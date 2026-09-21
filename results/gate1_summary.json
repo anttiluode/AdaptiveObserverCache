@@ -1,0 +1,41 @@
+{
+  "gate": 1,
+  "status": "pass",
+  "architecture": {
+    "equation": "q' = W_Q h + 2.5 * m * u",
+    "observer_rank": 1,
+    "read_budget_per_step": 1,
+    "schedule": "AAAABBBBAAAABBBB",
+    "fixed_observer_grid": [
+      -1,
+      0,
+      1
+    ]
+  },
+  "paired_same_cache_same_present": {
+    "observer_plus_1": {
+      "mass_A": 0.9622362343556183,
+      "mass_B": 0.03776376564438156,
+      "prediction": 1,
+      "selected_provenance": "A"
+    },
+    "observer_minus_1": {
+      "mass_A": 0.03776376564438156,
+      "mass_B": 0.9622362343556183,
+      "prediction": -1,
+      "selected_provenance": "B"
+    }
+  },
+  "best_fixed_accuracy": 0.5,
+  "adaptive_accuracy": 0.8125,
+  "adaptive_advantage": 0.3125,
+  "errors_on_switch_steps": 3,
+  "integrity": {
+    "cache_digest_before": "c98fa957ef01a9ba7ae49bb943e145f389d10864553efa3ed9796ae5ee5fd19c",
+    "cache_digest_after": "c98fa957ef01a9ba7ae49bb943e145f389d10864553efa3ed9796ae5ee5fd19c",
+    "parameter_digest_before": "d882c794aecd821a164dfa01057bf19bebc593abf1698b3ef19d0ff43f144958",
+    "parameter_digest_after": "d882c794aecd821a164dfa01057bf19bebc593abf1698b3ef19d0ff43f144958",
+    "all_parameters_frozen": true
+  },
+  "source": "GitHub Actions Gate 1 receipt, PR #2"
+}
