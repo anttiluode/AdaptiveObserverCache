@@ -25,38 +25,13 @@ update m
 next query is different
 ```
 
-The intended transformer bridge is simple:
-
-```text
-ordinary attention:
-q_t = W_Q h_t
-
-adaptive observer:
-q_t = Q(h_t, m_t)
-
-m_(t+1) = U(m_t, observation_t, receipt_t, goal_t)
-```
-
 The cache is historical material. The observer state is the changing measuring apparatus.
 
 ## Gate 0 — same cache, moving reader
 
 Gate 0 is deliberately tiny and model-free. It uses a two-dimensional KV-like memory with conflicting evidence under two provenance families, A and B.
 
-The contract freezes:
-
-- the cache;
-- the present input;
-- the read budget: one cache read per step;
-- all mechanism parameters;
-- no learned weights;
-- no hidden cache mutation.
-
-Only the two-dimensional observer state may change.
-
-Two tests matter.
-
-### 0a. Observer state changes what the same memory reveals
+The contract freezes the cache, present input, one-read budget, and mechanism parameters. Only observer state may change.
 
 With identical cache and identical present:
 
@@ -65,59 +40,113 @@ m_A -> query points toward A-addressed evidence -> +1
 m_B -> query points toward B-addressed evidence -> -1
 ```
 
-The purpose is not the toy classification. It is to establish the primitive:
-
-```text
-memory content != memory currently observable
-```
-
-### 0b. Observation changes the future observer
-
-The trusted provenance alternates in four blocks:
+On the alternating trusted-provenance schedule
 
 ```text
 AAAA BBBB AAAA BBBB
 ```
 
-A static reader begins A-biased and never changes. The adaptive reader receives the same one-read budget, but after a contradicted read it updates only its observer state and re-queries the unchanged cache differently on the next step.
-
-Pre-registered Gate-0 pass:
-
-- same cache + same present + opposite observer states must select opposite provenance families;
-- adaptive accuracy must be at least 0.75 on the switch schedule;
-- adaptive must beat the static reader by at least 0.20 absolute accuracy;
-- cache checksum must remain unchanged;
-- recovery after a provenance switch must take no more than one contradicted read.
+the static reader gets 50%, while the adaptive reader gets 81.25% and changes only its observer state after contradicted reads.
 
 Run:
 
 ```bash
 python gate0_experiment.py
-python -m unittest discover -s tests -v
 ```
 
-No external Python packages are required.
+Gate 0 is intentionally only a synthetic primitive.
 
-## Why this is not yet "a better KV cache"
+## Gate 1 — frozen transformer attention, moving query
 
-Gate 0 does **not** claim that a production transformer should mutate its KV cache, that this is a new attention mechanism, or that persistent observer state is sufficient for useful reasoning.
-
-It establishes a smaller object:
+Gate 1 moves the primitive into a real PyTorch attention calculation with frozen `nn.Linear` projections:
 
 ```text
-fast present state h_t
-slow observer state m_t
-fixed historical field C_t
+q_base = W_Q h
+q'     = q_base + 2.5 * m * u
+
+scores = K q' / sqrt(d_head)
+read   = softmax(scores) V
 ```
 
-with
+Everything except the scalar observer `m` is frozen:
+
+- identical present hidden state on every read;
+- `W_Q/W_K/W_V` are frozen and never trained;
+- memory is projected into `K,V` exactly once;
+- projected `K,V` are never rewritten;
+- one attention read per step;
+- feedback arrives only **after** the current read and may affect only the next query.
+
+The attacker is not one unlucky static baseline. Gate 1 tests fixed observers `m=-1,0,+1` and compares against the **best** of them.
+
+### Gate 1 receipt
+
+CI on Python 3.12 / CPU PyTorch produced:
 
 ```text
-read_t = A(Q(h_t, m_t), C_t)
-m_(t+1) = U(m_t, read_t, receipt_t)
+same K/V + same present + m=+1:
+    A attention mass = 0.962236
+    B attention mass = 0.037764
+    prediction = +1
+
+same K/V + same present + m=-1:
+    A attention mass = 0.037764
+    B attention mass = 0.962236
+    prediction = -1
+
+best fixed observer accuracy = 0.5000
+adaptive observer accuracy   = 0.8125
+adaptive advantage           = +0.3125
 ```
 
-The next attack is to replace the synthetic two-address cache with a frozen transformer attention layer while keeping the same discipline: modify query/read geometry with a tiny low-rank observer state, do not alter model weights, and compare against a static reader under an equal retrieval/compute budget.
+Every provenance switch costs exactly its first contradicted read; the observer then changes the next query.
+
+The projected-cache digest is identical before and after:
+
+```text
+c98fa957ef01a9ba7ae49bb943e145f389d10864553efa3ed9796ae5ee5fd19c
+```
+
+The frozen-parameter digest is also identical before and after:
+
+```text
+d882c794aecd821a164dfa01057bf19bebc593abf1698b3ef19d0ff43f144958
+```
+
+All parameters remain `requires_grad=False`.
+
+See [GATE1_CONTRACT.md](GATE1_CONTRACT.md) and [RESULTS_GATE1.md](RESULTS_GATE1.md).
+
+Run:
+
+```bash
+pip install -r requirements-gate1.txt --index-url https://download.pytorch.org/whl/cpu
+python gate1_experiment.py
+```
+
+## What Gate 1 does and does not establish
+
+Gate 1 now establishes this executable object:
+
+```text
+fast present h_t
+fixed historical field (K,V)
+slow persistent observer m_t
+
+q_t = W_Q h_t + u m_t
+read_t = Attention(q_t, K, V)
+m_(t+1) = U(m_t, read_t, feedback_t)
+```
+
+It does **not** establish useful adaptation inside a pretrained LLM. The A/B memory and observer direction are deliberately constructed so the mechanism is transparent.
+
+The next hard gate is therefore not another synthetic schedule. It is to attach a tiny low-rank observer state to a **real frozen pretrained transformer layer**, use naturally produced hidden states/KV, and ask whether earlier calibration experience can improve later ambiguous retrieval under an equal-compute static-reader attacker.
+
+The discipline stays the same:
+
+```text
+make the reader dynamic before making the memory dynamic
+```
 
 ## Relationship to the recent repos
 

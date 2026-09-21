@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  test:
+  core:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -17,5 +17,19 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Run Gate 0
         run: python gate0_experiment.py
-      - name: Run tests
+      - name: Run dependency-free tests
         run: python -m unittest discover -s tests -v
+
+  gate1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install CPU PyTorch
+        run: pip install -r requirements-gate1.txt --index-url https://download.pytorch.org/whl/cpu
+      - name: Run Gate 1 receipt
+        run: python gate1_experiment.py
+      - name: Run Gate 1 tests
+        run: python -m unittest discover -s tests -p "test_gate1.py" -v
