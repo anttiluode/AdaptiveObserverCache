@@ -593,3 +593,127 @@ Receipt:
 ```text
 results/qwen_observer_transfer_eval.json
 ```
+
+
+### Frozen-head transfer result
+
+The frozen-head transfer contract did **not** fully pass, and the failure is
+kept rather than softened:
+
+```text
+held-out cases                         4
+full A<->B generation switches        2/4
+reversed-order generation switches    2/2
+ordered dose-response endpoints       4/4
+source-cache integrity                true
+capped query updates                  0
+overall preregistered pass            false
+```
+
+The useful residue is narrower: the same frozen observer heads moved complete
+candidate-sequence likelihood in the A-relative direction on all four unrelated
+conflicts, even when the generated sentence did not cross the final decoding
+boundary.  The controller therefore transfers more reliably as a **graded
+directional bias** than as a guaranteed binary answer switch.
+
+Leave-one-head-out scoring on the original conflict shows L24/Q29 and L24/Q23
+carry most of the B-side crossing, L30/Q11 is supportive, and L18/Q28 is small.
+
+### Order-only attacker
+
+`attack_order.py` holds content, wording, source labels and head identities
+fixed and changes only physical source order.  The unmodified model itself has
+a very large first-record prior:
+
+```text
+A physically first: delta(A-B) = +10.8754
+B physically first: delta(A-B) = -10.7571
+```
+
+Against that prior, the AOC dose-response slope keeps the **same semantic
+direction** when order is reversed:
+
+```text
+slope AB = +7.9095
+slope BA = +8.1761
+ratio    = 1.034
+```
+
+So the frozen observer effect is not explained by a first-slot coordinate.
+However, the historical receipt printed `IDENTITY_COORDINATE` while the BA
+arm did not flip the greedy sentence at m=+1.  The script's old verdict code
+forgot the preregistered "generation crosses in both arms" clause.  That bug is
+now fixed: likelihood-only identity behavior is reported separately as
+`IDENTITY_LIKELIHOOD_ONLY`.
+
+### Live growing-cache observer
+
+`qwen_observer_live_cache.py` closes the practical gap left by the earlier
+chat harness.
+
+The old chat harness rerendered and refilled the complete transcript every
+turn.  The live harness instead performs exactly one full prefill, then keeps a
+single Qwen `DynamicCache` alive and appends only:
+
+```text
+new user-turn suffix -> generated token -> generated token -> ...
+```
+
+The source K rows are fingerprinted once and checked against the same baseline
+for the entire session.  Cache length must increase exactly with committed token
+history or the run aborts.
+
+The slow observer state is now also persistent outside the text.  External
+evidence receipts update an additive evidence score whose bounded control value
+is:
+
+```math
+m = tanh(score)
+```
+
+but self/model-prediction receipts are explicitly non-anchoring:
+
+```text
+sensor / tool / independent_model / user_verification -> may change trust
+self_prediction / model_output                         -> logged only
+```
+
+This prevents a steered read from certifying itself.
+
+Run:
+
+```bash
+python3.13 qwen_observer_live_cache.py
+```
+
+Useful commands:
+
+```text
+/state
+/cache
+/a
+/b
+/neutral
+/trust 0.35
+/auto
+/evidence a 0.8 sensor checked externally
+/evidence b 1.0 independent_model second system agreed
+/self a 1.0 model preferred A
+/quit
+```
+
+The observer evidence state survives process restarts in
+`results/qwen_observer_live_state.json`.  The session receipt is written to
+`results/qwen_observer_live_cache.json`.
+
+This is the first harness in the repo where both objects are genuinely
+persistent at different timescales:
+
+```text
+slow observer state persists across turns / restarts
+fast Qwen KV state grows token by token inside one live conversation
+```
+
+The remaining scientific boundary is no longer "does the cache really grow?"
+but whether the identity-relative observer remains effective as the trusted
+source recedes hundreds or thousands of tokens into that same cache.
