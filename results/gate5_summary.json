@@ -1,0 +1,31 @@
+{
+  "gate": 5,
+  "status": "pass",
+  "mechanism": "persistent arbitrary provenance key -> equality binding -> current slot -> frozen positional read mode",
+  "frozen_reader": {
+    "model": "distilbert/distilgpt2",
+    "revision": "2290a62",
+    "layer": 3,
+    "head": 2,
+    "first_slot_mode": 1.149999976158142,
+    "second_slot_mode": -3.950000047683716
+  },
+  "population": {
+    "families": 6,
+    "cases": 12,
+    "unique_persistent_keys": 12,
+    "identity_reads": 24
+  },
+  "results": {
+    "generic_bound_accuracy": 1,
+    "dual_success_rate": 1,
+    "reversed_order_dual_success_rate": 1,
+    "mean_target_mass": 0.9729603032271067,
+    "static_calibration_slot_accuracy": 0.5,
+    "wrong_persistent_key_accuracy": 0
+  },
+  "integrity": {
+    "all_test_caches_unchanged": true
+  },
+  "boundary": "Exact key equality cannot survive alias or surface-form drift."
+}
