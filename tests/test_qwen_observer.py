@@ -10,6 +10,8 @@ try:
         locate_source_spans,
         CausalHeadScore,
         HeadSelection,
+        ObserverPlan,
+        QwenObserverController,
         minimum_norm_query_update,
         observer_candidates,
         select_causal_plan,
@@ -166,6 +168,19 @@ class QwenObserverGeometryTests(unittest.TestCase):
         )
         self.assertEqual(len(candidates), 2)
         self.assertEqual(tuple(candidates), plan.heads)
+
+    def test_query_start_mode_is_explicit_and_resettable(self):
+        controller = QwenObserverController(
+            None,
+            ObserverPlan(heads=tuple()),
+        )
+        self.assertIsNone(controller.query_start)
+        controller.set_query_start(7)
+        self.assertEqual(controller.query_start, 7)
+        controller.set_query_start(None)
+        self.assertIsNone(controller.query_start)
+        with self.assertRaises(ValueError):
+            controller.set_query_start(-1)
 
     def test_plan_prefers_head_that_can_engage_both_sources(self):
         # Two query heads share one KV head. Head 0 can be steered symmetrically;
