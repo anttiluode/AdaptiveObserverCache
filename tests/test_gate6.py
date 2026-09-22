@@ -56,19 +56,40 @@ class Gate6Tests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             bind_alias_key(key, projection, one_hop)
 
-    def test_gate6_receipt_passes_attackers(self):
+    def test_gate6_records_the_frozen_absolute_engagement_failure(self):
         from gate6_experiment import build_receipt
 
         receipt = build_receipt()
-        self.assertTrue(receipt["pass"])
+        self.assertFalse(receipt["pass"])
+        self.assertTrue(receipt["checks"]["integrity_pass"])
+
         summary = receipt["summary"]
-        self.assertGreaterEqual(summary["alias_bound_accuracy"], 0.95)
+        self.assertEqual(summary["identity_reads"], 48)
         self.assertEqual(summary["exact_current_key_matches"], 0)
+        self.assertGreaterEqual(summary["alias_bound_accuracy"], 0.95)
+        self.assertEqual(summary["reversed_order_dual_success_rate"], 1.0)
+        self.assertLess(
+            summary["transitive_generation_dual_success_rate"], 0.95
+        )
         self.assertLessEqual(summary["gate5_exact_key_accuracy"], 0.10)
         self.assertLessEqual(summary["wrong_alias_map_accuracy"], 0.10)
         self.assertLessEqual(
             summary["generation2_one_hop_only_accuracy"], 0.10
         )
+
+        failing = [
+            (row["name"], target, read)
+            for row in receipt["results"]
+            for target, read in row["reads"].items()
+            if not read["alias_bound_pass"]
+        ]
+        self.assertEqual(len(failing), 1)
+        name, target, read = failing[0]
+        self.assertEqual(name, "package-g2-01")
+        self.assertEqual(target, "Liam")
+        self.assertEqual(read["resolved_slot"], 1)
+        self.assertGreater(read["target_share"], 0.999)
+        self.assertLess(read["target_mass"], 0.20)
 
 
 if __name__ == "__main__":

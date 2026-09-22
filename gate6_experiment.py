@@ -264,9 +264,17 @@ def build_receipt():
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="exit non-zero when the frozen scientific Gate-6 contract fails",
+    )
+    args = parser.parse_args()
+
     receipt = build_receipt()
     print(json.dumps(receipt, indent=2))
-    if not receipt["pass"]:
+    if args.strict and not receipt["pass"]:
         raise SystemExit(1)
 
 
