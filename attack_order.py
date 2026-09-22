@@ -476,8 +476,34 @@ def main():
     ratio = abs(s_ba / s_ab) if abs(s_ab) > 1e-12 else float("inf")
     same_sign = (s_ab > 0) == (s_ba > 0)
 
-    if same_sign and 0.5 <= ratio <= 2.0:
+    def generation_side(text: str):
+        low = (text or "").lower()
+        sig_a = args.candidate_a.lower().rstrip(" .")
+        sig_b = args.candidate_b.lower().rstrip(" .")
+        has_a = sig_a in low
+        has_b = sig_b in low
+        if has_a and not has_b:
+            return "A"
+        if has_b and not has_a:
+            return "B"
+        return None
+
+    def arm_crosses(order: str) -> bool:
+        rows = receipt["arms"][order]["rows"]
+        by_trust = {float(row["trust"]): row for row in rows}
+        if -1.0 not in by_trust or 1.0 not in by_trust:
+            return False
+        return (
+            generation_side(by_trust[-1.0].get("generation", "")) == "B"
+            and generation_side(by_trust[1.0].get("generation", "")) == "A"
+        )
+
+    generated_cross_both = arm_crosses("ab") and arm_crosses("ba")
+
+    if same_sign and 0.5 <= ratio <= 2.0 and generated_cross_both:
         verdict = "IDENTITY_COORDINATE"
+    elif same_sign and 0.5 <= ratio <= 2.0:
+        verdict = "IDENTITY_LIKELIHOOD_ONLY"
     elif (not same_sign) or ratio < 0.25:
         verdict = "SLOT_READING"
     else:
@@ -493,6 +519,7 @@ def main():
         "neutral_delta_ab": n_ab,
         "neutral_delta_ba": n_ba,
         "neutral_swing": (n_ab - n_ba) if (n_ab is not None and n_ba is not None) else None,
+        "generated_cross_both_orders": generated_cross_both,
     }
 
     print(f"\nslope ab {s_ab:+.4f}   slope ba {s_ba:+.4f}   ratio {ratio:.3f}")
