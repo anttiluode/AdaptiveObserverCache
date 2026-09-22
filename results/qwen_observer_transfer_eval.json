@@ -1,0 +1,2976 @@
+{
+  "scope": "Frozen-head held-out transfer evaluation after the first Qwen language-level AOC switch.",
+  "model": "Qwen/Qwen3-8B",
+  "plan_receipt": "results\\qwen_observer_causal_compare.json",
+  "frozen_heads": [
+    {
+      "layer": 24,
+      "query_head": 29,
+      "kv_head": 7,
+      "symmetric_source_mass": 0.3152068555355072,
+      "mass_when_a": 0.47883620858192444,
+      "mass_when_b": 0.3152068555355072,
+      "ratio_when_a": 0.18174579759412554,
+      "ratio_when_b": 0.49617732725553104
+    },
+    {
+      "layer": 24,
+      "query_head": 23,
+      "kv_head": 5,
+      "symmetric_source_mass": 0.2703208923339844,
+      "mass_when_a": 0.2703208923339844,
+      "mass_when_b": 0.3355734050273895,
+      "ratio_when_a": 0.26868694508327146,
+      "ratio_when_b": 0.3437080749266016
+    },
+    {
+      "layer": 30,
+      "query_head": 11,
+      "kv_head": 2,
+      "symmetric_source_mass": 0.08307279646396637,
+      "mass_when_a": 0.08768667280673981,
+      "mass_when_b": 0.08307279646396637,
+      "ratio_when_a": 0.22103351347285471,
+      "ratio_when_b": 0.5432341194168246
+    },
+    {
+      "layer": 18,
+      "query_head": 28,
+      "kv_head": 7,
+      "symmetric_source_mass": 0.06900083273649216,
+      "mass_when_a": 0.06900083273649216,
+      "mass_when_b": 0.0825178325176239,
+      "ratio_when_a": 0.4100351142323762,
+      "ratio_when_b": 0.28437676999860306
+    }
+  ],
+  "target_margin": 3.0,
+  "max_ratio": 1.0,
+  "trust_grid": [
+    -1.0,
+    -0.5,
+    0.0,
+    0.5,
+    1.0
+  ],
+  "held_out": [
+    {
+      "name": "telescope",
+      "order": "AB",
+      "generation": [
+        {
+          "mode": "A",
+          "trust": 1.0,
+          "answer": "The telescope image was blurred due to a warped secondary mirror.",
+          "class": "A",
+          "observer": {
+            "reads": 52,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.42544821719639003,
+            "mean_other_mass": 0.03293496057561312,
+            "mean_query_update_ratio": 0.254837335144903,
+            "max_query_update_ratio": 0.5625019519050594,
+            "capped_fraction": 0.0
+          }
+        },
+        {
+          "mode": "neutral",
+          "trust": 0.0,
+          "answer": "The telescope image was blurred due to a warped secondary mirror.",
+          "class": "A",
+          "observer": {
+            "reads": 52,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.22159619792364538,
+            "mean_other_mass": 0.10720454033714934,
+            "mean_query_update_ratio": 0.0,
+            "max_query_update_ratio": 0.0,
+            "capped_fraction": 0.0
+          }
+        },
+        {
+          "mode": "B",
+          "trust": -1.0,
+          "answer": "The telescope image blur was caused by a warped secondary mirror or tracking-motor jitter, as indicated by the conflicting diagnoses in the sources.",
+          "class": "both",
+          "observer": {
+            "reads": 112,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.40694361788752886,
+            "mean_other_mass": 0.01858355572039727,
+            "mean_query_update_ratio": 0.35833406419524316,
+            "max_query_update_ratio": 0.7034455373137483,
+            "capped_fraction": 0.0
+          }
+        }
+      ],
+      "dose_response": [
+        {
+          "trust": -1.0,
+          "A": {
+            "text": "The telescope image was blurred by a warped secondary mirror.",
+            "token_ids": [
+              785,
+              55825,
+              2168,
+              572,
+              72400,
+              553,
+              264,
+              86212,
+              14246,
+              17846,
+              13
+            ],
+            "token_count": 11,
+            "sum_logprob": -25.852523803710938,
+            "mean_logprob": -2.350229501724243,
+            "token_logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -1.501929521560669,
+              0.0,
+              -23.75007438659668,
+              -0.020784668624401093,
+              0.0,
+              0.0,
+              0.0,
+              -0.5797356367111206
+            ],
+            "observer": {
+              "reads": 48,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.39210702117998153,
+              "mean_other_mass": 0.026604625857241142,
+              "mean_query_update_ratio": 0.40649605987230686,
+              "max_query_update_ratio": 0.6818946619895822,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The telescope image was blurred by tracking-motor jitter.",
+            "token_ids": [
+              785,
+              55825,
+              2168,
+              572,
+              72400,
+              553,
+              14849,
+              1448,
+              9887,
+              84392,
+              13
+            ],
+            "token_count": 11,
+            "sum_logprob": -29.540939331054688,
+            "mean_logprob": -2.685539960861206,
+            "token_logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -1.501929521560669,
+              0.0,
+              -23.75007438659668,
+              -4.270784854888916,
+              -5.960462772236497e-07,
+              0.0,
+              0.0,
+              -0.018150312826037407
+            ],
+            "observer": {
+              "reads": 48,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.3852273180382326,
+              "mean_other_mass": 0.01349735313366788,
+              "mean_query_update_ratio": 0.3329354710591697,
+              "max_query_update_ratio": 0.6818946619895822,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 0.3353104591369629,
+          "sum_logprob_margin_A_minus_B": 3.68841552734375
+        },
+        {
+          "trust": -0.5,
+          "A": {
+            "text": "The telescope image was blurred by a warped secondary mirror.",
+            "token_ids": [
+              785,
+              55825,
+              2168,
+              572,
+              72400,
+              553,
+              264,
+              86212,
+              14246,
+              17846,
+              13
+            ],
+            "token_count": 11,
+            "sum_logprob": -24.80327796936035,
+            "mean_logprob": -2.2548434734344482,
+            "token_logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.474077433347702,
+              0.0,
+              -24.12507438659668,
+              -0.0006762839620932937,
+              0.0,
+              0.0,
+              0.0,
+              -0.20344841480255127
+            ],
+            "observer": {
+              "reads": 48,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.24919204887313148,
+              "mean_other_mass": 0.07159664004575461,
+              "mean_query_update_ratio": 0.24186561898902714,
+              "max_query_update_ratio": 0.5076965725345893,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The telescope image was blurred by tracking-motor jitter.",
+            "token_ids": [
+              785,
+              55825,
+              2168,
+              572,
+              72400,
+              553,
+              14849,
+              1448,
+              9887,
+              84392,
+              13
+            ],
+            "token_count": 11,
+            "sum_logprob": -33.60844421386719,
+            "mean_logprob": -3.0553131103515625,
+            "token_logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.474077433347702,
+              0.0,
+              -24.12507438659668,
+              -9.000676155090332,
+              -1.4305104514278355e-06,
+              0.0,
+              0.0,
+              -0.00861463975161314
+            ],
+            "observer": {
+              "reads": 48,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.26406462273250025,
+              "mean_other_mass": 0.03792876933099857,
+              "mean_query_update_ratio": 0.1720858803898816,
+              "max_query_update_ratio": 0.5076965725345893,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 0.8004696369171143,
+          "sum_logprob_margin_A_minus_B": 8.805166244506836
+        },
+        {
+          "trust": 0.0,
+          "A": {
+            "text": "The telescope image was blurred by a warped secondary mirror.",
+            "token_ids": [
+              785,
+              55825,
+              2168,
+              572,
+              72400,
+              553,
+              264,
+              86212,
+              14246,
+              17846,
+              13
+            ],
+            "token_count": 11,
+            "sum_logprob": -24.475418090820312,
+            "mean_logprob": -2.2250380516052246,
+            "token_logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.20141363143920898,
+              0.0,
+              -24.250045776367188,
+              -1.6689160474925302e-05,
+              0.0,
+              0.0,
+              0.0,
+              -0.02394181303679943
+            ],
+            "observer": {
+              "reads": 48,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.2177736108424142,
+              "mean_other_mass": 0.10391988798316258,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The telescope image was blurred by tracking-motor jitter.",
+            "token_ids": [
+              785,
+              55825,
+              2168,
+              572,
+              72400,
+              553,
+              14849,
+              1448,
+              9887,
+              84392,
+              13
+            ],
+            "token_count": 11,
+            "sum_logprob": -47.45820236206055,
+            "mean_logprob": -4.314382076263428,
+            "token_logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.20141363143920898,
+              0.0,
+              -24.250045776367188,
+              -23.000017166137695,
+              -1.0132738680113107e-05,
+              -1.1920928244535389e-07,
+              0.0,
+              -0.006715585943311453
+            ],
+            "observer": {
+              "reads": 48,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.1148025438693973,
+              "mean_other_mass": 0.17486424736368159,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 2.089344024658203,
+          "sum_logprob_margin_A_minus_B": 22.982784271240234
+        },
+        {
+          "trust": 0.5,
+          "A": {
+            "text": "The telescope image was blurred by a warped secondary mirror.",
+            "token_ids": [
+              785,
+              55825,
+              2168,
+              572,
+              72400,
+              553,
+              264,
+              86212,
+              14246,
+              17846,
+              13
+            ],
+            "token_count": 11,
+            "sum_logprob": -24.38861083984375,
+            "mean_logprob": -2.217146396636963,
+            "token_logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.2519294023513794,
+              0.0,
+              -24.12507438659668,
+              -1.0132738680113107e-05,
+              0.0,
+              0.0,
+              0.0,
+              -0.011596886441111565
+            ],
+            "observer": {
+              "reads": 48,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.298571843712125,
+              "mean_other_mass": 0.06763722551598524,
+              "mean_query_update_ratio": 0.10689255606445441,
+              "max_query_update_ratio": 0.35097691478611776,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The telescope image was blurred by tracking-motor jitter.",
+            "token_ids": [
+              785,
+              55825,
+              2168,
+              572,
+              72400,
+              553,
+              14849,
+              1448,
+              9887,
+              84392,
+              13
+            ],
+            "token_count": 11,
+            "sum_logprob": -48.135650634765625,
+            "mean_logprob": -4.3759684562683105,
+            "token_logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.2519294023513794,
+              0.0,
+              -24.12507438659668,
+              -23.750009536743164,
+              -2.1457441107486375e-05,
+              -1.1920928244535389e-07,
+              0.0,
+              -0.008614758029580116
+            ],
+            "observer": {
+              "reads": 48,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.22508958831895143,
+              "mean_other_mass": 0.07480962693807669,
+              "mean_query_update_ratio": 0.1862737010505122,
+              "max_query_update_ratio": 0.5643730359697043,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 2.1588220596313477,
+          "sum_logprob_margin_A_minus_B": 23.747039794921875
+        },
+        {
+          "trust": 1.0,
+          "A": {
+            "text": "The telescope image was blurred by a warped secondary mirror.",
+            "token_ids": [
+              785,
+              55825,
+              2168,
+              572,
+              72400,
+              553,
+              264,
+              86212,
+              14246,
+              17846,
+              13
+            ],
+            "token_count": 11,
+            "sum_logprob": -24.072345733642578,
+            "mean_logprob": -2.1883950233459473,
+            "token_logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.3132621645927429,
+              0.0,
+              -23.750036239624023,
+              -3.6954811548639555e-06,
+              0.0,
+              0.0,
+              0.0,
+              -0.009043092839419842
+            ],
+            "observer": {
+              "reads": 48,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.41752133041154593,
+              "mean_other_mass": 0.033501174388220534,
+              "mean_query_update_ratio": 0.2572093342516279,
+              "max_query_update_ratio": 0.5642196509197239,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The telescope image was blurred by tracking-motor jitter.",
+            "token_ids": [
+              785,
+              55825,
+              2168,
+              572,
+              72400,
+              553,
+              14849,
+              1448,
+              9887,
+              84392,
+              13
+            ],
+            "token_count": 11,
+            "sum_logprob": -51.44695281982422,
+            "mean_logprob": -4.676995754241943,
+            "token_logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.3132621645927429,
+              0.0,
+              -23.750036239624023,
+              -27.375003814697266,
+              -3.540453326422721e-05,
+              -1.1920928244535389e-07,
+              0.0,
+              -0.008614758029580116
+            ],
+            "observer": {
+              "reads": 48,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.35496049863286316,
+              "mean_other_mass": 0.03450861308859506,
+              "mean_query_update_ratio": 0.34880634191893445,
+              "max_query_update_ratio": 0.7509836609019859,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 2.488600730895996,
+          "sum_logprob_margin_A_minus_B": 27.37460708618164
+        }
+      ]
+    },
+    {
+      "name": "database",
+      "order": "BA",
+      "generation": [
+        {
+          "mode": "A",
+          "trust": 1.0,
+          "answer": "The database service went offline due to a corrupted primary index file.",
+          "class": "A",
+          "observer": {
+            "reads": 56,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.4046467301834907,
+            "mean_other_mass": 0.015174616868275084,
+            "mean_query_update_ratio": 0.31089583891383554,
+            "max_query_update_ratio": 0.6016723894286355,
+            "capped_fraction": 0.0
+          }
+        },
+        {
+          "mode": "neutral",
+          "trust": 0.0,
+          "answer": "The database service went offline due to an expired authentication certificate.",
+          "class": "B",
+          "observer": {
+            "reads": 52,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.11996799625026491,
+            "mean_other_mass": 0.1847542078422311,
+            "mean_query_update_ratio": 0.0,
+            "max_query_update_ratio": 0.0,
+            "capped_fraction": 0.0
+          }
+        },
+        {
+          "mode": "B",
+          "trust": -1.0,
+          "answer": "The database service went offline due to an expired authentication certificate.",
+          "class": "B",
+          "observer": {
+            "reads": 52,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.35547095350921154,
+            "mean_other_mass": 0.03364691220653745,
+            "mean_query_update_ratio": 0.3096491653794417,
+            "max_query_update_ratio": 0.560837007105408,
+            "capped_fraction": 0.0
+          }
+        }
+      ],
+      "dose_response": [
+        {
+          "trust": -1.0,
+          "A": {
+            "text": "The service went offline because the primary index file was corrupted.",
+            "token_ids": [
+              785,
+              2473,
+              3937,
+              26166,
+              1576,
+              279,
+              6028,
+              1922,
+              1034,
+              572,
+              49400,
+              13
+            ],
+            "token_count": 12,
+            "sum_logprob": -62.407257080078125,
+            "mean_logprob": -5.2006049156188965,
+            "token_logprobs": [
+              0.0,
+              -26.75,
+              -1.3132634162902832,
+              0.0,
+              -13.500000953674316,
+              -18.0,
+              -0.4922831952571869,
+              0.0,
+              0.0,
+              -2.3502066135406494,
+              -0.0011707840021699667,
+              -0.00033539868309162557
+            ],
+            "observer": {
+              "reads": 52,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.3261959350739534,
+              "mean_other_mass": 0.032858167636172414,
+              "mean_query_update_ratio": 0.42903115820021226,
+              "max_query_update_ratio": 0.852789772037305,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The service went offline because the authentication certificate expired.",
+            "token_ids": [
+              785,
+              2473,
+              3937,
+              26166,
+              1576,
+              279,
+              16653,
+              15748,
+              26391,
+              13
+            ],
+            "token_count": 10,
+            "sum_logprob": -66.52206420898438,
+            "mean_logprob": -6.6522064208984375,
+            "token_logprobs": [
+              0.0,
+              -26.5,
+              -1.5019309520721436,
+              0.0,
+              -13.500000953674316,
+              -17.75,
+              -4.6523590087890625,
+              0.0,
+              -2.5797319412231445,
+              -0.03804141283035278
+            ],
+            "observer": {
+              "reads": 44,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.387562622231516,
+              "mean_other_mass": 0.03465520819141106,
+              "mean_query_update_ratio": 0.2938901701253165,
+              "max_query_update_ratio": 0.5803505375474901,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 1.451601505279541,
+          "sum_logprob_margin_A_minus_B": 4.11480712890625
+        },
+        {
+          "trust": -0.5,
+          "A": {
+            "text": "The service went offline because the primary index file was corrupted.",
+            "token_ids": [
+              785,
+              2473,
+              3937,
+              26166,
+              1576,
+              279,
+              6028,
+              1922,
+              1034,
+              572,
+              49400,
+              13
+            ],
+            "token_count": 12,
+            "sum_logprob": -61.863224029541016,
+            "mean_logprob": -5.155268669128418,
+            "token_logprobs": [
+              0.0,
+              -27.75,
+              -0.8259411454200745,
+              0.0,
+              -13.250001907348633,
+              -17.25,
+              -0.20662614703178406,
+              0.0,
+              0.0,
+              -2.578889846801758,
+              -0.001503290724940598,
+              -0.00026127262390218675
+            ],
+            "observer": {
+              "reads": 52,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.20755506754637912,
+              "mean_other_mass": 0.07284085374647895,
+              "mean_query_update_ratio": 0.2508042118389318,
+              "max_query_update_ratio": 0.6527603510753138,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The service went offline because the authentication certificate expired.",
+            "token_ids": [
+              785,
+              2473,
+              3937,
+              26166,
+              1576,
+              279,
+              16653,
+              15748,
+              26391,
+              13
+            ],
+            "token_count": 10,
+            "sum_logprob": -66.8987045288086,
+            "mean_logprob": -6.689870357513428,
+            "token_logprobs": [
+              0.0,
+              -27.0,
+              -0.8259411454200745,
+              0.0,
+              -13.500000953674316,
+              -17.25,
+              -6.165055274963379,
+              0.0,
+              -2.1279590129852295,
+              -0.029750416055321693
+            ],
+            "observer": {
+              "reads": 44,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.28320089710707014,
+              "mean_other_mass": 0.06984122677452186,
+              "mean_query_update_ratio": 0.13523782413395385,
+              "max_query_update_ratio": 0.32801776331743593,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 1.5346016883850098,
+          "sum_logprob_margin_A_minus_B": 5.035480499267578
+        },
+        {
+          "trust": 0.0,
+          "A": {
+            "text": "The service went offline because the primary index file was corrupted.",
+            "token_ids": [
+              785,
+              2473,
+              3937,
+              26166,
+              1576,
+              279,
+              6028,
+              1922,
+              1034,
+              572,
+              49400,
+              13
+            ],
+            "token_count": 12,
+            "sum_logprob": -62.968074798583984,
+            "mean_logprob": -5.247339725494385,
+            "token_logprobs": [
+              0.0,
+              -27.75,
+              -1.1368730068206787,
+              0.0,
+              -13.500000953674316,
+              -17.0,
+              -0.04961357265710831,
+              0.0,
+              0.0,
+              -3.529750347137451,
+              -0.001503290724940598,
+              -0.00033539868309162557
+            ],
+            "observer": {
+              "reads": 52,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.22207642060059768,
+              "mean_other_mass": 0.10381651908839838,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The service went offline because the authentication certificate expired.",
+            "token_ids": [
+              785,
+              2473,
+              3937,
+              26166,
+              1576,
+              279,
+              16653,
+              15748,
+              26391,
+              13
+            ],
+            "token_count": 10,
+            "sum_logprob": -69.47296905517578,
+            "mean_logprob": -6.947297096252441,
+            "token_logprobs": [
+              0.0,
+              -27.25,
+              -0.9740788340568542,
+              0.0,
+              -13.250001907348633,
+              -17.25,
+              -8.789078712463379,
+              0.0,
+              -1.9112212657928467,
+              -0.04858732968568802
+            ],
+            "observer": {
+              "reads": 44,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.11741898801516402,
+              "mean_other_mass": 0.21332337267019533,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 1.6999573707580566,
+          "sum_logprob_margin_A_minus_B": 6.504894256591797
+        },
+        {
+          "trust": 0.5,
+          "A": {
+            "text": "The service went offline because the primary index file was corrupted.",
+            "token_ids": [
+              785,
+              2473,
+              3937,
+              26166,
+              1576,
+              279,
+              6028,
+              1922,
+              1034,
+              572,
+              49400,
+              13
+            ],
+            "token_count": 12,
+            "sum_logprob": -61.00617980957031,
+            "mean_logprob": -5.083848476409912,
+            "token_logprobs": [
+              0.0,
+              -28.0,
+              -0.9740788340568542,
+              0.0,
+              -13.250001907348633,
+              -15.25,
+              -0.0005813338793814182,
+              0.0,
+              0.0,
+              -3.529750347137451,
+              -0.0015034097013995051,
+              -0.00026127262390218675
+            ],
+            "observer": {
+              "reads": 52,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.3020748868584633,
+              "mean_other_mass": 0.03905281155871657,
+              "mean_query_update_ratio": 0.13653004786478845,
+              "max_query_update_ratio": 0.45228347016674275,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The service went offline because the authentication certificate expired.",
+            "token_ids": [
+              785,
+              2473,
+              3937,
+              26166,
+              1576,
+              279,
+              16653,
+              15748,
+              26391,
+              13
+            ],
+            "token_count": 10,
+            "sum_logprob": -73.78993225097656,
+            "mean_logprob": -7.378993511199951,
+            "token_logprobs": [
+              0.0,
+              -27.5,
+              -0.9740788340568542,
+              0.0,
+              -13.500000953674316,
+              -15.5,
+              -14.750458717346191,
+              0.0,
+              -1.5034286975860596,
+              -0.06196761503815651
+            ],
+            "observer": {
+              "reads": 44,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.28131652411750774,
+              "mean_other_mass": 0.06465808238664811,
+              "mean_query_update_ratio": 0.24641790210510656,
+              "max_query_update_ratio": 0.5745552921751621,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 2.295145034790039,
+          "sum_logprob_margin_A_minus_B": 12.78375244140625
+        },
+        {
+          "trust": 1.0,
+          "A": {
+            "text": "The service went offline because the primary index file was corrupted.",
+            "token_ids": [
+              785,
+              2473,
+              3937,
+              26166,
+              1576,
+              279,
+              6028,
+              1922,
+              1034,
+              572,
+              49400,
+              13
+            ],
+            "token_count": 12,
+            "sum_logprob": -61.28374481201172,
+            "mean_logprob": -5.106978893280029,
+            "token_logprobs": [
+              0.0,
+              -28.0,
+              -1.5019309520721436,
+              0.0,
+              -13.750000953674316,
+              -14.5,
+              -0.00013147920253686607,
+              0.0,
+              0.0,
+              -3.529750347137451,
+              -0.0015034097013995051,
+              -0.0004306104383431375
+            ],
+            "observer": {
+              "reads": 52,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.4089733934603058,
+              "mean_other_mass": 0.01463408841832111,
+              "mean_query_update_ratio": 0.2915930879045766,
+              "max_query_update_ratio": 0.661322144163816,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The service went offline because the authentication certificate expired.",
+            "token_ids": [
+              785,
+              2473,
+              3937,
+              26166,
+              1576,
+              279,
+              16653,
+              15748,
+              26391,
+              13
+            ],
+            "token_count": 10,
+            "sum_logprob": -75.76799774169922,
+            "mean_logprob": -7.5767998695373535,
+            "token_logprobs": [
+              0.0,
+              -27.5,
+              -1.5019309520721436,
+              0.0,
+              -14.000000953674316,
+              -15.0,
+              -16.500106811523438,
+              0.0,
+              -1.1390306949615479,
+              -0.1269281506538391
+            ],
+            "observer": {
+              "reads": 44,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.4311682972210375,
+              "mean_other_mass": 0.022195935654136436,
+              "mean_query_update_ratio": 0.42524346602841984,
+              "max_query_update_ratio": 0.7666134194746788,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 2.469820976257324,
+          "sum_logprob_margin_A_minus_B": 14.4842529296875
+        }
+      ]
+    },
+    {
+      "name": "reactor",
+      "order": "AB",
+      "generation": [
+        {
+          "mode": "A",
+          "trust": 1.0,
+          "answer": "The chemical reaction stopped because the catalyst bed was poisoned.",
+          "class": "A",
+          "observer": {
+            "reads": 48,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.3596019401835899,
+            "mean_other_mass": 0.039520125443232246,
+            "mean_query_update_ratio": 0.23860457207868346,
+            "max_query_update_ratio": 0.4695496471773676,
+            "capped_fraction": 0.0
+          }
+        },
+        {
+          "mode": "neutral",
+          "trust": 0.0,
+          "answer": "The chemical reaction stopped because the catalyst bed was poisoned.",
+          "class": "A",
+          "observer": {
+            "reads": 48,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.24500201202075308,
+            "mean_other_mass": 0.10247053462080657,
+            "mean_query_update_ratio": 0.0,
+            "max_query_update_ratio": 0.0,
+            "capped_fraction": 0.0
+          }
+        },
+        {
+          "mode": "B",
+          "trust": -1.0,
+          "answer": "The chemical reaction stopped because the catalyst bed was poisoned.",
+          "class": "A",
+          "observer": {
+            "reads": 48,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.42374471404279274,
+            "mean_other_mass": 0.04346516547472371,
+            "mean_query_update_ratio": 0.396067129333953,
+            "max_query_update_ratio": 0.586412684316749,
+            "capped_fraction": 0.0
+          }
+        }
+      ],
+      "dose_response": [
+        {
+          "trust": -1.0,
+          "A": {
+            "text": "The reaction stopped because the catalyst bed was poisoned.",
+            "token_ids": [
+              785,
+              12720,
+              10497,
+              1576,
+              279,
+              50383,
+              4845,
+              572,
+              70498,
+              13
+            ],
+            "token_count": 10,
+            "sum_logprob": -11.772439956665039,
+            "mean_logprob": -1.1772440671920776,
+            "token_logprobs": [
+              0.0,
+              -11.750007629394531,
+              -1.1920928244535389e-07,
+              -0.00020346954988781363,
+              -2.3841855067985307e-07,
+              -0.004078523721545935,
+              0.0,
+              0.0,
+              0.0,
+              -0.018150078132748604
+            ],
+            "observer": {
+              "reads": 44,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.43969012195752427,
+              "mean_other_mass": 0.04671134682774374,
+              "mean_query_update_ratio": 0.391949874532744,
+              "max_query_update_ratio": 0.5838999220364228,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The reaction stopped because the feed pump was cavitating.",
+            "token_ids": [
+              785,
+              12720,
+              10497,
+              1576,
+              279,
+              5395,
+              13834,
+              572,
+              272,
+              43110,
+              1095,
+              13
+            ],
+            "token_count": 12,
+            "sum_logprob": -17.253395080566406,
+            "mean_logprob": -1.4377830028533936,
+            "token_logprobs": [
+              0.0,
+              -11.50001049041748,
+              -1.1920928244535389e-07,
+              -0.00020346954988781363,
+              -2.3841855067985307e-07,
+              -5.753177642822266,
+              0.0,
+              0.0,
+              -1.4305104514278355e-06,
+              0.0,
+              0.0,
+              -1.4305104514278355e-06
+            ],
+            "observer": {
+              "reads": 52,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.41711242446819174,
+              "mean_other_mass": 0.02143784881403777,
+              "mean_query_update_ratio": 0.2510542958830611,
+              "max_query_update_ratio": 0.5643550054097958,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 0.2605389356613159,
+          "sum_logprob_margin_A_minus_B": 5.480955123901367
+        },
+        {
+          "trust": -0.5,
+          "A": {
+            "text": "The reaction stopped because the catalyst bed was poisoned.",
+            "token_ids": [
+              785,
+              12720,
+              10497,
+              1576,
+              279,
+              50383,
+              4845,
+              572,
+              70498,
+              13
+            ],
+            "token_count": 10,
+            "sum_logprob": -12.268540382385254,
+            "mean_logprob": -1.2268540859222412,
+            "token_logprobs": [
+              0.0,
+              -12.250004768371582,
+              -1.1920928244535389e-07,
+              -0.00026127262390218675,
+              -2.3841855067985307e-07,
+              -0.00012337400403339416,
+              0.0,
+              0.0,
+              0.0,
+              -0.018149960786104202
+            ],
+            "observer": {
+              "reads": 44,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.27211057115346193,
+              "mean_other_mass": 0.11337928541681984,
+              "mean_query_update_ratio": 0.23471999904904817,
+              "max_query_update_ratio": 0.42505711738421864,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The reaction stopped because the feed pump was cavitating.",
+            "token_ids": [
+              785,
+              12720,
+              10497,
+              1576,
+              279,
+              5395,
+              13834,
+              572,
+              272,
+              43110,
+              1095,
+              13
+            ],
+            "token_count": 12,
+            "sum_logprob": -21.250423431396484,
+            "mean_logprob": -1.7708686590194702,
+            "token_logprobs": [
+              0.0,
+              -11.750007629394531,
+              -1.1920928244535389e-07,
+              -0.00033539868309162557,
+              -2.3841855067985307e-07,
+              -9.50007438659668,
+              0.0,
+              0.0,
+              -1.7881377516459906e-06,
+              0.0,
+              0.0,
+              -3.6954811548639555e-06
+            ],
+            "observer": {
+              "reads": 52,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.31255018587510747,
+              "mean_other_mass": 0.0514257126924349,
+              "mean_query_update_ratio": 0.1271210513575458,
+              "max_query_update_ratio": 0.4207384278492235,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 0.544014573097229,
+          "sum_logprob_margin_A_minus_B": 8.98188304901123
+        },
+        {
+          "trust": 0.0,
+          "A": {
+            "text": "The reaction stopped because the catalyst bed was poisoned.",
+            "token_ids": [
+              785,
+              12720,
+              10497,
+              1576,
+              279,
+              50383,
+              4845,
+              572,
+              70498,
+              13
+            ],
+            "token_count": 10,
+            "sum_logprob": -12.53018569946289,
+            "mean_logprob": -1.2530186176300049,
+            "token_logprobs": [
+              0.0,
+              -12.500003814697266,
+              -1.1920928244535389e-07,
+              -0.0004306104383431375,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.029750416055321693
+            ],
+            "observer": {
+              "reads": 44,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.2581051989797164,
+              "mean_other_mass": 0.10745542293245142,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The reaction stopped because the feed pump was cavitating.",
+            "token_ids": [
+              785,
+              12720,
+              10497,
+              1576,
+              279,
+              5395,
+              13834,
+              572,
+              272,
+              43110,
+              1095,
+              13
+            ],
+            "token_count": 12,
+            "sum_logprob": -35.50035095214844,
+            "mean_logprob": -2.958362579345703,
+            "token_logprobs": [
+              0.0,
+              -12.250004768371582,
+              -1.1920928244535389e-07,
+              -0.00033539868309162557,
+              0.0,
+              -23.25,
+              0.0,
+              0.0,
+              -3.6954811548639555e-06,
+              0.0,
+              0.0,
+              -6.198863957251888e-06
+            ],
+            "observer": {
+              "reads": 52,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.11447161462834068,
+              "mean_other_mass": 0.22893549575327107,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 1.7053439617156982,
+          "sum_logprob_margin_A_minus_B": 22.970165252685547
+        },
+        {
+          "trust": 0.5,
+          "A": {
+            "text": "The reaction stopped because the catalyst bed was poisoned.",
+            "token_ids": [
+              785,
+              12720,
+              10497,
+              1576,
+              279,
+              50383,
+              4845,
+              572,
+              70498,
+              13
+            ],
+            "token_count": 10,
+            "sum_logprob": -12.030092239379883,
+            "mean_logprob": -1.2030092477798462,
+            "token_logprobs": [
+              0.0,
+              -12.000005722045898,
+              -1.1920928244535389e-07,
+              -0.00033539868309162557,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.029750416055321693
+            ],
+            "observer": {
+              "reads": 44,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.2991735082204369,
+              "mean_other_mass": 0.07042666559573263,
+              "mean_query_update_ratio": 0.09512578051796465,
+              "max_query_update_ratio": 0.28418175925652545,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The reaction stopped because the feed pump was cavitating.",
+            "token_ids": [
+              785,
+              12720,
+              10497,
+              1576,
+              279,
+              5395,
+              13834,
+              572,
+              272,
+              43110,
+              1095,
+              13
+            ],
+            "token_count": 12,
+            "sum_logprob": -36.7503662109375,
+            "mean_logprob": -3.062530517578125,
+            "token_logprobs": [
+              0.0,
+              -12.500003814697266,
+              -1.1920928244535389e-07,
+              -0.00033539868309162557,
+              0.0,
+              -24.25,
+              0.0,
+              0.0,
+              -7.867782187531702e-06,
+              0.0,
+              0.0,
+              -2.1457441107486375e-05
+            ],
+            "observer": {
+              "reads": 52,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.193329115344498,
+              "mean_other_mass": 0.07992173653866093,
+              "mean_query_update_ratio": 0.25092637260553646,
+              "max_query_update_ratio": 0.639636505487843,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 1.8595212697982788,
+          "sum_logprob_margin_A_minus_B": 24.720273971557617
+        },
+        {
+          "trust": 1.0,
+          "A": {
+            "text": "The reaction stopped because the catalyst bed was poisoned.",
+            "token_ids": [
+              785,
+              12720,
+              10497,
+              1576,
+              279,
+              50383,
+              4845,
+              572,
+              70498,
+              13
+            ],
+            "token_count": 10,
+            "sum_logprob": -11.788310050964355,
+            "mean_logprob": -1.1788309812545776,
+            "token_logprobs": [
+              0.0,
+              -11.750007629394531,
+              -1.1920928244535389e-07,
+              -0.00026127262390218675,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.038041528314352036
+            ],
+            "observer": {
+              "reads": 44,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.37715907640416513,
+              "mean_other_mass": 0.03894527758133005,
+              "mean_query_update_ratio": 0.23802508301341108,
+              "max_query_update_ratio": 0.4657515014039409,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The reaction stopped because the feed pump was cavitating.",
+            "token_ids": [
+              785,
+              12720,
+              10497,
+              1576,
+              279,
+              5395,
+              13834,
+              572,
+              272,
+              43110,
+              1095,
+              13
+            ],
+            "token_count": 12,
+            "sum_logprob": -38.75032043457031,
+            "mean_logprob": -3.2291934490203857,
+            "token_logprobs": [
+              0.0,
+              -12.000005722045898,
+              -1.1920928244535389e-07,
+              -0.00026127262390218675,
+              0.0,
+              -26.75,
+              0.0,
+              0.0,
+              -7.867782187531702e-06,
+              0.0,
+              0.0,
+              -4.541770613286644e-05
+            ],
+            "observer": {
+              "reads": 52,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.2815383037982079,
+              "mean_other_mass": 0.04105110866098235,
+              "mean_query_update_ratio": 0.4050053527027523,
+              "max_query_update_ratio": 0.8286907530447276,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 2.050362467765808,
+          "sum_logprob_margin_A_minus_B": 26.962010383605957
+        }
+      ]
+    },
+    {
+      "name": "compiler",
+      "order": "BA",
+      "generation": [
+        {
+          "mode": "A",
+          "trust": 1.0,
+          "answer": "The software build failed due to a parser regression rejecting a valid token sequence.",
+          "class": "A",
+          "observer": {
+            "reads": 64,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.4234479688166175,
+            "mean_other_mass": 0.012582423640196794,
+            "mean_query_update_ratio": 0.286034729794248,
+            "max_query_update_ratio": 0.5801059500776344,
+            "capped_fraction": 0.0
+          }
+        },
+        {
+          "mode": "neutral",
+          "trust": 0.0,
+          "answer": "The software build failed due to a parser regression rejecting a valid token sequence.",
+          "class": "A",
+          "observer": {
+            "reads": 64,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.2643268201936735,
+            "mean_other_mass": 0.09843546799675096,
+            "mean_query_update_ratio": 0.0,
+            "max_query_update_ratio": 0.0,
+            "capped_fraction": 0.0
+          }
+        },
+        {
+          "mode": "B",
+          "trust": -1.0,
+          "answer": "The build failed due to a stale generated schema.",
+          "class": "B",
+          "observer": {
+            "reads": 44,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.44155072793364525,
+            "mean_other_mass": 0.048038187336218965,
+            "mean_query_update_ratio": 0.276938838903641,
+            "max_query_update_ratio": 0.6217758422175558,
+            "capped_fraction": 0.0
+          }
+        }
+      ],
+      "dose_response": [
+        {
+          "trust": -1.0,
+          "A": {
+            "text": "The build failed because of a parser regression.",
+            "token_ids": [
+              785,
+              1936,
+              4641,
+              1576,
+              315,
+              264,
+              6729,
+              30549,
+              13
+            ],
+            "token_count": 9,
+            "sum_logprob": -38.653778076171875,
+            "mean_logprob": -4.294864177703857,
+            "token_logprobs": [
+              0.0,
+              -0.4740769863128662,
+              0.0,
+              -0.9740769863128662,
+              -12.000129699707031,
+              -9.619726915843785e-05,
+              -2.5788943767547607,
+              0.0,
+              -22.626502990722656
+            ],
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.407291017100215,
+              "mean_other_mass": 0.06018532236921601,
+              "mean_query_update_ratio": 0.37538940188598613,
+              "max_query_update_ratio": 0.6568367848596658,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The build failed because the generated schema was stale.",
+            "token_ids": [
+              785,
+              1936,
+              4641,
+              1576,
+              279,
+              7907,
+              10802,
+              572,
+              50351,
+              13
+            ],
+            "token_count": 10,
+            "sum_logprob": -1.4484047889709473,
+            "mean_logprob": -0.14484047889709473,
+            "token_logprobs": [
+              0.0,
+              -0.4740769863128662,
+              0.0,
+              -0.9740769863128662,
+              -0.00012706902634818107,
+              -3.576278118089249e-07,
+              0.0,
+              0.0,
+              0.0,
+              -0.00012337400403339416
+            ],
+            "observer": {
+              "reads": 44,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.4446529312567277,
+              "mean_other_mass": 0.04516858142266177,
+              "mean_query_update_ratio": 0.2689323253158127,
+              "max_query_update_ratio": 0.6452022201760503,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": -4.150023698806763,
+          "sum_logprob_margin_A_minus_B": -37.20537328720093
+        },
+        {
+          "trust": -0.5,
+          "A": {
+            "text": "The build failed because of a parser regression.",
+            "token_ids": [
+              785,
+              1936,
+              4641,
+              1576,
+              315,
+              264,
+              6729,
+              30549,
+              13
+            ],
+            "token_count": 9,
+            "sum_logprob": -37.35349655151367,
+            "mean_logprob": -4.150388717651367,
+            "token_logprobs": [
+              0.0,
+              -1.1368709802627563,
+              0.0,
+              -1.1368709802627563,
+              -10.500737190246582,
+              -0.0001234931987710297,
+              -1.701418161392212,
+              0.0,
+              -22.87747573852539
+            ],
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.2602673029992729,
+              "mean_other_mass": 0.1196551778819412,
+              "mean_query_update_ratio": 0.20055874362617768,
+              "max_query_update_ratio": 0.4482522097369535,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The build failed because the generated schema was stale.",
+            "token_ids": [
+              785,
+              1936,
+              4641,
+              1576,
+              279,
+              7907,
+              10802,
+              572,
+              50351,
+              13
+            ],
+            "token_count": 10,
+            "sum_logprob": -2.4509096145629883,
+            "mean_logprob": -0.24509096145629883,
+            "token_logprobs": [
+              0.0,
+              -1.1368709802627563,
+              0.0,
+              -1.3132617473602295,
+              -0.0005696581210941076,
+              -3.814689989667386e-06,
+              0.0,
+              0.0,
+              0.0,
+              -0.00020346954988781363
+            ],
+            "observer": {
+              "reads": 44,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.343078148085624,
+              "mean_other_mass": 0.07811968183589423,
+              "mean_query_update_ratio": 0.12698851175619197,
+              "max_query_update_ratio": 0.44020274285681554,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": -3.9052977561950684,
+          "sum_logprob_margin_A_minus_B": -34.902586936950684
+        },
+        {
+          "trust": 0.0,
+          "A": {
+            "text": "The build failed because of a parser regression.",
+            "token_ids": [
+              785,
+              1936,
+              4641,
+              1576,
+              315,
+              264,
+              6729,
+              30549,
+              13
+            ],
+            "token_count": 9,
+            "sum_logprob": -36.64437484741211,
+            "mean_logprob": -4.071597099304199,
+            "token_logprobs": [
+              0.0,
+              -1.5019290447235107,
+              0.0,
+              -1.3132617473602295,
+              -9.750969886779785,
+              -0.0003355178632773459,
+              -0.8259503245353699,
+              0.0,
+              -23.251928329467773
+            ],
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.22667149290209637,
+              "mean_other_mass": 0.14334573252126576,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The build failed because the generated schema was stale.",
+            "token_ids": [
+              785,
+              1936,
+              4641,
+              1576,
+              279,
+              7907,
+              10802,
+              572,
+              50351,
+              13
+            ],
+            "token_count": 10,
+            "sum_logprob": -2.640127658843994,
+            "mean_logprob": -0.26401278376579285,
+            "token_logprobs": [
+              0.0,
+              -1.5019290447235107,
+              0.0,
+              -1.1368709802627563,
+              -0.0009567927336320281,
+              -3.5523738915799186e-05,
+              0.0,
+              0.0,
+              0.0,
+              -0.00033539868309162557
+            ],
+            "observer": {
+              "reads": 44,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.1340574425544632,
+              "mean_other_mass": 0.26790067669935524,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": -3.8075843155384064,
+          "sum_logprob_margin_A_minus_B": -34.004247188568115
+        },
+        {
+          "trust": 0.5,
+          "A": {
+            "text": "The build failed because of a parser regression.",
+            "token_ids": [
+              785,
+              1936,
+              4641,
+              1576,
+              315,
+              264,
+              6729,
+              30549,
+              13
+            ],
+            "token_count": 9,
+            "sum_logprob": -34.073429107666016,
+            "mean_logprob": -3.7859365940093994,
+            "token_logprobs": [
+              0.0,
+              -1.9102240800857544,
+              0.0,
+              -1.1368709802627563,
+              -7.474644660949707,
+              -0.0011704268399626017,
+              -0.04858994111418724,
+              0.0,
+              -23.501928329467773
+            ],
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.33085961248725654,
+              "mean_other_mass": 0.04614825637545437,
+              "mean_query_update_ratio": 0.16236049651107978,
+              "max_query_update_ratio": 0.38980234680915365,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The build failed because the generated schema was stale.",
+            "token_ids": [
+              785,
+              1936,
+              4641,
+              1576,
+              279,
+              7907,
+              10802,
+              572,
+              50351,
+              13
+            ],
+            "token_count": 10,
+            "sum_logprob": -3.7880773544311523,
+            "mean_logprob": -0.37880775332450867,
+            "token_logprobs": [
+              0.0,
+              -2.1269280910491943,
+              0.0,
+              -1.1368709802627563,
+              -0.4745189845561981,
+              -0.048588916659355164,
+              0.0,
+              0.0,
+              0.0,
+              -0.0011703077470883727
+            ],
+            "observer": {
+              "reads": 44,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.29428785131312907,
+              "mean_other_mass": 0.07908571282909675,
+              "mean_query_update_ratio": 0.24824630437644002,
+              "max_query_update_ratio": 0.5385042363643702,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": -3.4071288406848907,
+          "sum_logprob_margin_A_minus_B": -30.285351753234863
+        },
+        {
+          "trust": 1.0,
+          "A": {
+            "text": "The build failed because of a parser regression.",
+            "token_ids": [
+              785,
+              1936,
+              4641,
+              1576,
+              315,
+              264,
+              6729,
+              30549,
+              13
+            ],
+            "token_count": 9,
+            "sum_logprob": -34.87445831298828,
+            "mean_logprob": -3.8749399185180664,
+            "token_logprobs": [
+              0.0,
+              -2.1269280910491943,
+              0.0,
+              -0.9740769863128662,
+              -8.137163162231445,
+              -0.0015025765169411898,
+              -0.008616176433861256,
+              0.0,
+              -23.626171112060547
+            ],
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.42604898624122145,
+              "mean_other_mass": 0.015864118630997837,
+              "mean_query_update_ratio": 0.33272789727776175,
+              "max_query_update_ratio": 0.548005440371233,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The build failed because the generated schema was stale.",
+            "token_ids": [
+              785,
+              1936,
+              4641,
+              1576,
+              279,
+              7907,
+              10802,
+              572,
+              50351,
+              13
+            ],
+            "token_count": 10,
+            "sum_logprob": -4.242929935455322,
+            "mean_logprob": -0.42429301142692566,
+            "token_logprobs": [
+              0.0,
+              -1.7014133930206299,
+              0.0,
+              -0.9740769863128662,
+              -1.313576579093933,
+              -0.2519342303276062,
+              0.0,
+              0.0,
+              0.0,
+              -0.0019287331961095333
+            ],
+            "observer": {
+              "reads": 44,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.42752283316274936,
+              "mean_other_mass": 0.025307011615950614,
+              "mean_query_update_ratio": 0.4155155107581239,
+              "max_query_update_ratio": 0.7308516999742761,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": -3.4506469070911407,
+          "sum_logprob_margin_A_minus_B": -30.63152837753296
+        }
+      ]
+    }
+  ],
+  "ablation": [
+    {
+      "variant": "full",
+      "heads": [
+        {
+          "layer": 24,
+          "query_head": 29,
+          "kv_head": 7,
+          "symmetric_source_mass": 0.3152068555355072,
+          "mass_when_a": 0.47883620858192444,
+          "mass_when_b": 0.3152068555355072,
+          "ratio_when_a": 0.18174579759412554,
+          "ratio_when_b": 0.49617732725553104
+        },
+        {
+          "layer": 24,
+          "query_head": 23,
+          "kv_head": 5,
+          "symmetric_source_mass": 0.2703208923339844,
+          "mass_when_a": 0.2703208923339844,
+          "mass_when_b": 0.3355734050273895,
+          "ratio_when_a": 0.26868694508327146,
+          "ratio_when_b": 0.3437080749266016
+        },
+        {
+          "layer": 30,
+          "query_head": 11,
+          "kv_head": 2,
+          "symmetric_source_mass": 0.08307279646396637,
+          "mass_when_a": 0.08768667280673981,
+          "mass_when_b": 0.08307279646396637,
+          "ratio_when_a": 0.22103351347285471,
+          "ratio_when_b": 0.5432341194168246
+        },
+        {
+          "layer": 18,
+          "query_head": 28,
+          "kv_head": 7,
+          "symmetric_source_mass": 0.06900083273649216,
+          "mass_when_a": 0.06900083273649216,
+          "mass_when_b": 0.0825178325176239,
+          "ratio_when_a": 0.4100351142323762,
+          "ratio_when_b": 0.28437676999860306
+        }
+      ],
+      "A_trust": {
+        "trust": 1.0,
+        "A": {
+          "text": "The device failed because valve C was obstructed.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            31430,
+            356,
+            572,
+            53192,
+            291,
+            13
+          ],
+          "token_count": 10,
+          "sum_logprob": -0.0024697468616068363,
+          "mean_logprob": -0.0002469746978022158,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0019286142196506262,
+            -0.0002057340752799064,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.00033539868309162557
+          ],
+          "observer": {
+            "reads": 44,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.4557201787829399,
+            "mean_other_mass": 0.035059381609740245,
+            "mean_query_update_ratio": 0.23078417586224423,
+            "max_query_update_ratio": 0.510421293389985,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "text": "The device failed because sensor K drifted.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            12002,
+            730,
+            91562,
+            13
+          ],
+          "token_count": 8,
+          "sum_logprob": -13.58171272277832,
+          "mean_logprob": -1.69771409034729,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0024756519123911858,
+            -13.500301361083984,
+            0.0,
+            -4.565611743601039e-05,
+            -0.07888974994421005
+          ],
+          "observer": {
+            "reads": 36,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.43173938234233195,
+            "mean_other_mass": 0.041950182135527335,
+            "mean_query_update_ratio": 0.3713907624194397,
+            "max_query_update_ratio": 0.8113647999531745,
+            "capped_fraction": 0.0
+          }
+        },
+        "mean_logprob_margin_A_minus_B": 1.6974671156494878,
+        "sum_logprob_margin_A_minus_B": 13.579242975916713
+      },
+      "B_trust": {
+        "trust": -1.0,
+        "A": {
+          "text": "The device failed because valve C was obstructed.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            31430,
+            356,
+            572,
+            53192,
+            291,
+            13
+          ],
+          "token_count": 10,
+          "sum_logprob": -1.7151286602020264,
+          "mean_logprob": -0.17151287198066711,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0015023384476080537,
+            -1.7050118446350098,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.008614521473646164
+          ],
+          "observer": {
+            "reads": 44,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.43158360706134274,
+            "mean_other_mass": 0.021838954639282416,
+            "mean_query_update_ratio": 0.4550562167930469,
+            "max_query_update_ratio": 0.7526087550531201,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "text": "The device failed because sensor K drifted.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            12002,
+            730,
+            91562,
+            13
+          ],
+          "token_count": 8,
+          "sum_logprob": -0.635253369808197,
+          "mean_logprob": -0.07940667122602463,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0019286142196506262,
+            -0.3200627565383911,
+            0.0,
+            -2.3841855067985307e-07,
+            -0.3132617473602295
+          ],
+          "observer": {
+            "reads": 36,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.4186845924705267,
+            "mean_other_mass": 0.01602047653351393,
+            "mean_query_update_ratio": 0.3377823180634243,
+            "max_query_update_ratio": 0.6247850943603477,
+            "capped_fraction": 0.0
+          }
+        },
+        "mean_logprob_margin_A_minus_B": -0.09210620075464249,
+        "sum_logprob_margin_A_minus_B": -1.0798752903938293
+      }
+    },
+    {
+      "variant": "without_L24_Q29",
+      "heads": [
+        {
+          "layer": 24,
+          "query_head": 23,
+          "kv_head": 5,
+          "symmetric_source_mass": 0.2703208923339844,
+          "mass_when_a": 0.2703208923339844,
+          "mass_when_b": 0.3355734050273895,
+          "ratio_when_a": 0.26868694508327146,
+          "ratio_when_b": 0.3437080749266016
+        },
+        {
+          "layer": 30,
+          "query_head": 11,
+          "kv_head": 2,
+          "symmetric_source_mass": 0.08307279646396637,
+          "mass_when_a": 0.08768667280673981,
+          "mass_when_b": 0.08307279646396637,
+          "ratio_when_a": 0.22103351347285471,
+          "ratio_when_b": 0.5432341194168246
+        },
+        {
+          "layer": 18,
+          "query_head": 28,
+          "kv_head": 7,
+          "symmetric_source_mass": 0.06900083273649216,
+          "mass_when_a": 0.06900083273649216,
+          "mass_when_b": 0.0825178325176239,
+          "ratio_when_a": 0.4100351142323762,
+          "ratio_when_b": 0.28437676999860306
+        }
+      ],
+      "A_trust": {
+        "trust": 1.0,
+        "A": {
+          "text": "The device failed because valve C was obstructed.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            31430,
+            356,
+            572,
+            53192,
+            291,
+            13
+          ],
+          "token_count": 10,
+          "sum_logprob": -0.0021033002994954586,
+          "mean_logprob": -0.00021033003577031195,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0015023384476080537,
+            -0.00026556302327662706,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.00033539868309162557
+          ],
+          "observer": {
+            "reads": 33,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.42092847011306067,
+            "mean_other_mass": 0.03410037094021611,
+            "mean_query_update_ratio": 0.2631818419771482,
+            "max_query_update_ratio": 0.510421293389985,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "text": "The device failed because sensor K drifted.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            12002,
+            730,
+            91562,
+            13
+          ],
+          "token_count": 8,
+          "sum_logprob": -13.081605911254883,
+          "mean_logprob": -1.6352007389068604,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0024756519123911858,
+            -13.000235557556152,
+            0.0,
+            -4.887569048150908e-06,
+            -0.07888974994421005
+          ],
+          "observer": {
+            "reads": 27,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.40104943279314925,
+            "mean_other_mass": 0.04086631708950908,
+            "mean_query_update_ratio": 0.3871051076675329,
+            "max_query_update_ratio": 0.6505050651921491,
+            "capped_fraction": 0.0
+          }
+        },
+        "mean_logprob_margin_A_minus_B": 1.63499040887109,
+        "sum_logprob_margin_A_minus_B": 13.079502610955387
+      },
+      "B_trust": {
+        "trust": -1.0,
+        "A": {
+          "text": "The device failed because valve C was obstructed.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            31430,
+            356,
+            572,
+            53192,
+            291,
+            13
+          ],
+          "token_count": 10,
+          "sum_logprob": -0.04592537134885788,
+          "mean_logprob": -0.00459253741428256,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0024756519123911858,
+            -0.03673436865210533,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.006715348921716213
+          ],
+          "observer": {
+            "reads": 33,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.4110028680526849,
+            "mean_other_mass": 0.020413899046340674,
+            "mean_query_update_ratio": 0.4319290622664906,
+            "max_query_update_ratio": 0.6998953187284042,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "text": "The device failed because sensor K drifted.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            12002,
+            730,
+            91562,
+            13
+          ],
+          "token_count": 8,
+          "sum_logprob": -4.3470354080200195,
+          "mean_logprob": -0.5433794260025024,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0024756519123911858,
+            -4.03129768371582,
+            0.0,
+            -2.3841855067985307e-07,
+            -0.3132617473602295
+          ],
+          "observer": {
+            "reads": 27,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.39996115532186294,
+            "mean_other_mass": 0.013694564932612356,
+            "mean_query_update_ratio": 0.32831124485234475,
+            "max_query_update_ratio": 0.5858603872738379,
+            "capped_fraction": 0.0
+          }
+        },
+        "mean_logprob_margin_A_minus_B": 0.5387868885882199,
+        "sum_logprob_margin_A_minus_B": 4.301110036671162
+      }
+    },
+    {
+      "variant": "without_L24_Q23",
+      "heads": [
+        {
+          "layer": 24,
+          "query_head": 29,
+          "kv_head": 7,
+          "symmetric_source_mass": 0.3152068555355072,
+          "mass_when_a": 0.47883620858192444,
+          "mass_when_b": 0.3152068555355072,
+          "ratio_when_a": 0.18174579759412554,
+          "ratio_when_b": 0.49617732725553104
+        },
+        {
+          "layer": 30,
+          "query_head": 11,
+          "kv_head": 2,
+          "symmetric_source_mass": 0.08307279646396637,
+          "mass_when_a": 0.08768667280673981,
+          "mass_when_b": 0.08307279646396637,
+          "ratio_when_a": 0.22103351347285471,
+          "ratio_when_b": 0.5432341194168246
+        },
+        {
+          "layer": 18,
+          "query_head": 28,
+          "kv_head": 7,
+          "symmetric_source_mass": 0.06900083273649216,
+          "mass_when_a": 0.06900083273649216,
+          "mass_when_b": 0.0825178325176239,
+          "ratio_when_a": 0.4100351142323762,
+          "ratio_when_b": 0.28437676999860306
+        }
+      ],
+      "A_trust": {
+        "trust": 1.0,
+        "A": {
+          "text": "The device failed because valve C was obstructed.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            31430,
+            356,
+            572,
+            53192,
+            291,
+            13
+          ],
+          "token_count": 10,
+          "sum_logprob": -0.0027057048864662647,
+          "mean_logprob": -0.0002705704828258604,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0019286142196506262,
+            -0.00044169207103550434,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.00033539868309162557
+          ],
+          "observer": {
+            "reads": 33,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.45216012023615115,
+            "mean_other_mass": 0.0357288854394221,
+            "mean_query_update_ratio": 0.25564698628340066,
+            "max_query_update_ratio": 0.510421293389985,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "text": "The device failed because sensor K drifted.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            12002,
+            730,
+            91562,
+            13
+          ],
+          "token_count": 8,
+          "sum_logprob": -11.853184700012207,
+          "mean_logprob": -1.4816480875015259,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0024756519123911858,
+            -11.75050163269043,
+            0.0,
+            -4.768370445162873e-07,
+            -0.10020658373832703
+          ],
+          "observer": {
+            "reads": 27,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.4565295648795587,
+            "mean_other_mass": 0.04001325624132598,
+            "mean_query_update_ratio": 0.37054764998782397,
+            "max_query_update_ratio": 0.8113647999531745,
+            "capped_fraction": 0.0
+          }
+        },
+        "mean_logprob_margin_A_minus_B": 1.4813775170187,
+        "sum_logprob_margin_A_minus_B": 11.85047899512574
+      },
+      "B_trust": {
+        "trust": -1.0,
+        "A": {
+          "text": "The device failed because valve C was obstructed.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            31430,
+            356,
+            572,
+            53192,
+            291,
+            13
+          ],
+          "token_count": 10,
+          "sum_logprob": -0.11152618378400803,
+          "mean_logprob": -0.011152618564665318,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0015023384476080537,
+            -0.10330849885940552,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.006715348921716213
+          ],
+          "observer": {
+            "reads": 33,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.37603272226723755,
+            "mean_other_mass": 0.018033612053841352,
+            "mean_query_update_ratio": 0.4524166383999606,
+            "max_query_update_ratio": 0.7526087550531201,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "text": "The device failed because sensor K drifted.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            12002,
+            730,
+            91562,
+            13
+          ],
+          "token_count": 8,
+          "sum_logprob": -3.1299545764923096,
+          "mean_logprob": -0.3912443220615387,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0015023384476080537,
+            -2.815190315246582,
+            0.0,
+            -2.3841855067985307e-07,
+            -0.3132617473602295
+          ],
+          "observer": {
+            "reads": 27,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.369982131101467,
+            "mean_other_mass": 0.016963956446421367,
+            "mean_query_update_ratio": 0.3609457884791008,
+            "max_query_update_ratio": 0.6247850943603477,
+            "capped_fraction": 0.0
+          }
+        },
+        "mean_logprob_margin_A_minus_B": 0.3800917034968734,
+        "sum_logprob_margin_A_minus_B": 3.0184283927083015
+      }
+    },
+    {
+      "variant": "without_L30_Q11",
+      "heads": [
+        {
+          "layer": 24,
+          "query_head": 29,
+          "kv_head": 7,
+          "symmetric_source_mass": 0.3152068555355072,
+          "mass_when_a": 0.47883620858192444,
+          "mass_when_b": 0.3152068555355072,
+          "ratio_when_a": 0.18174579759412554,
+          "ratio_when_b": 0.49617732725553104
+        },
+        {
+          "layer": 24,
+          "query_head": 23,
+          "kv_head": 5,
+          "symmetric_source_mass": 0.2703208923339844,
+          "mass_when_a": 0.2703208923339844,
+          "mass_when_b": 0.3355734050273895,
+          "ratio_when_a": 0.26868694508327146,
+          "ratio_when_b": 0.3437080749266016
+        },
+        {
+          "layer": 18,
+          "query_head": 28,
+          "kv_head": 7,
+          "symmetric_source_mass": 0.06900083273649216,
+          "mass_when_a": 0.06900083273649216,
+          "mass_when_b": 0.0825178325176239,
+          "ratio_when_a": 0.4100351142323762,
+          "ratio_when_b": 0.28437676999860306
+        }
+      ],
+      "A_trust": {
+        "trust": 1.0,
+        "A": {
+          "text": "The device failed because valve C was obstructed.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            31430,
+            356,
+            572,
+            53192,
+            291,
+            13
+          ],
+          "token_count": 10,
+          "sum_logprob": -0.00239657424390316,
+          "mean_logprob": -0.00023965742730069906,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0019286142196506262,
+            -0.00020668754586949944,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.00026127262390218675
+          ],
+          "observer": {
+            "reads": 33,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.5231686175772639,
+            "mean_other_mass": 0.03452777393359804,
+            "mean_query_update_ratio": 0.24734824632130137,
+            "max_query_update_ratio": 0.510421293389985,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "text": "The device failed because sensor K drifted.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            12002,
+            730,
+            91562,
+            13
+          ],
+          "token_count": 8,
+          "sum_logprob": -13.103043556213379,
+          "mean_logprob": -1.6378804445266724,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0024756519123911858,
+            -13.0003023147583,
+            0.0,
+            -5.8530047681415454e-05,
+            -0.10020658373832703
+          ],
+          "observer": {
+            "reads": 27,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.4841432661094047,
+            "mean_other_mass": 0.042147135362029076,
+            "mean_query_update_ratio": 0.3932534422658981,
+            "max_query_update_ratio": 0.8113647999531745,
+            "capped_fraction": 0.0
+          }
+        },
+        "mean_logprob_margin_A_minus_B": 1.6376407870993717,
+        "sum_logprob_margin_A_minus_B": 13.100646981969476
+      },
+      "B_trust": {
+        "trust": -1.0,
+        "A": {
+          "text": "The device failed because valve C was obstructed.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            31430,
+            356,
+            572,
+            53192,
+            291,
+            13
+          ],
+          "token_count": 10,
+          "sum_logprob": -1.3275091648101807,
+          "mean_logprob": -0.13275091350078583,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0015023384476080537,
+            -1.317392349243164,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.008614521473646164
+          ],
+          "observer": {
+            "reads": 33,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.4868045869198712,
+            "mean_other_mass": 0.02652850697720141,
+            "mean_query_update_ratio": 0.43491796503881386,
+            "max_query_update_ratio": 0.7526087550531201,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "text": "The device failed because sensor K drifted.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            12002,
+            730,
+            91562,
+            13
+          ],
+          "token_count": 8,
+          "sum_logprob": -0.9706222414970398,
+          "mean_logprob": -0.12132778018712997,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0019286142196506262,
+            -0.581822395324707,
+            0.0,
+            -2.3841855067985307e-07,
+            -0.38687101006507874
+          ],
+          "observer": {
+            "reads": 27,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.46436107958908435,
+            "mean_other_mass": 0.019010528594393422,
+            "mean_query_update_ratio": 0.3163544291132594,
+            "max_query_update_ratio": 0.6247850943603477,
+            "capped_fraction": 0.0
+          }
+        },
+        "mean_logprob_margin_A_minus_B": -0.011423133313655853,
+        "sum_logprob_margin_A_minus_B": -0.35688692331314087
+      }
+    },
+    {
+      "variant": "without_L18_Q28",
+      "heads": [
+        {
+          "layer": 24,
+          "query_head": 29,
+          "kv_head": 7,
+          "symmetric_source_mass": 0.3152068555355072,
+          "mass_when_a": 0.47883620858192444,
+          "mass_when_b": 0.3152068555355072,
+          "ratio_when_a": 0.18174579759412554,
+          "ratio_when_b": 0.49617732725553104
+        },
+        {
+          "layer": 24,
+          "query_head": 23,
+          "kv_head": 5,
+          "symmetric_source_mass": 0.2703208923339844,
+          "mass_when_a": 0.2703208923339844,
+          "mass_when_b": 0.3355734050273895,
+          "ratio_when_a": 0.26868694508327146,
+          "ratio_when_b": 0.3437080749266016
+        },
+        {
+          "layer": 30,
+          "query_head": 11,
+          "kv_head": 2,
+          "symmetric_source_mass": 0.08307279646396637,
+          "mass_when_a": 0.08768667280673981,
+          "mass_when_b": 0.08307279646396637,
+          "ratio_when_a": 0.22103351347285471,
+          "ratio_when_b": 0.5432341194168246
+        }
+      ],
+      "A_trust": {
+        "trust": 1.0,
+        "A": {
+          "text": "The device failed because valve C was obstructed.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            31430,
+            356,
+            572,
+            53192,
+            291,
+            13
+          ],
+          "token_count": 10,
+          "sum_logprob": -0.0044542294926941395,
+          "mean_logprob": -0.00044542294926941395,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0024756519123911858,
+            -0.0008083889842964709,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.0011701886542141438
+          ],
+          "observer": {
+            "reads": 33,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.4268916084459334,
+            "mean_other_mass": 0.03616884230128066,
+            "mean_query_update_ratio": 0.15909527449095653,
+            "max_query_update_ratio": 0.37857254850977795,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "text": "The device failed because sensor K drifted.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            12002,
+            730,
+            91562,
+            13
+          ],
+          "token_count": 8,
+          "sum_logprob": -13.163976669311523,
+          "mean_logprob": -1.6454970836639404,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0031777145341038704,
+            -13.000529289245605,
+            0.0,
+            -4.565611743601039e-05,
+            -0.1602240949869156
+          ],
+          "observer": {
+            "reads": 27,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.3821466887990634,
+            "mean_other_mass": 0.04532532697474515,
+            "mean_query_update_ratio": 0.34153801490668,
+            "max_query_update_ratio": 0.79930306083897,
+            "capped_fraction": 0.0
+          }
+        },
+        "mean_logprob_margin_A_minus_B": 1.645051660714671,
+        "sum_logprob_margin_A_minus_B": 13.15952243981883
+      },
+      "B_trust": {
+        "trust": -1.0,
+        "A": {
+          "text": "The device failed because valve C was obstructed.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            31430,
+            356,
+            572,
+            53192,
+            291,
+            13
+          ],
+          "token_count": 10,
+          "sum_logprob": -1.3212751150131226,
+          "mean_logprob": -0.13212750852108002,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0019286142196506262,
+            -1.3161687850952148,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.0031777145341038704
+          ],
+          "observer": {
+            "reads": 33,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.44425131087050296,
+            "mean_other_mass": 0.02214874569891077,
+            "mean_query_update_ratio": 0.5170810475314088,
+            "max_query_update_ratio": 0.7487276147382057,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "text": "The device failed because sensor K drifted.",
+          "token_ids": [
+            785,
+            3671,
+            4641,
+            1576,
+            12002,
+            730,
+            91562,
+            13
+          ],
+          "token_count": 8,
+          "sum_logprob": -0.45869261026382446,
+          "mean_logprob": -0.05733657628297806,
+          "token_logprobs": [
+            0.0,
+            0.0,
+            0.0,
+            -0.0019286142196506262,
+            -0.2553505301475525,
+            0.0,
+            -1.1920928244535389e-07,
+            -0.2014133334159851
+          ],
+          "observer": {
+            "reads": 27,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.4364629313349724,
+            "mean_other_mass": 0.014628913624350119,
+            "mean_query_update_ratio": 0.3586582993607383,
+            "max_query_update_ratio": 0.6267510162267472,
+            "capped_fraction": 0.0
+          }
+        },
+        "mean_logprob_margin_A_minus_B": -0.07479093223810196,
+        "sum_logprob_margin_A_minus_B": -0.8625825047492981
+      }
+    }
+  ],
+  "summary": {
+    "held_out_cases": 4,
+    "dual_switch_cases": 2,
+    "reversed_order_dual_switch_cases": 2,
+    "endpoint_ordered_dose_response_cases": 4,
+    "cache_integrity_all": true,
+    "no_capped_updates": true,
+    "strong_transfer_pass": false,
+    "reversed_order_pass": true,
+    "graded_control_pass": true,
+    "overall_pass": false,
+    "frozen_before_run_contract": {
+      "strong_transfer": ">=3/4 held-out cases dual-switch",
+      "reversed_order": "2/2 BA-order cases dual-switch",
+      "graded_control": "margin(+1) > margin(0) > margin(-1) in >=3/4 cases",
+      "integrity": "all source-cache checks true",
+      "boundedness": "no query update hits the norm cap"
+    }
+  }
+}
