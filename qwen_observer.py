@@ -538,10 +538,22 @@ class QwenObserverController:
             raise ValueError("query_start must be non-negative")
         self.query_start = query_start
 
-    def begin_generation(self) -> None:
+    def begin_generation(self, *, preserve_source_baseline: bool = False) -> None:
+        """Reset per-read diagnostics before a decode segment.
+
+        Existing callers get the historical behaviour: the source-cache digest
+        baseline is re-established for each independent run. A real growing
+        conversation can instead keep one baseline for the whole session with
+        preserve_source_baseline=True. Once that session-level integrity flag
+        goes false it stays false.
+        """
         self.runtime_reads.clear()
-        self.cache_integrity_ok = True
-        self._generation_snapshots.clear()
+        if preserve_source_baseline:
+            if not self._generation_snapshots:
+                self.cache_integrity_ok = True
+        else:
+            self.cache_integrity_ok = True
+            self._generation_snapshots.clear()
 
     def _check_source_cache(
         self, layer: int, kv_head: int, keys: Tensor, spans: SourceSpans
