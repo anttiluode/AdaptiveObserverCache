@@ -513,6 +513,10 @@ class QwenObserverController:
         self.target_margin = float(target_margin)
         self.max_ratio = float(max_ratio)
         self.spans: SourceSpans | None = None
+        # None means generation mode: steer only the newest query position.
+        # An integer enables teacher-forced scoring and steers every query
+        # position from that local sequence index onward.
+        self.query_start: int | None = None
         self.runtime_reads: List[RuntimeRead] = []
         self.cache_integrity_ok = True
         self._generation_snapshots: Dict[Tuple[int, int], Tuple[str, str]] = {}
@@ -524,6 +528,15 @@ class QwenObserverController:
 
     def set_spans(self, spans: SourceSpans) -> None:
         self.spans = spans
+
+    def set_query_start(self, query_start: int | None) -> None:
+        if query_start is None:
+            self.query_start = None
+            return
+        query_start = int(query_start)
+        if query_start < 0:
+            raise ValueError("query_start must be non-negative")
+        self.query_start = query_start
 
     def begin_generation(self) -> None:
         self.runtime_reads.clear()
@@ -621,6 +634,18 @@ class QwenObserverController:
                     )
 
                 query_states = query_states.clone()
+                q_len_local = query_states.shape[-2]
+                if controller.query_start is None:
+                    query_positions = (q_len_local - 1,)
+                else:
+                    if cache is not None and key_states.shape[-2] != q_len_local:
+                        raise RuntimeError(
+                            "query_start scoring mode requires a full no-cache "
+                            "forward pass"
+                        )
+                    start = min(controller.query_start, q_len_local)
+                    query_positions = tuple(range(start, q_len_local))
+
                 for q_head in _selected_heads:
                     kv_head = q_head // module.num_key_value_groups
                     keys = key_states[0, kv_head]
@@ -632,38 +657,50 @@ class QwenObserverController:
                         - keys[b0:b1].mean(dim=0)
                     )
 
-                    current = query_states[0, q_head, -1, :]
-                    corrected, info = minimum_norm_query_update(
-                        current,
-                        direction,
-                        trust=controller.trust,
-                        target_margin=controller.target_margin,
-                        scaling=float(module.scaling),
-                        max_ratio=controller.max_ratio,
-                    )
-                    query_states[0, q_head, -1, :] = corrected
-                    mass_a, mass_b = attention_masses(
-                        corrected,
-                        keys,
-                        spans,
-                        scaling=float(module.scaling),
-                    )
-                    target = mass_a if controller.trust >= 0 else mass_b
-                    other = mass_b if controller.trust >= 0 else mass_a
-                    controller.runtime_reads.append(
-                        RuntimeRead(
-                            layer=_layer_index,
-                            query_head=q_head,
-                            kv_head=kv_head,
+                    for q_pos in query_positions:
+                        current = query_states[0, q_head, q_pos, :]
+                        corrected, info = minimum_norm_query_update(
+                            current,
+                            direction,
                             trust=controller.trust,
-                            target_mass=target,
-                            other_mass=other,
-                            update_ratio=info.ratio,
-                            natural_gap=info.natural_gap,
-                            achieved_gap=info.achieved_gap,
-                            capped=info.capped,
+                            target_margin=controller.target_margin,
+                            scaling=float(module.scaling),
+                            max_ratio=controller.max_ratio,
                         )
-                    )
+                        query_states[0, q_head, q_pos, :] = corrected
+
+                        # In full-sequence teacher forcing, diagnostics must not
+                        # peek at future keys. Generation mode already has only
+                        # the causally available prefix in its cache.
+                        visible_keys = keys
+                        if cache is None and q_len_local == keys.shape[0]:
+                            visible_keys = keys[: q_pos + 1]
+                        if max(a1, b1) <= visible_keys.shape[0]:
+                            mass_a, mass_b = attention_masses(
+                                corrected,
+                                visible_keys,
+                                spans,
+                                scaling=float(module.scaling),
+                            )
+                        else:
+                            mass_a = mass_b = 0.0
+
+                        target = mass_a if controller.trust >= 0 else mass_b
+                        other = mass_b if controller.trust >= 0 else mass_a
+                        controller.runtime_reads.append(
+                            RuntimeRead(
+                                layer=_layer_index,
+                                query_head=q_head,
+                                kv_head=kv_head,
+                                trust=controller.trust,
+                                target_mass=target,
+                                other_mass=other,
+                                update_ratio=info.ratio,
+                                natural_gap=info.natural_gap,
+                                achieved_gap=info.achieved_gap,
+                                capped=info.capped,
+                            )
+                        )
 
                 # Eager attention for the patched layer only.  Qwen3-8B uses no
                 # sliding window, and this path keeps the modification local and
