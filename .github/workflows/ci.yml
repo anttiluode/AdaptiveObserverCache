@@ -33,3 +33,25 @@ jobs:
         run: python gate1_experiment.py
       - name: Run Gate 1 tests
         run: python -m unittest discover -s tests -p "test_gate1.py" -v
+
+  gate2:
+    runs-on: ubuntu-latest
+    env:
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      TOKENIZERS_PARALLELISM: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Cache Hugging Face model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: gate2-distilgpt2-2290a62
+      - name: Install Gate 2 dependencies
+        run: pip install -r requirements-gate2.txt --extra-index-url https://download.pytorch.org/whl/cpu
+      - name: Run Gate 2 receipt
+        run: python gate2_experiment.py
+      - name: Run Gate 2 tests
+        run: python -m unittest discover -s tests -p "test_gate2.py" -v
