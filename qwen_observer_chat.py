@@ -83,7 +83,7 @@ def load_model(args):
 
     dtype = torch.bfloat16 if torch.cuda.is_available() else torch.float32
     kwargs = {
-        "dtype": dtype,
+        "torch_dtype": dtype,
         "device_map": "auto",
         "low_cpu_mem_usage": True,
     }
