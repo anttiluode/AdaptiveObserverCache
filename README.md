@@ -160,28 +160,73 @@ pip install -r requirements-gate2.txt --extra-index-url https://download.pytorch
 python gate2_experiment.py
 ```
 
-## What Gate 2 does — and does not — establish
+## Gate 3 — freeze the observer, move the cache
 
-Gate 2 now has a real pretrained attention field:
+Gate 3 freezes the Gate-2 layer/head, the one-dimensional observer direction, and the two scalar read modes **before projecting any test prompt**. Seven new caches then receive only their ordinary pretrained q/K/V; no test-cache geometry is allowed to rebuild the observer.
+
+The transfer result is unexpectedly clean:
 
 ```text
-pretrained prompt -> natural hidden states -> natural projected K/V
-                                              |
-historical receipt -> scalar m -> query line -+
-                                              |
-                                              v
-                                      different read
+same-layout content changes     5 / 5 dual-success
+paraphrase / wording changes    2 / 2 dual-success
+all non-swapped transfer        7 / 7 dual-success
+
+mean worse target mass          0.9999948
+mean cos(local key axis, u_G2)  0.9441
+all projected test caches       unchanged
 ```
 
-The blind-test result demonstrates that an earlier calibration can persist as one scalar and materially alter later retrieval from unchanged pretrained K/V.
+So the Gate-2 coordinate is not merely a one-cache steering trick. Across these unseen prompts, the frozen A mode still puts essentially all attention on the first source span and the frozen B mode puts essentially all attention on the second.
 
-But the mechanism is still **cache-specific**. The source-address direction, selected head, and two useful scalar modes were calibrated on the same cache later used for testing. The B mode also lands exactly on the allowed `m=-4` boundary. That asymmetry is evidence, not decoration.
+### The order-swap attacker identifies the coordinate
 
-Therefore the next gate is transfer:
+Both order-swapped prompts fail **0 / 2**.
 
-> Freeze the selected head and observer mechanism on calibration caches, then move to different prompts/caches and forbid rebuilding the address mechanism there.
+When Bob is moved to the first source slot and Alice to the second, the local A→B key axis flips relative to the frozen Gate-2 direction:
 
-If it survives that, the object starts looking less like a clever local steering trick and more like a reusable observer state.
+```text
+vault order swap   cosine = -0.8748
+garden order swap  cosine = -0.8470
+```
+
+and the observer modes reverse which identity they retrieve.
+
+That changes the interpretation of the mechanism:
+
+```text
+not yet:  persistent "trust Alice / trust Bob" coordinate
+closer to: persistent "read source slot 1 / read source slot 2" coordinate
+```
+
+This is still useful. A stable address axis across content and paraphrase is exactly the sort of thing a persistent observer can exploit. But the next mechanism must bind **who/what occupies an address** separately from the positional read coordinate.
+
+See [GATE3_CONTRACT.md](GATE3_CONTRACT.md) and [RESULTS_GATE3.md](RESULTS_GATE3.md).
+
+Run:
+
+```bash
+python gate3_experiment.py
+```
+
+## Current boundary
+
+The chain now establishes:
+
+```text
+Gate 0  synthetic moving reader
+Gate 1  frozen attention moving query
+Gate 2  real pretrained K/V + persistent calibration state
+Gate 3  frozen read coordinate transfers across new caches,
+        but tracks source slot/order rather than source identity
+```
+
+The next gate should therefore **not** search another better steering vector. It should factor the problem:
+
+```text
+identity / provenance binding   +   reusable positional read coordinate
+```
+
+so that swapping source order changes the binding, not the meaning of the observer state.
 
 ## Relationship to recent repos
 

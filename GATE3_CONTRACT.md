@@ -16,7 +16,7 @@ The following are frozen **before any Gate-3 test prompt is projected**:
 - selected head `2`;
 - the 64-D observer direction `u`;
 - scalar A mode `m_A ~= +1.15`;
-- scalar B mode `m_B = -4.0`.
+- scalar B mode `m_B ~= -4.0` (the saturated lower-bound region; the current CI receipt selects the adjacent grid point `-3.95`).
 
 On a Gate-3 prompt:
 

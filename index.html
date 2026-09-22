@@ -29,6 +29,16 @@ code{color:#cbd5e1}.big{font-size:2rem;font-weight:800}.small{color:#8e99a7;font
 <h1>The memory stays.<br>The reader moves.</h1>
 <p class="lead">Keep historical material fixed. Let a tiny persistent state change how the transformer interrogates it.</p>
 
+
+<h2>Gate 3 — frozen coordinate on unseen caches <span class="pass">PASS</span></h2>
+<div class="grid">
+<section class="card"><div class="small">ordinary unseen transfer</div><div class="metric">7 / 7</div><p>Five content changes plus two paraphrases; frozen layer/head, direction and scalar modes.</p></section>
+<section class="card"><div class="small">order-swap attacker</div><div class="metric">0 / 2</div><p>Swapping source order reverses the read modes. The coordinate tracks source slot, not Alice/Bob identity.</p></section>
+<section class="card"><div class="small">mean target capture</div><div class="metric">99.999%</div><p>Mean of the worse intended-source mass across the seven transfer caches.</p></section>
+<section class="card"><div class="small">geometry transfer</div><div class="metric">cos 0.944</div><p>Mean unseen-cache local source-axis cosine to the frozen Gate-2 direction. Diagnostic only; never used to read.</p></section>
+</div>
+<p class="lead warn"><strong>Gate 3 tells us what the object is:</strong> a reusable first-source ↔ second-source read coordinate across content and paraphrase. It is not yet an order-invariant provenance-identity coordinate. The next gate must bind identity to address separately.</p>
+
 <h2>Gate 2 — pretrained DistilGPT2 K/V <span class="pass">PASS</span></h2>
 <div class="grid">
 <section class="card"><div class="small">blind adaptive reads</div><div class="metric">12 / 12</div><p>One calibration receipt, then three truth-free reads per block.</p></section>
@@ -36,7 +46,7 @@ code{color:#cbd5e1}.big{font-size:2rem;font-weight:800}.small{color:#8e99a7;font
 <section class="card"><div class="small">A observer mode</div><div class="metric">100% A</div><p><code>m = +1.15</code>; essentially all total attention lands on Alice's source span.</p></section>
 <section class="card"><div class="small">B observer mode</div><div class="metric">100% B</div><p><code>m = -4.00</code>; essentially all total attention lands on Bob's source span.</p></section>
 </div>
-<p class="lead warn"><strong>Important:</strong> the B mode hits the allowed scalar boundary, and the observer geometry is calibrated on this same cache. Gate 3 must freeze it and move to unseen prompts rather than rebuilding it.</p>
+<p class="lead warn"><strong>Gate 2 limitation resolved by Gate 3:</strong> the frozen coordinate transfers strongly to unseen non-swapped caches, but the order-swap attacker shows it is tied to source slot/layout rather than semantic identity.</p>
 
 <h2>Gate 1 — frozen synthetic attention bridge</h2>
 <div class="grid">

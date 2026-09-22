@@ -1,0 +1,45 @@
+{
+  "gate": 3,
+  "status": "pass",
+  "frozen_from_gate2": {
+    "model": "distilbert/distilgpt2",
+    "revision": "2290a62",
+    "layer": 3,
+    "head": 2,
+    "mode_A": 1.149999976158142,
+    "mode_B": -3.950000047683716,
+    "observer_direction_recomputed_on_test": false
+  },
+  "transfer": {
+    "same_layout": {
+      "success": 5,
+      "total": 5,
+      "rate": 1
+    },
+    "paraphrase": {
+      "success": 2,
+      "total": 2,
+      "rate": 1
+    },
+    "non_swapped": {
+      "success": 7,
+      "total": 7,
+      "rate": 1
+    },
+    "order_swap_diagnostic": {
+      "success": 0,
+      "total": 2,
+      "rate": 0
+    },
+    "mean_worst_target_mass": 0.999994797366006,
+    "mean_local_direction_cosine": 0.9441036326544625
+  },
+  "order_swap": {
+    "vault_local_direction_cosine": -0.8748066425323486,
+    "garden_local_direction_cosine": -0.8470160961151123
+  },
+  "integrity": {
+    "all_test_caches_unchanged": true
+  },
+  "interpretation": "Frozen observer transfers across content/paraphrase but tracks source slot/order rather than semantic source identity."
+}
