@@ -714,6 +714,19 @@ slow observer state persists across turns / restarts
 fast Qwen KV state grows token by token inside one live conversation
 ```
 
-The remaining scientific boundary is no longer "does the cache really grow?"
-but whether the identity-relative observer remains effective as the trusted
-source recedes hundreds or thousands of tokens into that same cache.
+The first successful second-turn run now answers the mechanical half. The same
+live cache grew from 131 to 160 tokens while the original source spans stayed at
+A=[45,62) and B=[72,87), cache/history lengths remained equal, and the
+session-level source-cache integrity check stayed true. An external B-sensor
+receipt moved anchored trust to m=-0.664 and selected-head attention strongly
+toward B (mean target mass 0.2532 versus 0.0362 for A), but the generated
+sentence still remained on A. That is a useful boundary rather than a pass:
+persistent cache + persistent observer is now real, while language-level
+control across distance is not yet established.
+
+See [RESULTS_QWEN_LIVE_CACHE.md](RESULTS_QWEN_LIVE_CACHE.md).
+
+The next discriminator is a matched distance-by-trust sweep on one live cache:
+hold sources and frozen heads fixed, grow temporal distance, and measure
+complete A-vs-B sequence likelihood at the same trust values. That separates
+distance decay from the already-observed decoding threshold.
