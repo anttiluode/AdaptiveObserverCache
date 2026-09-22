@@ -9,6 +9,7 @@ try:
         choose_observer_plan,
         locate_source_spans,
         minimum_norm_query_update,
+        tensor_digest,
     )
 except ImportError:
     torch = None
@@ -77,6 +78,10 @@ class QwenObserverGeometryTests(unittest.TestCase):
         )
         self.assertEqual(spans.source_a, (3, 8))
         self.assertEqual(spans.source_b, (12, 16))
+
+    def test_bfloat16_digest_is_supported(self):
+        x = torch.tensor([1.0, 2.0], dtype=torch.bfloat16)
+        self.assertEqual(tensor_digest(x), tensor_digest(x.clone()))
 
     def test_plan_prefers_head_that_can_engage_both_sources(self):
         # Two query heads share one KV head. Head 0 can be steered symmetrically;
