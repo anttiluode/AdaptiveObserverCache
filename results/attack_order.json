@@ -1,0 +1,244 @@
+{
+  "model": "Qwen/Qwen3-8B",
+  "frozen_heads": [
+    {
+      "layer": 24,
+      "query_head": 29
+    },
+    {
+      "layer": 24,
+      "query_head": 23
+    },
+    {
+      "layer": 30,
+      "query_head": 11
+    },
+    {
+      "layer": 18,
+      "query_head": 28
+    }
+  ],
+  "question": "Why did the device fail? Give the cause in one short sentence.",
+  "candidate_a": "The device failed because valve C was obstructed.",
+  "candidate_b": "The device failed because sensor K drifted.",
+  "candidate_a_tokens": 10,
+  "candidate_b_tokens": 8,
+  "trust_sweep": [
+    -1.0,
+    -0.75,
+    -0.5,
+    -0.25,
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "arms": {
+    "ab": {
+      "first_block": "A",
+      "rows": [
+        {
+          "trust": -1.0,
+          "ll_a": -1.155064239166677,
+          "ll_b": -0.7833209959789826,
+          "delta": -0.37174324318769436,
+          "generation": "The device failed because sensor K drifted.",
+          "observer": {
+            "reads": 36,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.41937911241418785,
+            "mean_other_mass": 0.01604525417658604,
+            "mean_query_update_ratio": 0.33720941640727337,
+            "max_query_update_ratio": 0.6244045416503778,
+            "capped_fraction": 0.0
+          }
+        },
+        {
+          "trust": -0.75,
+          "ll_a": -0.7077690993901342,
+          "ll_b": -0.955619977554278,
+          "delta": 0.24785087816414375
+        },
+        {
+          "trust": -0.5,
+          "ll_a": -0.32885446096770465,
+          "ll_b": -1.4866032020654245,
+          "delta": 1.1577487410977199
+        },
+        {
+          "trust": -0.25,
+          "ll_a": -0.04230520571582019,
+          "ll_b": -3.66730486135927,
+          "delta": 3.6249996556434496
+        },
+        {
+          "trust": 0.0,
+          "ll_a": -0.005241406382992864,
+          "ll_b": -11.205152842216165,
+          "delta": 11.199911435833172,
+          "generation": "The device failed because valve C was obstructed.",
+          "observer": {
+            "reads": 44,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.26450544701550494,
+            "mean_other_mass": 0.1177164812953296,
+            "mean_query_update_ratio": 0.0,
+            "max_query_update_ratio": 0.0,
+            "capped_fraction": 0.0
+          }
+        },
+        {
+          "trust": 0.25,
+          "ll_a": -0.00328570808051154,
+          "ll_b": -11.352784292538331,
+          "delta": 11.34949858445782
+        },
+        {
+          "trust": 0.5,
+          "ll_a": -0.003634506545495242,
+          "ll_b": -11.081977303119857,
+          "delta": 11.078342796574361
+        },
+        {
+          "trust": 0.75,
+          "ll_a": -0.002748724742559716,
+          "ll_b": -12.314302136746846,
+          "delta": 12.311553412004287
+        },
+        {
+          "trust": 1.0,
+          "ll_a": -0.003186484129400924,
+          "ll_b": -13.352998139638657,
+          "delta": 13.349811655509257,
+          "generation": "The device failed because valve C was obstructed.",
+          "observer": {
+            "reads": 44,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.45665841380303557,
+            "mean_other_mass": 0.035008485608903524,
+            "mean_query_update_ratio": 0.2307803740235401,
+            "max_query_update_ratio": 0.5093873519333638,
+            "capped_fraction": 0.0
+          }
+        }
+      ],
+      "slope": 7.909534282405059,
+      "delta_at_neutral": 11.199911435833172,
+      "zero_crossing": -0.8500053380200653
+    },
+    "ba": {
+      "first_block": "B",
+      "rows": [
+        {
+          "trust": -1.0,
+          "ll_a": -20.195984970778227,
+          "ll_b": -5.911121815442982,
+          "delta": -14.284863155335245,
+          "generation": "The device failed because sensor K drifted, as supported by the calibration log.",
+          "observer": {
+            "reads": 64,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.43465243343962356,
+            "mean_other_mass": 0.037381432091933675,
+            "mean_query_update_ratio": 0.2697761340495384,
+            "max_query_update_ratio": 0.5663436178248187,
+            "capped_fraction": 0.0
+          }
+        },
+        {
+          "trust": -0.75,
+          "ll_a": -18.70145077072084,
+          "ll_b": -5.184920608997288,
+          "delta": -13.516530161723551
+        },
+        {
+          "trust": -0.5,
+          "ll_a": -17.558834685012698,
+          "ll_b": -5.16730506718153,
+          "delta": -12.391529617831168
+        },
+        {
+          "trust": -0.25,
+          "ll_a": -15.722509341314435,
+          "ll_b": -4.962974108755532,
+          "delta": -10.759535232558903
+        },
+        {
+          "trust": 0.0,
+          "ll_a": -15.24542872607708,
+          "ll_b": -4.7423136681317715,
+          "delta": -10.503115057945308,
+          "generation": "The device failed because sensor K drifted, as supported by the calibration log.",
+          "observer": {
+            "reads": 64,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.11349951192823937,
+            "mean_other_mass": 0.2668686787801562,
+            "mean_query_update_ratio": 0.0,
+            "max_query_update_ratio": 0.0,
+            "capped_fraction": 0.0
+          }
+        },
+        {
+          "trust": 0.25,
+          "ll_a": -9.40610333159566,
+          "ll_b": -5.150554601102897,
+          "delta": -4.255548730492762
+        },
+        {
+          "trust": 0.5,
+          "ll_a": -7.7388159818947315,
+          "ll_b": -5.23326877131899,
+          "delta": -2.5055472105757417
+        },
+        {
+          "trust": 0.75,
+          "ll_a": -6.280575133860111,
+          "ll_b": -5.523133598246659,
+          "delta": -0.7574415356134523
+        },
+        {
+          "trust": 1.0,
+          "ll_a": -5.625710126012564,
+          "ll_b": -5.8628159237505315,
+          "delta": 0.2371057977379678,
+          "generation": "The device failed because sensor K drifted, as supported by the calibration log.",
+          "observer": {
+            "reads": 64,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.4831179064931348,
+            "mean_other_mass": 0.026543853153270902,
+            "mean_query_update_ratio": 0.4502125670754675,
+            "max_query_update_ratio": 0.7438077428683237,
+            "capped_fraction": 0.0
+          }
+        }
+      ],
+      "slope": 8.176072867146676,
+      "delta_at_neutral": -10.503115057945308,
+      "zero_crossing": 0.9403985638021446
+    }
+  },
+  "controls": {
+    "unpatched_ab": {
+      "ll_a": -0.006206911406479776,
+      "ll_b": -10.881632831878932,
+      "delta": 10.875425920472452
+    },
+    "unpatched_ba": {
+      "ll_a": -15.528323592618108,
+      "ll_b": -4.771221518516484,
+      "delta": -10.757102074101624
+    }
+  },
+  "verdict": {
+    "rule": "IDENTITY_COORDINATE",
+    "slope_ab": 7.909534282405059,
+    "slope_ba": 8.176072867146676,
+    "slope_ratio": 1.0336983917415388,
+    "neutral_delta_ab": 11.199911435833172,
+    "neutral_delta_ba": -10.503115057945308,
+    "neutral_swing": 21.70302649377848
+  }
+}
