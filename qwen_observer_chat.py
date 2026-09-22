@@ -10,6 +10,7 @@ every generation step.
 from __future__ import annotations
 
 import argparse
+import gc
 import json
 from pathlib import Path
 
@@ -277,6 +278,10 @@ def main():
     ]
 
     plan = calibrate(model, tokenizer, args, base_messages)
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+
     controller = QwenObserverController(
         model,
         plan,
