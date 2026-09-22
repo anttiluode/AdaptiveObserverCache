@@ -293,6 +293,50 @@ learned or inferred current binding
 reusable read coordinate
 ```
 
+## Gate 5 — arbitrary provenance keys
+
+Gate 4 still knew an Alice/Bob identity table. Gate 5 removes it.
+
+The slow state is now simply the token tuple copied from whichever source provenance field was selected during calibration:
+
+```text
+persistent arbitrary key
+        |
+        v
+generic key-equality binder
+        |
+        v
+current slot
+        |
+        v
+frozen positional read mode
+```
+
+The binder has no predefined identity vocabulary. Six new provenance pairs—Carol/Dave, Eve/Frank, Grace/Henry, Iris/Jack, Kira/Liam, and Mona/Nate—exercise twelve distinct persistent keys, each in both record orders.
+
+Receipt:
+
+```text
+families                           6
+cases                             12
+unique persistent keys            12
+identity-conditioned reads        24
+
+generic bound accuracy          1.00
+dual-success rate              1.00
+reversed-order dual success    1.00
+mean intended-source mass    0.97296
+
+static calibration-slot         0.50
+wrong persistent key            0.00
+```
+
+Every projected K/V cache remains unchanged.
+
+This is a more general binding primitive than Gate 4, but it is still symbolic: the same source must present the same provenance key. The obvious next attacker is **alias drift**—the same underlying source represented by a different surface key.
+
+See [GATE5_CONTRACT.md](GATE5_CONTRACT.md) and [RESULTS_GATE5.md](RESULTS_GATE5.md).
+
 ## Relationship to recent repos
 
 - **ReadWrite** — a state may be invisible until the right intervention/query is applied.

@@ -31,6 +31,16 @@ code{color:#cbd5e1}.big{font-size:2rem;font-weight:800}.small{color:#8e99a7;font
 
 
 
+
+<h2>Gate 5 — arbitrary provenance keys <span class="pass">PASS</span></h2>
+<div class="grid">
+<section class="card"><div class="small">generic bound reads</div><div class="metric">24 / 24</div><p>Twelve distinct provenance token tuples; no Alice/Bob identity table.</p></section>
+<section class="card"><div class="small">reversed-order cases</div><div class="metric">100%</div><p>Persistent key is rebound to its current slot before the frozen positional reader is applied.</p></section>
+<section class="card"><div class="small">mean target capture</div><div class="metric">97.30%</div><p>Absolute attention on the intended source across all generic-key reads.</p></section>
+<section class="card"><div class="small">wrong persistent key</div><div class="metric">0%</div><p>A valid but incorrect source key deterministically routes to the wrong record.</p></section>
+</div>
+<p class="lead warn"><strong>Current boundary:</strong> equality binding assumes the same source keeps the same provenance key. Alias/surface-form drift is the next attacker.</p>
+
 <h2>Gate 4 — identity is not address <span class="pass">PASS</span></h2>
 <div class="grid">
 <section class="card"><div class="small">bound identity reads</div><div class="metric">24 / 24</div><p>Persistent Alice/Bob state is rebound to the current source slot before using the frozen positional reader.</p></section>
