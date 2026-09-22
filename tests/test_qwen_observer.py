@@ -11,6 +11,7 @@ try:
         CausalHeadScore,
         HeadSelection,
         minimum_norm_query_update,
+        observer_candidates,
         select_causal_plan,
         tensor_digest,
     )
@@ -128,6 +129,43 @@ class QwenObserverGeometryTests(unittest.TestCase):
             [(h.layer, h.query_head) for h in plan.heads],
             [(24, 3), (30, 4)],
         )
+
+    def test_observer_candidates_exposes_same_ranked_pool_as_plan(self):
+        keys = torch.tensor(
+            [
+                [2.0, 0.0],
+                [1.5, 0.0],
+                [-2.0, 0.0],
+                [-1.5, 0.0],
+                [0.0, 4.0],
+            ],
+            dtype=torch.float32,
+        ).unsqueeze(0)
+        capture = CapturedGeometry(
+            layer=4,
+            query_states=torch.tensor(
+                [[0.0, 0.2], [0.0, 4.0]], dtype=torch.float32
+            ),
+            key_states=keys,
+            scaling=1.0,
+            num_key_value_groups=2,
+        )
+        spans = SourceSpans((0, 2), (2, 4))
+        candidates = observer_candidates(
+            {4: capture},
+            spans,
+            target_margin=3.0,
+            max_ratio=10.0,
+        )
+        plan = choose_observer_plan(
+            {4: capture},
+            spans,
+            target_margin=3.0,
+            max_ratio=10.0,
+            num_heads=2,
+        )
+        self.assertEqual(len(candidates), 2)
+        self.assertEqual(tuple(candidates), plan.heads)
 
     def test_plan_prefers_head_that_can_engage_both_sources(self):
         # Two query heads share one KV head. Head 0 can be steered symmetrically;
