@@ -161,3 +161,94 @@ persistent observer
 ```
 
 This bridge does not yet claim that composition.
+
+
+## First Qwen3-8B receipt: attention moved, answer did not
+
+The first real local run produced a useful dissociation.
+
+With four geometry-selected heads at layer 24:
+
+```text
+A trust:
+  mean intended-source mass  0.56876
+  mean other-source mass     0.03690
+  mean query update ratio    0.26343
+
+neutral:
+  mean A-source mass         0.35373
+  mean B-source mass         0.11909
+
+B trust:
+  mean intended-source mass  0.51965
+  mean other-source mass     0.03146
+  mean query update ratio    0.47282
+
+cache_integrity_ok = true in all three runs
+capped_fraction    = 0.0 in all three runs
+```
+
+Yet all three generated:
+
+```text
+The device failed because valve C was obstructed.
+```
+
+So the bridge passed the **read-control** test but failed the first
+**language-behavior** test.
+
+The important correction is:
+
+> geometry calibration found heads that are easy to aim at either source; it
+> did not establish that those heads are load-bearing for the answer.
+
+Do not respond by simply increasing `target_margin` or the perturbation cap.
+
+## Causal head selector
+
+`qwen_observer_causal_compare.py` adds a second calibration stage.
+
+Stage 1 keeps a small pool of heads that can be symmetrically aimed at both
+sources. To avoid selecting only one easy layer, the pool takes the best
+geometry-qualified heads **per candidate layer**.
+
+Stage 2 gives each candidate head a serial, identical-shape one-word task:
+
+```text
+Which component caused the failure?
+Answer with exactly one word: valve or sensor.
+```
+
+For each head it measures
+
+```text
+g_A = log p(valve) - log p(sensor)   under A-trust
+g_B = log p(valve) - log p(sensor)   under B-trust
+
+causal_swing = g_A - g_B
+```
+
+Only positive-swing heads are eligible. Negative-swing heads are not silently
+inverted. The A/B runs use the same prompt shape and the same patched attention
+implementation; only the observer sign changes.
+
+Stage 3 freezes the causally selected head identities and reruns the original
+free-generation A / neutral / B comparison.
+
+Run:
+
+```bash
+git pull
+python3.13 qwen_observer_causal_compare.py
+```
+
+The default pool is 4 heads per layer across layers 18, 24 and 30 (12 serial
+candidates, 24 causal probe forward passes). It writes:
+
+```text
+results/qwen_observer_causal_compare.json
+```
+
+This is deliberately closer to the J-space question: not merely *can this
+internal coordinate be changed?*, but *does changing it causally alter a
+downstream decision?*

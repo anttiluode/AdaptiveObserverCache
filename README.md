@@ -519,3 +519,17 @@ Windows kills the load, use `--gpu-memory 4GiB --cpu-memory 4GiB`.
 
 See [QWEN_OBSERVER_CHAT.md](QWEN_OBSERVER_CHAT.md) for the mechanism, controls,
 interactive commands, and interpretation boundary.
+
+
+### Qwen causal head selection
+
+The first Qwen3-8B chat receipt established strong query-level source control
+without a language-level answer change: A-trust drove selected-head attention
+to A, B-trust drove it to B, K-cache integrity held, and no perturbation hit
+the cap, but all three generations still chose the A explanation.
+
+That negative boundary is now explicit. The follow-up
+[`qwen_observer_causal_compare.py`](qwen_observer_causal_compare.py) selects
+heads by **downstream causal swing**, not by source-attention engagement alone,
+before rerunning the same conversational A / neutral / B comparison. See
+[QWEN_OBSERVER_CHAT.md](QWEN_OBSERVER_CHAT.md).
