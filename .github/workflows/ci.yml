@@ -67,3 +67,7 @@ jobs:
         run: python gate5_experiment.py
       - name: Run Gate 5 tests
         run: python -m unittest discover -s tests -p "test_gate5.py" -v
+      - name: Run Gate 6 alias-translation receipt
+        run: python gate6_experiment.py
+      - name: Run Gate 6 tests
+        run: python -m unittest discover -s tests -p "test_gate6.py" -v
