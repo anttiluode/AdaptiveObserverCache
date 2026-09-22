@@ -169,6 +169,24 @@ class QwenObserverGeometryTests(unittest.TestCase):
         self.assertEqual(len(candidates), 2)
         self.assertEqual(tuple(candidates), plan.heads)
 
+    def test_live_session_can_preserve_source_digest_baseline(self):
+        controller = QwenObserverController(
+            None,
+            ObserverPlan(heads=tuple()),
+        )
+        controller._generation_snapshots[(1, 2)] = ("a", "b")
+        controller.cache_integrity_ok = False
+        controller.begin_generation(preserve_source_baseline=True)
+        self.assertEqual(
+            controller._generation_snapshots[(1, 2)],
+            ("a", "b"),
+        )
+        self.assertFalse(controller.cache_integrity_ok)
+
+        controller.begin_generation()
+        self.assertEqual(controller._generation_snapshots, {})
+        self.assertTrue(controller.cache_integrity_ok)
+
     def test_query_start_mode_is_explicit_and_resettable(self):
         controller = QwenObserverController(
             None,
