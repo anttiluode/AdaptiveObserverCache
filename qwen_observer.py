@@ -316,6 +316,19 @@ def tensor_digest(tensor: Tensor) -> str:
     return sha256(raw).hexdigest()
 
 
+def _forward_storage(module) -> str:
+    """Return the forward slot that preserves Accelerate's device/offload hook.
+
+    Accelerate wraps module.forward and stores the real implementation in
+    _old_forward. Replacing forward directly would bypass its pre/post device
+    hooks on disk/CPU-offloaded models.
+    """
+
+    if hasattr(module, "_hf_hook") and hasattr(module, "_old_forward"):
+        return "_old_forward"
+    return "forward"
+
+
 @torch.inference_mode()
 def capture_qwen_geometry(
     model,
@@ -324,40 +337,63 @@ def capture_qwen_geometry(
     *,
     layers: Iterable[int],
 ) -> Dict[int, CapturedGeometry]:
-    """Capture current post-RoPE q/k geometry without changing model execution."""
+    """Capture current post-RoPE q/k geometry without changing model execution.
+
+    Capture wrappers are inserted *inside* any Accelerate offload wrapper, so
+    hidden states and layer weights are already on the execution device.
+    """
 
     captures: Dict[int, CapturedGeometry] = {}
-    handles = []
+    originals = []
 
     for layer_index in sorted(set(int(x) for x in layers)):
         attn = model.model.layers[layer_index].self_attn
+        storage = _forward_storage(attn)
+        original = getattr(attn, storage)
+        originals.append((attn, storage, original))
 
-        def hook(module, args, kwargs, layer_index=layer_index):
+        def wrapped_capture(
+            module,
+            *args,
+            _layer_index=layer_index,
+            _original=original,
+            **kwargs,
+        ):
             hidden_states = kwargs.get("hidden_states")
             if hidden_states is None and args:
                 hidden_states = args[0]
+
             position_embeddings = kwargs.get("position_embeddings")
+            if position_embeddings is None and len(args) > 1:
+                position_embeddings = args[1]
+
             if hidden_states is None or position_embeddings is None:
                 raise RuntimeError(
-                    "Qwen attention hook did not receive hidden_states/position_embeddings"
+                    "Qwen attention capture did not receive "
+                    "hidden_states/position_embeddings"
                 )
 
             input_shape = hidden_states.shape[:-1]
             hidden_shape = (*input_shape, -1, module.head_dim)
-            q = module.q_norm(module.q_proj(hidden_states).view(hidden_shape)).transpose(1, 2)
-            k = module.k_norm(module.k_proj(hidden_states).view(hidden_shape)).transpose(1, 2)
+            q = module.q_norm(
+                module.q_proj(hidden_states).view(hidden_shape)
+            ).transpose(1, 2)
+            k = module.k_norm(
+                module.k_proj(hidden_states).view(hidden_shape)
+            ).transpose(1, 2)
             cos, sin = position_embeddings
             q, k = apply_rope(q, k, cos, sin)
 
-            captures[layer_index] = CapturedGeometry(
-                layer=layer_index,
+            captures[_layer_index] = CapturedGeometry(
+                layer=_layer_index,
                 query_states=q[0, :, -1, :].detach().float().cpu(),
                 key_states=k[0].detach().float().cpu(),
                 scaling=float(module.scaling),
                 num_key_value_groups=int(module.num_key_value_groups),
             )
+            return _original(*args, **kwargs)
 
-        handles.append(attn.register_forward_pre_hook(hook, with_kwargs=True))
+        setattr(attn, storage, MethodType(wrapped_capture, attn))
 
     try:
         model(
@@ -367,8 +403,8 @@ def capture_qwen_geometry(
             return_dict=True,
         )
     finally:
-        for handle in handles:
-            handle.remove()
+        for attn, storage, original in originals:
+            setattr(attn, storage, original)
 
     missing = sorted(set(int(x) for x in layers) - set(captures))
     if missing:
@@ -402,7 +438,7 @@ class QwenObserverController:
         self.runtime_reads: List[RuntimeRead] = []
         self.cache_integrity_ok = True
         self._generation_snapshots: Dict[Tuple[int, int], Tuple[str, str]] = {}
-        self._original_forward: Dict[int, object] = {}
+        self._original_forward: Dict[int, Tuple[str, object]] = {}
         self._installed = False
 
     def set_trust(self, trust: float) -> None:
@@ -440,7 +476,11 @@ class QwenObserverController:
 
         for layer_index, selected_heads in grouped.items():
             attn = self.model.model.layers[layer_index].self_attn
-            self._original_forward[layer_index] = attn.forward
+            storage = _forward_storage(attn)
+            self._original_forward[layer_index] = (
+                storage,
+                getattr(attn, storage),
+            )
 
             def wrapped(
                 module,
@@ -601,15 +641,16 @@ class QwenObserverController:
                 attn_output = module.o_proj(attn_output)
                 return attn_output, None
 
-            attn.forward = MethodType(wrapped, attn)
+            setattr(attn, storage, MethodType(wrapped, attn))
 
         self._installed = True
 
     def uninstall(self) -> None:
         if not self._installed:
             return
-        for layer_index, original in self._original_forward.items():
-            self.model.model.layers[layer_index].self_attn.forward = original
+        for layer_index, (storage, original) in self._original_forward.items():
+            attn = self.model.model.layers[layer_index].self_attn
+            setattr(attn, storage, original)
         self._original_forward.clear()
         self._installed = False
 
