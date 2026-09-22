@@ -312,7 +312,16 @@ def choose_observer_plan(
 
 
 def tensor_digest(tensor: Tensor) -> str:
-    raw = tensor.detach().cpu().contiguous().numpy().tobytes()
+    # NumPy does not reliably expose torch.bfloat16.  View the exact storage
+    # bytes instead so the integrity check is dtype-agnostic and byte-exact.
+    raw = (
+        tensor.detach()
+        .cpu()
+        .contiguous()
+        .view(torch.uint8)
+        .numpy()
+        .tobytes()
+    )
     return sha256(raw).hexdigest()
 
 
