@@ -168,9 +168,12 @@ def user_turn_suffix_ids(tokenizer, user_text: str) -> List[int]:
     """
 
     anchor = "__AOC_PREVIOUS_ASSISTANT__"
-    anchor_messages = [{"role": "assistant", "content": anchor}]
-    full_messages = [
+    anchor_messages = [
+        {"role": "system", "content": "__AOC_TEMPLATE_SYSTEM__"},
+        {"role": "user", "content": "__AOC_TEMPLATE_USER__"},
         {"role": "assistant", "content": anchor},
+    ]
+    full_messages = anchor_messages + [
         {"role": "user", "content": user_text},
     ]
 
