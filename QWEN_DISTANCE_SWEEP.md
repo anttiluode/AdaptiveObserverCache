@@ -113,3 +113,24 @@ frozen causal actuator itself needs to generalize better.
 This experiment does **not** test PCA, PAC, entorhinal-style transverse sweeps,
 or GAx. Those remain unearned side hypotheses until this distance discriminator
 is resolved.
+
+
+## First run exposed a trajectory confound
+
+The first completed visible-filler receipt is now recorded in
+\`RESULTS_QWEN_DISTANCE_SWEEP.md\`.
+
+The observer did not fade at +280 tokens: the endpoint likelihood swing grew
+from about 0.425 to 1.719. However the neutral A-vs-B margin itself moved from
+about -0.950 to +2.313. The visible filler therefore changed the computational
+basin strongly enough that it cannot serve as a pure distance manipulation.
+
+The next discriminator is the masked positional control:
+
+\`\`\`bash
+python3.13 qwen_observer_masked_distance.py
+\`\`\`
+
+It creates cache rows that advance Qwen's cached position while remaining
+masked from all later attention. This separates readable intervening trajectory
+from positional age much more cleanly.
