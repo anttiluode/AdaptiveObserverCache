@@ -8,7 +8,10 @@ try:
         apply_rope,
         choose_observer_plan,
         locate_source_spans,
+        CausalHeadScore,
+        HeadSelection,
         minimum_norm_query_update,
+        select_causal_plan,
         tensor_digest,
     )
 except ImportError:
@@ -82,6 +85,49 @@ class QwenObserverGeometryTests(unittest.TestCase):
     def test_bfloat16_digest_is_supported(self):
         x = torch.tensor([1.0, 2.0], dtype=torch.bfloat16)
         self.assertEqual(tensor_digest(x), tensor_digest(x.clone()))
+
+
+    def test_causal_plan_uses_positive_swing_without_inverting_semantics(self):
+        base = dict(
+            kv_head=0,
+            symmetric_source_mass=0.4,
+            mass_when_a=0.5,
+            mass_when_b=0.5,
+            ratio_when_a=0.2,
+            ratio_when_b=0.2,
+        )
+        good = CausalHeadScore(
+            head=HeadSelection(layer=24, query_head=3, **base),
+            gap_when_a=0.8,
+            gap_when_b=-0.2,
+            causal_swing=1.0,
+            mean_update_ratio=0.2,
+            capped=False,
+        )
+        weak = CausalHeadScore(
+            head=HeadSelection(layer=30, query_head=4, **base),
+            gap_when_a=0.1,
+            gap_when_b=0.0,
+            causal_swing=0.1,
+            mean_update_ratio=0.1,
+            capped=False,
+        )
+        reversed_semantics = CausalHeadScore(
+            head=HeadSelection(layer=18, query_head=5, **base),
+            gap_when_a=-1.0,
+            gap_when_b=1.0,
+            causal_swing=-2.0,
+            mean_update_ratio=0.1,
+            capped=False,
+        )
+        plan = select_causal_plan(
+            [weak, reversed_semantics, good],
+            num_heads=2,
+        )
+        self.assertEqual(
+            [(h.layer, h.query_head) for h in plan.heads],
+            [(24, 3), (30, 4)],
+        )
 
     def test_plan_prefers_head_that_can_engage_both_sources(self):
         # Two query heads share one KV head. Head 0 can be steered symmetrically;

@@ -63,6 +63,16 @@ class HeadSelection:
 
 
 @dataclass(frozen=True)
+class CausalHeadScore:
+    head: HeadSelection
+    gap_when_a: float
+    gap_when_b: float
+    causal_swing: float
+    mean_update_ratio: float
+    capped: bool
+
+
+@dataclass(frozen=True)
 class ObserverPlan:
     heads: Tuple[HeadSelection, ...]
 
@@ -309,6 +319,42 @@ def choose_observer_plan(
         reverse=True,
     )
     return ObserverPlan(heads=tuple(candidates[: max(1, int(num_heads))]))
+
+
+
+def select_causal_plan(
+    scores: Sequence[CausalHeadScore],
+    *,
+    num_heads: int,
+    min_swing: float = 0.0,
+) -> ObserverPlan:
+    """Choose causally aligned heads after a serial A-vs-B output probe.
+
+    Geometry only says a head *can* be aimed at either source.  The causal
+    swing asks whether doing so actually moves the downstream answer
+    distribution in the same semantic direction.  Negative-swing heads are
+    never silently inverted.
+    """
+
+    eligible = [
+        score
+        for score in scores
+        if score.causal_swing > float(min_swing)
+    ]
+    eligible.sort(
+        key=lambda score: (
+            score.causal_swing,
+            not score.capped,
+            -score.mean_update_ratio,
+            score.head.symmetric_source_mass,
+        ),
+        reverse=True,
+    )
+    return ObserverPlan(
+        heads=tuple(
+            score.head for score in eligible[: max(1, int(num_heads))]
+        )
+    )
 
 
 def tensor_digest(tensor: Tensor) -> str:
