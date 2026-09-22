@@ -2,25 +2,23 @@
 
 ## Question
 
-Does the Gate-1 mechanism survive contact with a **real frozen pretrained
-transformer layer**?
+Can a one-scalar persistent observer steer a **real frozen pretrained
+attention reader** over unchanged naturally produced K/V, carrying an earlier
+calibration into later blind retrieval?
 
-Gate 2 may not manufacture Q/K/V tensors.  DistilGPT2 must produce the hidden
-states and projected Q/K/V from an actual tokenized prompt.  Once projected,
-K/V are frozen and reused byte-for-byte.
+Gate 2 may not manufacture Q/K/V tensors. DistilGPT2 produces all hidden
+states and projected Q/K/V from the tokenized prompt.
 
-The model is pinned to:
+Pinned model:
 
 ```text
 distilbert/distilgpt2
 revision 2290a62
 ```
 
-DistilGPT2 is used only as a frozen source of pretrained attention geometry.
+## Prompt and cache
 
-## Prompt
-
-The same exact prompt is used on every read:
+Every read uses the exact same prompt:
 
 ```text
  Alice reports the vault color red.
@@ -28,101 +26,107 @@ The same exact prompt is used on every read:
  Which report should be trusted for the vault color?
 ```
 
-The experiment knows the token spans belonging to Alice/source A and
-Bob/source B.  It does **not** rewrite those spans or the projected cache.
+A and B source spans are known provenance spans. Projected K/V are cloned once
+and then reused byte-for-byte for every experimental read.
 
-## Observer
+## One-dimensional observer
 
-For each pretrained attention head, Gate 2 looks at its naturally produced K
-vectors and derives the one-dimensional source-separation direction
+For each pretrained head, derive only one address direction:
 
 ```text
 u = normalize(mean(K_A) - mean(K_B))
 ```
 
-This does not say which source is trusted.  It only gives the local address
-axis already available in that cache.
-
-For every head, the experiment computes the smallest perturbation that would
-create a +/-4 difference between the *mean* source logits:
+The observer can move only along that line:
 
 ```text
-q' = q_pretrained + m * strength * u
+q' = q_pretrained + m * ||q_pretrained|| * u
 ```
 
-The chosen head is the one requiring the smallest perturbation relative to
-its natural query norm.  This selection rule is frozen before the schedule is
-run and never sees the trusted-source labels.
-
-The observer state is one scalar:
+with
 
 ```text
-m = +1  -> A direction
-m =  0  -> ordinary pretrained query
-m = -1  -> B direction
+-4 <= m <= +4
 ```
 
-Gate 2 fails if the selected perturbation is more than 4x the natural query
-norm.
+A fixed 161-point grid is searched for every real pretrained head.
+
+For each head:
+
+- `m_A` is the grid point maximizing **absolute total attention mass on A**;
+- `m_B` is the grid point maximizing **absolute total attention mass on B**.
+
+The selected head maximizes:
+
+```text
+min(attention_mass_A(m_A), attention_mass_B(m_B))
+```
+
+This search sees source addresses but never sees the future trusted-source
+schedule.
+
+## Why absolute mass is required
+
+An earlier version of Gate 2 used only normalized A-vs-B share. It passed, but
+inspection exposed a loophole: B could win almost all of the A-vs-B share
+while both source spans received essentially zero total attention.
+
+That is not retrieval.
+
+The hardened gate therefore requires both modes to **engage the intended
+source in the full attention distribution**.
 
 ## Calibration protocol
 
-The trusted source alternates by four-read block:
+Trusted source blocks:
 
 ```text
 AAAA BBBB AAAA BBBB
 ```
 
-The first read of each block is a **calibration read**.
+Each four-read block has:
 
-Only after that read is complete, the environment reveals whether A or B is
-trusted.  The adaptive observer may store that receipt in `m`.
+1. one calibration read;
+2. only after that read, reveal trusted source A or B;
+3. store `m_A` or `m_B` in the scalar persistent observer;
+4. three blind reads with no truth signal and no further update.
 
-The next three reads are blind test reads:
+Thus all blind test reads have:
 
-- exact same prompt;
-- exact same projected K/V;
-- no truth signal;
-- one read each;
-- no observer update.
-
-Therefore the test asks whether information from an earlier calibration can
-change later retrieval without changing memory.
+- identical prompt;
+- identical pretrained K/V;
+- one attention read;
+- no current truth;
+- only historical observer state differs.
 
 ## Attackers
 
-All attackers get the same prompt, pretrained cache, and one-read budget.
-
-1. best fixed observer from `m = -1, 0, +1`;
-2. ordinary pretrained query is explicitly `m = 0`;
-3. reset control receives each calibration but erases observer state before
-   every blind test read.
+1. best fixed reader among `m_B, 0, m_A`;
+2. ordinary pretrained query `m=0`;
+3. reset control: receives calibration but erases `m` before every blind read.
 
 ## Pass boundary
 
 Gate 2 passes only if:
 
-1. `m=+1` sends at least 80% of A-vs-B source attention share to A;
-2. `m=-1` sends at least 80% to B;
-3. the two modes produce different attention outputs;
-4. observer perturbation norm <= 4x the natural query norm;
-5. adaptive blind-test accuracy >= 0.90;
-6. adaptive beats the best fixed observer by >= 0.30 absolute;
-7. reset-observer control <= 0.60;
-8. projected K/V digest is identical before/after.
+1. A mode puts >=20% of **all attention** on source A;
+2. B mode puts >=20% of **all attention** on source B;
+3. A mode gives >=80% of A-vs-B source share to A;
+4. B mode gives >=80% of A-vs-B source share to B;
+5. both mode states stay within `|m| <= 4`;
+6. the two modes produce different attention outputs;
+7. adaptive blind-test accuracy >=0.90;
+8. adaptive beats best fixed by >=0.30 absolute;
+9. reset control <=0.60;
+10. projected K/V digest is identical before/after.
 
 ## Interpretation boundary
 
-A pass does **not** show that DistilGPT2 spontaneously learned an adaptive
-observer, nor that this improves language-model generation.
+A pass does **not** mean DistilGPT2 learned this observer, and does not yet
+show better language generation.
 
-The address direction is extracted from the current cache using known source
-spans.  Gate 2 asks a narrower question:
+The head and two scalar states are calibrated on the same cache later used for
+testing. Gate 2 establishes a pretrained-attention mechanism only.
 
-> Can a one-scalar persistent state steer a real pretrained attention reader
-> over unchanged natural K/V, carrying an earlier calibration into later
-> retrieval?
-
-A pass earns Gate 3: the observer/address mechanism must transfer across
-different prompts or content rather than being rebuilt and tested on one
-identical cache.
+A pass earns Gate 3: **freeze the observer address mechanism on calibration
+prompts, then test it on different prompts/caches where it may not be rebuilt.**

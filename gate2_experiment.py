@@ -1,8 +1,7 @@
-"""Gate 2: real pretrained hidden states/KV, persistent query observer.
+"""Gate 2: real pretrained K/V, persistent scalar query observer.
 
-Each block has one calibration read followed by three blind test reads.
-Only the calibration read reveals which provenance is trusted.  The prompt,
-pretrained K/V, and query base are identical on every trial.
+One calibration read per block may update the observer.  The next three reads
+are blind and must reuse the exact same prompt and projected K/V.
 """
 
 from __future__ import annotations
@@ -12,6 +11,8 @@ import json
 import torch
 
 from pretrained_observer import (
+    MAX_PERTURBATION_RATIO,
+    OBSERVER_GRID_STEPS,
     build_fixture,
     cache_digest,
     read,
@@ -20,54 +21,40 @@ from pretrained_observer import (
 
 BLOCKS = ("A", "B", "A", "B")
 READS_PER_BLOCK = 4
-FIXED_OBSERVERS = (-1.0, 0.0, 1.0)
 
 
-def _observer_for(source: str) -> float:
-    return 1.0 if source == "A" else -1.0
+def _observer_for(fixture, source: str) -> float:
+    return (
+        fixture.mode_a.state
+        if source == "A"
+        else fixture.mode_b.state
+    )
 
 
 def run_fixed(fixture, observer: float):
     test_correct = 0
     test_total = 0
     all_correct = 0
-    rows = []
 
-    for block_index, trusted in enumerate(BLOCKS):
+    for trusted in BLOCKS:
         for offset in range(READS_PER_BLOCK):
             result = read(fixture, observer)
             correct = result.prediction == trusted
             all_correct += int(correct)
-
-            is_calibration = offset == 0
-            if not is_calibration:
+            if offset != 0:
                 test_total += 1
                 test_correct += int(correct)
-
-            rows.append(
-                {
-                    "block": block_index,
-                    "offset": offset,
-                    "trusted": trusted,
-                    "calibration": is_calibration,
-                    "observer": observer,
-                    "prediction": result.prediction,
-                    "source_share_A": result.source_share_a,
-                    "correct": correct,
-                }
-            )
 
     return {
         "observer": observer,
         "test_accuracy": test_correct / test_total,
-        "all_read_accuracy": all_correct / (len(BLOCKS) * READS_PER_BLOCK),
-        "rows": rows,
+        "all_read_accuracy": all_correct / (
+            len(BLOCKS) * READS_PER_BLOCK
+        ),
     }
 
 
 def run_adaptive(fixture):
-    # Neutral at the very beginning.  Only a calibration receipt can set the
-    # persistent observer for subsequent blind reads.
     observer = 0.0
     test_correct = 0
     test_total = 0
@@ -84,9 +71,8 @@ def run_adaptive(fixture):
             observer_after = observer
 
             if is_calibration:
-                # Truth arrives strictly after this read and is then carried
-                # forward.  No later read in the block receives truth.
-                observer_after = _observer_for(trusted)
+                # Receipt arrives only after this read.
+                observer_after = _observer_for(fixture, trusted)
             else:
                 test_total += 1
                 test_correct += int(correct)
@@ -97,12 +83,14 @@ def run_adaptive(fixture):
                     "offset": offset,
                     "trusted": trusted,
                     "calibration": is_calibration,
-                    "feedback_visible_after_read": trusted
-                    if is_calibration
-                    else None,
+                    "feedback_visible_after_read": (
+                        trusted if is_calibration else None
+                    ),
                     "observer_before": observer,
                     "observer_after": observer_after,
                     "prediction": result.prediction,
+                    "mass_A": result.mass_a,
+                    "mass_B": result.mass_b,
                     "source_share_A": result.source_share_a,
                     "correct": correct,
                 }
@@ -111,20 +99,20 @@ def run_adaptive(fixture):
 
     return {
         "test_accuracy": test_correct / test_total,
-        "all_read_accuracy": all_correct / (len(BLOCKS) * READS_PER_BLOCK),
+        "all_read_accuracy": all_correct / (
+            len(BLOCKS) * READS_PER_BLOCK
+        ),
         "test_reads": test_total,
         "rows": rows,
     }
 
 
 def run_reset_control(fixture):
-    """Calibration exists, but state is erased before every blind test read."""
-
     test_correct = 0
     test_total = 0
+
     for trusted in BLOCKS:
-        # Calibration read; receipt is intentionally discarded.
-        read(fixture, 0.0)
+        read(fixture, 0.0)  # calibration read, then erase state
         for _ in range(READS_PER_BLOCK - 1):
             result = read(fixture, 0.0)
             test_total += 1
@@ -137,12 +125,17 @@ def build_receipt():
     fixture = build_fixture()
     cache_before = cache_digest(fixture.cache)
 
-    plus = read(fixture, +1.0)
+    mode_a = read(fixture, fixture.mode_a.state)
     neutral = read(fixture, 0.0)
-    minus = read(fixture, -1.0)
+    mode_b = read(fixture, fixture.mode_b.state)
 
+    fixed_states = (
+        fixture.mode_b.state,
+        0.0,
+        fixture.mode_a.state,
+    )
     fixed = [
-        run_fixed(fixture, observer) for observer in FIXED_OBSERVERS
+        run_fixed(fixture, observer) for observer in fixed_states
     ]
     best_fixed = max(item["test_accuracy"] for item in fixed)
     adaptive = run_adaptive(fixture)
@@ -151,15 +144,18 @@ def build_receipt():
     cache_after = cache_digest(fixture.cache)
 
     output_distance = float(
-        torch.linalg.vector_norm(plus.output - minus.output)
+        torch.linalg.vector_norm(mode_a.output - mode_b.output)
     )
     fixed_advantage = adaptive["test_accuracy"] - best_fixed
 
     geometry_pass = (
-        plus.source_share_a >= 0.80
-        and minus.source_share_a <= 0.20
+        mode_a.mass_a >= 0.20
+        and mode_b.mass_b >= 0.20
+        and mode_a.source_share_a >= 0.80
+        and mode_b.source_share_a <= 0.20
         and output_distance > 1e-6
-        and fixture.perturbation_ratio <= 4.0
+        and abs(fixture.mode_a.state) <= MAX_PERTURBATION_RATIO
+        and abs(fixture.mode_b.state) <= MAX_PERTURBATION_RATIO
     )
     integrity_pass = cache_before == cache_after
     persistence_pass = (
@@ -186,37 +182,53 @@ def build_receipt():
         },
         "tokens": list(fixture.tokens),
         "observer": {
-            "equation": "q' = q_pretrained + m * strength * u",
+            "equation": "q' = q_pretrained + m * ||q|| * u",
             "rank": 1,
-            "target_mean_logit_margin": 4.0,
-            "strength": fixture.observer_strength,
-            "perturbation_to_base_query_norm": fixture.perturbation_ratio,
-            "base_source_logit_delta": fixture.base_source_logit_delta,
-            "unit_source_logit_delta": fixture.unit_source_logit_delta,
+            "max_abs_state": MAX_PERTURBATION_RATIO,
+            "grid_steps": OBSERVER_GRID_STEPS,
+            "mode_A": {
+                "state": fixture.mode_a.state,
+                "target_mass_from_search": fixture.mode_a.target_mass,
+                "source_share_A_from_search": (
+                    fixture.mode_a.source_share_a
+                ),
+            },
+            "mode_B": {
+                "state": fixture.mode_b.state,
+                "target_mass_from_search": fixture.mode_b.target_mass,
+                "source_share_A_from_search": (
+                    fixture.mode_b.source_share_a
+                ),
+            },
+            "symmetric_target_capture": fixture.symmetric_capture,
             "head_selection": (
-                "choose the pretrained layer/head requiring the smallest "
-                "observer perturbation, relative to its natural query norm, "
-                "to create +/-4 mean source-logit separation"
+                "for each pretrained head, derive u from the natural "
+                "source-key mean difference; search the fixed scalar grid "
+                "for the A-mass-maximizing and B-mass-maximizing states; "
+                "choose the head maximizing the worse absolute target mass"
             ),
         },
         "paired_same_prompt_same_KV": {
-            "m_plus_1": {
-                "prediction": plus.prediction,
-                "mass_A": plus.mass_a,
-                "mass_B": plus.mass_b,
-                "source_share_A": plus.source_share_a,
+            "mode_A": {
+                "observer": fixture.mode_a.state,
+                "prediction": mode_a.prediction,
+                "mass_A": mode_a.mass_a,
+                "mass_B": mode_a.mass_b,
+                "source_share_A": mode_a.source_share_a,
             },
-            "m_0": {
+            "neutral": {
+                "observer": 0.0,
                 "prediction": neutral.prediction,
                 "mass_A": neutral.mass_a,
                 "mass_B": neutral.mass_b,
                 "source_share_A": neutral.source_share_a,
             },
-            "m_minus_1": {
-                "prediction": minus.prediction,
-                "mass_A": minus.mass_a,
-                "mass_B": minus.mass_b,
-                "source_share_A": minus.source_share_a,
+            "mode_B": {
+                "observer": fixture.mode_b.state,
+                "prediction": mode_b.prediction,
+                "mass_A": mode_b.mass_a,
+                "mass_B": mode_b.mass_b,
+                "source_share_A": mode_b.source_share_a,
             },
             "attention_output_l2_between_modes": output_distance,
         },
@@ -240,6 +252,9 @@ def build_receipt():
             "cache_unchanged": cache_before == cache_after,
         },
         "checks": {
+            "absolute_source_engagement_pass": (
+                mode_a.mass_a >= 0.20 and mode_b.mass_b >= 0.20
+            ),
             "geometry_pass": geometry_pass,
             "integrity_pass": integrity_pass,
             "persistence_pass": persistence_pass,

@@ -1,9 +1,10 @@
-"""Gate 2: observer-modulated query over real pretrained DistilGPT2 K/V.
+"""Gate 2: persistent 1-D observer over real pretrained DistilGPT2 K/V.
 
-The pretrained model produces the hidden states and projected Q/K/V.  After the
-cache is materialized, every experimental read reuses exactly the same K/V.
-Only a scalar persistent observer changes the final-token query of one frozen
-attention head.
+DistilGPT2 produces every hidden state and Q/K/V tensor.  The experiment then
+freezes one head's projected K/V.  A scalar observer moves the final-token
+query only along a source-address direction extracted from that frozen cache.
+
+Gate 2 is deliberately cache-specific.  Gate 3 must test transfer.
 """
 
 from __future__ import annotations
@@ -21,7 +22,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 MODEL_ID = "distilbert/distilgpt2"
 MODEL_REVISION = "2290a62"
-TARGET_MEAN_LOGIT_MARGIN = 4.0
+MAX_PERTURBATION_RATIO = 4.0
+OBSERVER_GRID_STEPS = 161
 
 
 @dataclass(frozen=True)
@@ -34,6 +36,13 @@ class NaturalCache:
 
 
 @dataclass(frozen=True)
+class ObserverMode:
+    state: float
+    target_mass: float
+    source_share_a: float
+
+
+@dataclass(frozen=True)
 class PretrainedObserverFixture:
     model_id: str
     revision: str
@@ -42,11 +51,11 @@ class PretrainedObserverFixture:
     head: int
     head_dim: int
     query_base: Tensor
+    query_norm: float
     observer_direction: Tensor
-    observer_strength: float
-    perturbation_ratio: float
-    base_source_logit_delta: float
-    unit_source_logit_delta: float
+    mode_a: ObserverMode
+    mode_b: ObserverMode
+    symmetric_capture: float
     cache: NaturalCache
     parameter_digest: str
     tokens: Tuple[str, ...]
@@ -91,8 +100,6 @@ def module_parameter_digest(module) -> str:
 
 
 def _split_heads(x: Tensor, n_head: int) -> Tensor:
-    if x.ndim != 2:
-        raise ValueError("expected [sequence, hidden] projection")
     seq, width = x.shape
     if width % n_head:
         raise ValueError("hidden width must divide evenly across heads")
@@ -104,10 +111,29 @@ def _source_mean(keys: Tensor, span: Tuple[int, int]) -> Tensor:
     return keys[start:stop].mean(dim=0)
 
 
-def _source_delta(query: Tensor, keys: Tensor, a, b) -> float:
-    mean_a = _source_mean(keys, a)
-    mean_b = _source_mean(keys, b)
-    return float(torch.dot(query, mean_a - mean_b) / sqrt(query.numel()))
+@torch.no_grad()
+def _read_raw(
+    query_base: Tensor,
+    query_norm: float,
+    direction: Tensor,
+    keys: Tensor,
+    values: Tensor,
+    source_a: Tuple[int, int],
+    source_b: Tuple[int, int],
+    observer: float,
+):
+    query = query_base + float(observer) * query_norm * direction
+    scores = keys @ query / sqrt(query.numel())
+    weights = torch.softmax(scores, dim=0)
+    output = weights @ values
+
+    a0, a1 = source_a
+    b0, b1 = source_b
+    mass_a = float(weights[a0:a1].sum())
+    mass_b = float(weights[b0:b1].sum())
+    source_total = mass_a + mass_b
+    share_a = mass_a / source_total if source_total > 0.0 else 0.5
+    return query, weights, output, mass_a, mass_b, share_a
 
 
 @lru_cache(maxsize=1)
@@ -129,7 +155,6 @@ def build_fixture() -> PretrainedObserverFixture:
     for parameter in model.parameters():
         parameter.requires_grad_(False)
 
-    # Pieces are tokenized independently so the two provenance spans are exact.
     source_a_text = " Alice reports the vault color red."
     source_b_text = " Bob reports the vault color blue."
     query_text = " Which report should be trusted for the vault color?"
@@ -156,13 +181,19 @@ def build_fixture() -> PretrainedObserverFixture:
     n_embd = int(config.n_embd)
     head_dim = n_embd // n_head
 
-    # Head selection is geometry-only.  For every real pretrained head, derive
-    # the source-separation direction from its natural K vectors, compute how
-    # large a query perturbation would be needed to guarantee a +/-4 difference
-    # between the *mean* source logits, and choose the head requiring the
-    # smallest perturbation relative to its natural query norm.
+    grid = torch.linspace(
+        -MAX_PERTURBATION_RATIO,
+        MAX_PERTURBATION_RATIO,
+        OBSERVER_GRID_STEPS,
+    )
+
+    # Search is blind to the future trusted-source schedule.  It knows only
+    # which token spans are provenance A and B.  For each real pretrained head,
+    # the address direction is the normalized K-mean difference.  Along that
+    # single line, find the scalar state that maximizes absolute attention mass
+    # on A and the state that maximizes absolute mass on B.  Choose the head
+    # whose worse mode captures the most target attention.
     candidates = []
-    cached_projections = {}
 
     with torch.no_grad():
         for layer_index, block in enumerate(model.transformer.h):
@@ -174,59 +205,85 @@ def build_fixture() -> PretrainedObserverFixture:
             k_heads = _split_heads(k_all, n_head)
             v_heads = _split_heads(v_all, n_head)
 
-            cached_projections[layer_index] = (q_heads, k_heads, v_heads)
-
             for head_index in range(n_head):
-                keys = k_heads[:, head_index, :]
-                query = q_heads[-1, head_index, :]
+                keys = k_heads[:, head_index, :].detach().clone()
+                values = v_heads[:, head_index, :].detach().clone()
+                query_base = q_heads[-1, head_index, :].detach().clone()
+                query_norm = float(torch.linalg.vector_norm(query_base))
+                if query_norm <= 1e-8:
+                    continue
+
                 mean_gap = _source_mean(keys, source_a) - _source_mean(
                     keys, source_b
                 )
                 gap_norm = float(torch.linalg.vector_norm(mean_gap))
                 if gap_norm <= 1e-8:
                     continue
-
                 direction = mean_gap / gap_norm
-                base_delta = _source_delta(
-                    query, keys, source_a, source_b
-                )
-                unit_delta = float(
-                    torch.dot(direction, mean_gap) / sqrt(head_dim)
-                )
-                strength = (
-                    abs(base_delta) + TARGET_MEAN_LOGIT_MARGIN
-                ) / unit_delta
-                q_norm = float(torch.linalg.vector_norm(query))
-                ratio = strength / max(q_norm, 1e-8)
+
+                best_a = None
+                best_b = None
+
+                for state_tensor in grid:
+                    state = float(state_tensor)
+                    (
+                        _query,
+                        _weights,
+                        _output,
+                        mass_a,
+                        mass_b,
+                        share_a,
+                    ) = _read_raw(
+                        query_base,
+                        query_norm,
+                        direction,
+                        keys,
+                        values,
+                        source_a,
+                        source_b,
+                        state,
+                    )
+
+                    if best_a is None or mass_a > best_a[0]:
+                        best_a = (mass_a, state, share_a)
+                    if best_b is None or mass_b > best_b[0]:
+                        best_b = (mass_b, state, share_a)
+
+                assert best_a is not None and best_b is not None
+                symmetric_capture = min(best_a[0], best_b[0])
+
                 candidates.append(
                     (
-                        ratio,
+                        symmetric_capture,
+                        -max(abs(best_a[1]), abs(best_b[1])),
                         layer_index,
                         head_index,
-                        strength,
-                        base_delta,
-                        unit_delta,
+                        query_base,
+                        query_norm,
                         direction.detach().clone(),
+                        keys,
+                        values,
+                        best_a,
+                        best_b,
                     )
                 )
 
     if not candidates:
-        raise RuntimeError("no pretrained attention head separated the sources")
+        raise RuntimeError("no usable pretrained attention heads")
 
     (
-        ratio,
+        symmetric_capture,
+        _negative_max_state,
         layer_index,
         head_index,
-        strength,
-        base_delta,
-        unit_delta,
+        query_base,
+        query_norm,
         direction,
-    ) = min(candidates, key=lambda item: item[0])
-
-    q_heads, k_heads, v_heads = cached_projections[layer_index]
-    query_base = q_heads[-1, head_index, :].detach().clone()
-    keys = k_heads[:, head_index, :].detach().clone()
-    values = v_heads[:, head_index, :].detach().clone()
+        keys,
+        values,
+        best_a,
+        best_b,
+    ) = max(candidates, key=lambda item: (item[0], item[1]))
 
     cache = NaturalCache(
         keys=keys,
@@ -238,9 +295,17 @@ def build_fixture() -> PretrainedObserverFixture:
 
     target_attention = model.transformer.h[layer_index].attn
     param_digest = module_parameter_digest(target_attention)
+    tokens = tuple(tokenizer.convert_ids_to_tokens(list(cache.input_ids)))
 
-    tokens = tuple(
-        tokenizer.convert_ids_to_tokens(list(cache.input_ids))
+    mode_a = ObserverMode(
+        state=float(best_a[1]),
+        target_mass=float(best_a[0]),
+        source_share_a=float(best_a[2]),
+    )
+    mode_b = ObserverMode(
+        state=float(best_b[1]),
+        target_mass=float(best_b[0]),
+        source_share_a=float(best_b[2]),
     )
 
     return PretrainedObserverFixture(
@@ -251,11 +316,11 @@ def build_fixture() -> PretrainedObserverFixture:
         head=head_index,
         head_dim=head_dim,
         query_base=query_base,
+        query_norm=query_norm,
         observer_direction=direction,
-        observer_strength=float(strength),
-        perturbation_ratio=float(ratio),
-        base_source_logit_delta=float(base_delta),
-        unit_source_logit_delta=float(unit_delta),
+        mode_a=mode_a,
+        mode_b=mode_b,
+        symmetric_capture=float(symmetric_capture),
         cache=cache,
         parameter_digest=param_digest,
         tokens=tokens,
@@ -267,27 +332,24 @@ def read(
     fixture: PretrainedObserverFixture,
     observer: float,
 ) -> PretrainedRead:
-    cache = fixture.cache
-    query = (
-        fixture.query_base
-        + float(observer)
-        * fixture.observer_strength
-        * fixture.observer_direction
+    (
+        query,
+        weights,
+        output,
+        mass_a,
+        mass_b,
+        source_share_a,
+    ) = _read_raw(
+        fixture.query_base,
+        fixture.query_norm,
+        fixture.observer_direction,
+        fixture.cache.keys,
+        fixture.cache.values,
+        fixture.cache.source_a,
+        fixture.cache.source_b,
+        observer,
     )
 
-    scores = cache.keys @ query / sqrt(fixture.head_dim)
-    weights = torch.softmax(scores, dim=0)
-    output = weights @ cache.values
-
-    a0, a1 = cache.source_a
-    b0, b1 = cache.source_b
-    mass_a = float(weights[a0:a1].sum())
-    mass_b = float(weights[b0:b1].sum())
-    source_total = mass_a + mass_b
-    if source_total <= 0.0:
-        raise RuntimeError("source spans received zero attention mass")
-
-    source_share_a = mass_a / source_total
     prediction = "A" if source_share_a >= 0.5 else "B"
 
     return PretrainedRead(
