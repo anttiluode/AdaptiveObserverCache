@@ -1,17 +1,20 @@
 import unittest
 
-import torch
+try:
+    import torch
+    from qwen_observer import (
+        CapturedGeometry,
+        SourceSpans,
+        apply_rope,
+        choose_observer_plan,
+        locate_source_spans,
+        minimum_norm_query_update,
+    )
+except ImportError:
+    torch = None
 
-from qwen_observer import (
-    CapturedGeometry,
-    SourceSpans,
-    apply_rope,
-    choose_observer_plan,
-    locate_source_spans,
-    minimum_norm_query_update,
-)
 
-
+@unittest.skipIf(torch is None, "Qwen observer geometry tests require PyTorch")
 class QwenObserverGeometryTests(unittest.TestCase):
     def test_minimum_update_hits_positive_margin(self):
         q = torch.tensor([0.0, 1.0], dtype=torch.float64)
@@ -91,7 +94,7 @@ class QwenObserverGeometryTests(unittest.TestCase):
         capture = CapturedGeometry(
             layer=4,
             query_states=torch.tensor(
-                [[0.0, 0.0], [0.0, 4.0]], dtype=torch.float32
+                [[0.0, 0.2], [0.0, 4.0]], dtype=torch.float32
             ),
             key_states=keys,
             scaling=1.0,
