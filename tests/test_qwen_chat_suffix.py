@@ -22,8 +22,8 @@ class MappingTokenizer:
     ):
         self.assert_shape(messages, add_generation_prompt)
         if len(messages) == 3:
-            return {"input_ids": [10, 11, 99]}
-        return {"input_ids": [10, 11, 99, 20, 21]}
+            return {"input_ids": [10, 99, 11, 99, 12, 99]}
+        return {"input_ids": [10, 99, 11, 99, 12, 99, 20, 99, 21]}
 
     @staticmethod
     def assert_shape(messages, add_generation_prompt):
@@ -32,6 +32,26 @@ class MappingTokenizer:
         else:
             assert len(messages) == 4
             assert add_generation_prompt
+
+
+class NonPrefixTokenizer(MappingTokenizer):
+    def apply_chat_template(
+        self,
+        messages,
+        *,
+        tokenize,
+        add_generation_prompt,
+        enable_thinking=False,
+    ):
+        self.assert_shape(messages, add_generation_prompt)
+        if len(messages) == 3:
+            # Three completed synthetic messages.
+            return {"input_ids": [10, 99, 11, 99, 12, 99]}
+        # Deliberately change the earlier tokenization while preserving the
+        # three message-boundary terminators before the new user turn.
+        return {
+            "input_ids": [1010, 99, 1111, 99, 1212, 99, 20, 99, 21]
+        }
 
 
 class ChatSuffixTests(unittest.TestCase):
@@ -51,7 +71,14 @@ class ChatSuffixTests(unittest.TestCase):
         tokenizer = MappingTokenizer()
         self.assertEqual(
             user_turn_suffix_ids(tokenizer, "Why did it fail?"),
-            [20, 21],
+            [20, 99, 21],
+        )
+
+    def test_suffix_does_not_require_prefix_stability(self):
+        tokenizer = NonPrefixTokenizer()
+        self.assertEqual(
+            user_turn_suffix_ids(tokenizer, "Why did it fail?"),
+            [20, 99, 21],
         )
 
     def test_mapping_without_input_ids_fails_cleanly(self):
