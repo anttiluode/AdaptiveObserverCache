@@ -533,3 +533,63 @@ That negative boundary is now explicit. The follow-up
 heads by **downstream causal swing**, not by source-attention engagement alone,
 before rerunning the same conversational A / neutral / B comparison. See
 [QWEN_OBSERVER_CHAT.md](QWEN_OBSERVER_CHAT.md).
+
+
+### First Qwen language-level switch
+
+The causal selector produced the first language-level AOC switch on frozen
+Qwen3-8B.  With the same prompt, same model weights and unchanged historical
+source K/V rows:
+
+```text
+A trust  -> The device failed because valve C was obstructed.
+neutral  -> The device failed because valve C was obstructed.
+B trust  -> The device failed because sensor K drifted.
+```
+
+The causally selected plan spans layers 18, 24 and 30.  In B mode the selected
+heads put mean attention mass `0.4194` on B versus `0.0160` on A, with mean
+query-update ratio `0.3372`, max ratio `0.6244`, no capped updates, and
+`cache_integrity_ok=true`.
+
+This is an existence result, not yet a transfer result.  The head set was
+selected on the valve/sensor conflict itself.
+
+One instrumentation caveat is also frozen into the record: the causal profiler
+used the first tokenizer token of each label, so `valve` was represented by
+its first token (`val`) while `sensor` was one token.  The free-generation
+switch does not depend on that approximation, but causal-swing magnitudes
+should not be treated as exact sequence-level likelihood effects.
+
+### Frozen-head transfer evaluation
+
+`qwen_observer_transfer_eval.py` freezes the selected head identities from
+`results/qwen_observer_causal_compare.json`; it does **no head reselection**.
+
+It evaluates four unrelated conflicts, including two cases with physical source
+order reversed, and sweeps observer trust over `-1,-0.5,0,0.5,1`.  The
+dose-response readout uses complete candidate-sequence log likelihood rather
+than the earlier first-token proxy.  A leave-one-head-out diagnostic is run on
+the original conflict.
+
+The pre-run contract is:
+
+```text
+>= 3/4 held-out cases must dual-switch under A vs B trust
+2/2 reversed-order cases must dual-switch
+>= 3/4 cases must satisfy margin(+1) > margin(0) > margin(-1)
+all source-cache integrity checks must remain true
+no query update may hit the norm cap
+```
+
+Run:
+
+```bash
+python3.13 qwen_observer_transfer_eval.py
+```
+
+Receipt:
+
+```text
+results/qwen_observer_transfer_eval.json
+```
