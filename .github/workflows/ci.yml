@@ -59,3 +59,7 @@ jobs:
         run: python gate3_experiment.py
       - name: Run Gate 3 tests
         run: python -m unittest discover -s tests -p "test_gate3.py" -v
+      - name: Run Gate 4 identity-binding receipt
+        run: python gate4_experiment.py
+      - name: Run Gate 4 tests
+        run: python -m unittest discover -s tests -p "test_gate4.py" -v
