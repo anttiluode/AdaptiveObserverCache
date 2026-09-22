@@ -98,14 +98,29 @@ def user_turn_suffix_ids(tokenizer, user_text: str) -> list[int]:
     full_ids = flat_token_ids(full_raw)
 
     end_id = assistant_end_id(tokenizer)
-    positions = [i for i, tok in enumerate(anchor_ids) if tok == end_id]
-    if not positions:
+
+    # Do not require the two rendered transcripts to have byte-for-byte or
+    # token-for-token identical prefixes.  Some transformers/Qwen template
+    # versions change earlier formatting depending on whether another turn
+    # follows, even though message boundaries remain explicit.  The synthetic
+    # anchor transcript has exactly three completed messages, so its number of
+    # <|im_end|> terminators tells us which terminator in the full transcript
+    # closes the previous assistant turn.
+    anchor_ends = [i for i, tok in enumerate(anchor_ids) if tok == end_id]
+    full_ends = [i for i, tok in enumerate(full_ids) if tok == end_id]
+    if not anchor_ends:
         raise RuntimeError(
             "chat template anchor contained no assistant end token"
         )
-    cut = positions[-1] + 1
-    if full_ids[:cut] != anchor_ids[:cut]:
+    boundary_ordinal = len(anchor_ends)
+    if len(full_ends) < boundary_ordinal + 1:
         raise RuntimeError(
-            "Qwen chat template is not prefix-stable at assistant boundary"
+            "full chat template did not contain the expected completed "
+            "anchor messages plus the new user turn"
         )
-    return full_ids[cut:]
+
+    cut = full_ends[boundary_ordinal - 1] + 1
+    suffix = full_ids[cut:]
+    if not suffix:
+        raise RuntimeError("chat template produced an empty incremental suffix")
+    return suffix
