@@ -55,3 +55,7 @@ jobs:
         run: python gate2_experiment.py
       - name: Run Gate 2 tests
         run: python -m unittest discover -s tests -p "test_gate2.py" -v
+      - name: Run Gate 3 transfer receipt
+        run: python gate3_experiment.py
+      - name: Run Gate 3 tests
+        run: python -m unittest discover -s tests -p "test_gate3.py" -v
