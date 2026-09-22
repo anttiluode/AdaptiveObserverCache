@@ -290,14 +290,20 @@ def _candidate(
     )
 
 
-def choose_observer_plan(
+def observer_candidates(
     captures: Mapping[int, CapturedGeometry],
     spans: SourceSpans,
     *,
     target_margin: float,
     max_ratio: float,
-    num_heads: int,
-) -> ObserverPlan:
+) -> List[HeadSelection]:
+    """Return every geometry-qualified observer head in ranked order.
+
+    This is the public pool builder used by the causal Qwen calibration.
+    choose_observer_plan is intentionally just the top-k convenience wrapper
+    over the same ranking so the two paths cannot silently diverge.
+    """
+
     candidates: List[HeadSelection] = []
     for capture in captures.values():
         for head in range(capture.query_states.shape[0]):
@@ -317,6 +323,23 @@ def choose_observer_plan(
             -max(item.ratio_when_a, item.ratio_when_b),
         ),
         reverse=True,
+    )
+    return candidates
+
+
+def choose_observer_plan(
+    captures: Mapping[int, CapturedGeometry],
+    spans: SourceSpans,
+    *,
+    target_margin: float,
+    max_ratio: float,
+    num_heads: int,
+) -> ObserverPlan:
+    candidates = observer_candidates(
+        captures,
+        spans,
+        target_margin=target_margin,
+        max_ratio=max_ratio,
     )
     return ObserverPlan(heads=tuple(candidates[: max(1, int(num_heads))]))
 
