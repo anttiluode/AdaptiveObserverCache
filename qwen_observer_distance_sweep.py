@@ -120,28 +120,100 @@ def parse_args():
     return p.parse_args()
 
 
-def fork_cache(cache):
-    """Cheap branch from a DynamicCache without cloning the historical tensors.
+def _layer_tensor_pairs(cache):
+    """Read K/V tensors from the newer DynamicCache layer API.
 
-    DynamicCache's legacy conversion exposes the existing K/V tensors, and
-    from_legacy_cache builds a new cache container around them. Appending to the
-    branch should allocate/replace branch tensors rather than extend the
-    canonical container. Every probe verifies that the canonical cache length
-    did not move; source-row integrity is independently checked by the observer.
+    The tensors are intentionally not cloned here. DynamicLayer.update grows
+    caches by assigning torch.cat(...) results, so the branch gets a new tensor
+    when tokens are appended while the canonical historical tensor remains
+    untouched. The caller still verifies canonical length and source digests.
+    """
+
+    layers = getattr(cache, "layers", None)
+    if layers is None:
+        return None
+
+    pairs = []
+    for index, layer in enumerate(layers):
+        keys = getattr(layer, "keys", None)
+        values = getattr(layer, "values", None)
+        if keys is None or values is None:
+            raise RuntimeError(
+                f"DynamicCache layer {index} exposes no keys/values tensors"
+            )
+        pairs.append((keys, values))
+    return pairs
+
+
+def cache_fork_mode(cache) -> str:
+    """Describe the API path used to fork this installed Transformers cache."""
+
+    from transformers import DynamicCache
+
+    to_legacy = getattr(cache, "to_legacy_cache", None)
+    from_legacy = getattr(DynamicCache, "from_legacy_cache", None)
+    if callable(to_legacy) and callable(from_legacy):
+        return "legacy-conversion"
+
+    if _layer_tensor_pairs(cache) is not None:
+        return "layer-tensor-constructor"
+
+    return "unsupported"
+
+
+def fork_cache(cache):
+    """Branch a DynamicCache across both legacy and newer Transformers APIs.
+
+    Older Transformers releases expose to_legacy_cache()/from_legacy_cache().
+    Newer releases removed those helpers and expose cache.layers[i].keys/values;
+    they reconstruct DynamicCache from existing K/V through ddp_cache_data.
+
+    Historical tensors are shared read-only at fork time. Appending to the
+    branch must not advance the canonical cache; every caller checks that
+    invariant immediately after the probe.
     """
 
     if cache is None:
         raise RuntimeError("distance sweep requires a DynamicCache")
-    to_legacy = getattr(cache, "to_legacy_cache", None)
-    if to_legacy is None:
-        raise RuntimeError(
-            "installed transformers DynamicCache has no to_legacy_cache()"
-        )
-    from transformers import DynamicCache
 
-    branch = DynamicCache.from_legacy_cache(to_legacy())
-    if cache_length(branch) != cache_length(cache):
-        raise RuntimeError("forked cache length differs from canonical cache")
+    from transformers import DynamicCache, __version__ as transformers_version
+
+    canonical_len = cache_length(cache)
+    to_legacy = getattr(cache, "to_legacy_cache", None)
+    from_legacy = getattr(DynamicCache, "from_legacy_cache", None)
+
+    if callable(to_legacy) and callable(from_legacy):
+        branch = from_legacy(to_legacy())
+    else:
+        pairs = _layer_tensor_pairs(cache)
+        if pairs is None:
+            raise RuntimeError(
+                "unsupported DynamicCache API in transformers "
+                f"{transformers_version}: neither legacy conversion nor "
+                "cache.layers K/V tensors are available"
+            )
+
+        # Transformers >=4.56 / 5.x accepts existing K/V through
+        # ddp_cache_data. Keep a positional fallback for intermediate API
+        # variants that accepted the same iterable as the first argument.
+        try:
+            branch = DynamicCache(ddp_cache_data=pairs)
+        except TypeError as keyword_error:
+            try:
+                branch = DynamicCache(pairs)
+            except Exception as positional_error:
+                raise RuntimeError(
+                    "could not reconstruct DynamicCache branch under "
+                    f"transformers {transformers_version}; "
+                    f"keyword error={keyword_error!r}; "
+                    f"positional error={positional_error!r}"
+                ) from positional_error
+
+    if cache_length(branch) != canonical_len:
+        raise RuntimeError(
+            "forked cache length differs from canonical cache: "
+            f"branch={cache_length(branch)} canonical={canonical_len}"
+        )
     return branch
 
 
@@ -452,6 +524,9 @@ def main():
     print("Trust grid:", trust_grid)
     print("Loading one frozen Qwen model and one canonical growing cache...")
 
+    import transformers
+
+    print("Transformers version:", transformers.__version__)
     model, tokenizer = load_model(args)
     _messages, _rendered, ids, _mask, spans = initial_prompt(tokenizer, args)
     initial_ids = [int(x) for x in ids[0].tolist()]
@@ -476,6 +551,7 @@ def main():
             "branches and must not advance the canonical history."
         ),
         "model": args.model,
+        "transformers_version": transformers.__version__,
         "source_spans": {
             "A": list(spans.source_a),
             "B": list(spans.source_b),
@@ -522,8 +598,10 @@ def main():
         payload["anchor"] = {
             "initial_answer": initial_answer,
             "cache_tokens": anchor_len,
+            "cache_fork_mode": cache_fork_mode(cache),
             "source_cache_integrity_ok": True,
         }
+        print("Cache fork mode:", payload["anchor"]["cache_fork_mode"])
         write_receipt(receipt_path, payload)
         print(f"Anchor cache: {anchor_len} tokens")
         print("Initial answer:", initial_answer)
