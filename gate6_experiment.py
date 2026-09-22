@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 
 from gate5_generic_binding import capture_persistent_key
