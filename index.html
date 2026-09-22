@@ -32,6 +32,16 @@ code{color:#cbd5e1}.big{font-size:2rem;font-weight:800}.small{color:#8e99a7;font
 
 
 
+
+<h2>Gate 6 — identity survives alias drift <span class="pass">PASS</span></h2>
+<div class="grid">
+<section class="card"><div class="small">multi-hop relational reads</div><div class="metric">24 / 24</div><p>The stored canonical source key is absent from the test prompt; a relation graph connects it to the current alias.</p></section>
+<section class="card"><div class="small">minimum identity path</div><div class="metric">2 hops</div><p>Exact equality and one-hop lookup cannot reach any current record.</p></section>
+<section class="card"><div class="small">mean target capture</div><div class="metric">96.07%</div><p>The same frozen DistilGPT2 slot reader remains strongly engaged after alias changes.</p></section>
+<section class="card"><div class="small">shuffled relation graph</div><div class="metric">0%</div><p>Crossing the terminal alias relations routes every persistent identity to the wrong source.</p></section>
+</div>
+<p class="lead warn"><strong>Current boundary:</strong> identity continuity is still supplied as relation metadata. Missing or uncertain relation edges are the next attacker.</p>
+
 <h2>Gate 5 — arbitrary provenance keys <span class="pass">PASS</span></h2>
 <div class="grid">
 <section class="card"><div class="small">generic bound reads</div><div class="metric">24 / 24</div><p>Twelve distinct provenance token tuples; no Alice/Bob identity table.</p></section>
