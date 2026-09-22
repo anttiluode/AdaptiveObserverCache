@@ -1,0 +1,34 @@
+{
+  "gate": 4,
+  "status": "pass",
+  "mechanism": "persistent identity -> current identity/slot binding -> frozen positional observer mode",
+  "frozen_reader": {
+    "model": "distilbert/distilgpt2",
+    "revision": "2290a62",
+    "layer": 3,
+    "head": 2,
+    "first_slot_mode": 1.149999976158142,
+    "second_slot_mode": -3.950000047683716
+  },
+  "binder": {
+    "type": "explicit provenance token-id binder",
+    "uses_attention_KV_geometry": false,
+    "uses_trust_label": false
+  },
+  "results": {
+    "cases": 12,
+    "identity_reads": 24,
+    "binder_accuracy": 1,
+    "dual_identity_success_rate": 1,
+    "swapped_dual_identity_success_rate": 1,
+    "persistent_Alice_sequence_accuracy": 1,
+    "persistent_Bob_sequence_accuracy": 1,
+    "mean_target_mass": 0.996812604367733,
+    "static_identity_to_slot_accuracy": 0.5,
+    "inverted_binder_accuracy": 0
+  },
+  "integrity": {
+    "all_test_caches_unchanged": true
+  },
+  "interpretation": "Identity and address must be represented separately; explicit rebinding repairs the Gate-3 order failure."
+}
