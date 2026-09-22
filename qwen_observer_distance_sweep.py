@@ -25,6 +25,10 @@ from typing import List
 
 import torch
 
+from qwen_cache_fork_compat import (
+    cache_fork_mode as compat_cache_fork_mode,
+    fork_dynamic_cache,
+)
 from qwen_chat_suffix import assistant_end_id, user_turn_suffix_ids
 from qwen_observer import QwenObserverController
 from qwen_observer_chat import (
@@ -120,30 +124,32 @@ def parse_args():
     return p.parse_args()
 
 
-def fork_cache(cache):
-    """Cheap branch from a DynamicCache without cloning the historical tensors.
+def cache_fork_mode(cache) -> str:
+    from transformers import DynamicCache
 
-    DynamicCache's legacy conversion exposes the existing K/V tensors, and
-    from_legacy_cache builds a new cache container around them. Appending to the
-    branch should allocate/replace branch tensors rather than extend the
-    canonical container. Every probe verifies that the canonical cache length
-    did not move; source-row integrity is independently checked by the observer.
-    """
+    return compat_cache_fork_mode(cache, DynamicCache)
+
+
+def fork_cache(cache):
+    """Branch a DynamicCache across legacy and newer Transformers APIs."""
 
     if cache is None:
         raise RuntimeError("distance sweep requires a DynamicCache")
-    to_legacy = getattr(cache, "to_legacy_cache", None)
-    if to_legacy is None:
+
+    from transformers import DynamicCache, __version__ as transformers_version
+
+    canonical_len = cache_length(cache)
+    branch, _mode = fork_dynamic_cache(
+        cache,
+        DynamicCache,
+        version=transformers_version,
+    )
+    if cache_length(branch) != canonical_len:
         raise RuntimeError(
-            "installed transformers DynamicCache has no to_legacy_cache()"
+            "forked cache length differs from canonical cache: "
+            f"branch={cache_length(branch)} canonical={canonical_len}"
         )
-    from transformers import DynamicCache
-
-    branch = DynamicCache.from_legacy_cache(to_legacy())
-    if cache_length(branch) != cache_length(cache):
-        raise RuntimeError("forked cache length differs from canonical cache")
     return branch
-
 
 def tokenize_answer(tokenizer, text: str) -> list[int]:
     ids = tokenizer.encode(text, add_special_tokens=False)
@@ -452,6 +458,9 @@ def main():
     print("Trust grid:", trust_grid)
     print("Loading one frozen Qwen model and one canonical growing cache...")
 
+    import transformers
+
+    print("Transformers version:", transformers.__version__)
     model, tokenizer = load_model(args)
     _messages, _rendered, ids, _mask, spans = initial_prompt(tokenizer, args)
     initial_ids = [int(x) for x in ids[0].tolist()]
@@ -476,6 +485,7 @@ def main():
             "branches and must not advance the canonical history."
         ),
         "model": args.model,
+        "transformers_version": transformers.__version__,
         "source_spans": {
             "A": list(spans.source_a),
             "B": list(spans.source_b),
@@ -522,8 +532,10 @@ def main():
         payload["anchor"] = {
             "initial_answer": initial_answer,
             "cache_tokens": anchor_len,
+            "cache_fork_mode": cache_fork_mode(cache),
             "source_cache_integrity_ok": True,
         }
+        print("Cache fork mode:", payload["anchor"]["cache_fork_mode"])
         write_receipt(receipt_path, payload)
         print(f"Anchor cache: {anchor_len} tokens")
         print("Initial answer:", initial_answer)
