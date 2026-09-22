@@ -2,10 +2,10 @@
 
 **Can the same fixed memory reveal different useful information because the reader itself has persistent state — and can new evidence change that reader without rewriting the memory?**
 
-This repo isolates one mechanism from the recent `AInsteinInsideTransformerResidualStream` / Genealogy "observer in the loop" line:
+The working object is:
 
 ```text
-fixed cache C
+fixed historical field C
 fixed present h
 persistent observer state m
         |
@@ -13,40 +13,23 @@ persistent observer state m
 query geometry Q(h, m)
         |
         v
-read fixed cache C
+read fixed memory C
         |
         v
-observation + receipt
+receipt arrives after the read
         |
         v
 update m
         |
         v
-next query is different
+next read changes without rewriting memory
 ```
 
 The cache is historical material. The observer state is the changing measuring apparatus.
 
-## Gate 0 — same cache, moving reader
+## Gate 0 — synthetic primitive
 
-Gate 0 is deliberately tiny and model-free. It uses a two-dimensional KV-like memory with conflicting evidence under two provenance families, A and B.
-
-The contract freezes the cache, present input, one-read budget, and mechanism parameters. Only observer state may change.
-
-With identical cache and identical present:
-
-```text
-m_A -> query points toward A-addressed evidence -> +1
-m_B -> query points toward B-addressed evidence -> -1
-```
-
-On the alternating trusted-provenance schedule
-
-```text
-AAAA BBBB AAAA BBBB
-```
-
-the static reader gets 50%, while the adaptive reader gets 81.25% and changes only its observer state after contradicted reads.
+Gate 0 established the smallest model-free version: identical cache and identical present can reveal different provenance depending on persistent reader state. On the alternating `AAAA BBBB AAAA BBBB` schedule, the static reader gets 50% while the adaptive reader gets 81.25%.
 
 Run:
 
@@ -54,110 +37,160 @@ Run:
 python gate0_experiment.py
 ```
 
-Gate 0 is intentionally only a synthetic primitive.
+## Gate 1 — frozen PyTorch attention
 
-## Gate 1 — frozen transformer attention, moving query
-
-Gate 1 moves the primitive into a real PyTorch attention calculation with frozen `nn.Linear` projections:
+Gate 1 moved the primitive into an actual frozen attention calculation:
 
 ```text
 q_base = W_Q h
 q'     = q_base + 2.5 * m * u
-
 scores = K q' / sqrt(d_head)
 read   = softmax(scores) V
 ```
 
-Everything except the scalar observer `m` is frozen:
+`W_Q/W_K/W_V`, projected K/V and the present hidden state are frozen. Only one scalar observer state changes the query.
 
-- identical present hidden state on every read;
-- `W_Q/W_K/W_V` are frozen and never trained;
-- memory is projected into `K,V` exactly once;
-- projected `K,V` are never rewritten;
-- one attention read per step;
-- feedback arrives only **after** the current read and may affect only the next query.
-
-The attacker is not one unlucky static baseline. Gate 1 tests fixed observers `m=-1,0,+1` and compares against the **best** of them.
-
-### Gate 1 receipt
-
-CI on Python 3.12 / CPU PyTorch produced:
+Receipt:
 
 ```text
-same K/V + same present + m=+1:
-    A attention mass = 0.962236
-    B attention mass = 0.037764
-    prediction = +1
-
-same K/V + same present + m=-1:
-    A attention mass = 0.037764
-    B attention mass = 0.962236
-    prediction = -1
-
 best fixed observer accuracy = 0.5000
 adaptive observer accuracy   = 0.8125
 adaptive advantage           = +0.3125
+
+same K/V + m=+1 -> 96.22% A mass
+same K/V + m=-1 -> 96.22% B mass
 ```
 
-Every provenance switch costs exactly its first contradicted read; the observer then changes the next query.
-
-The projected-cache digest is identical before and after:
-
-```text
-c98fa957ef01a9ba7ae49bb943e145f389d10864553efa3ed9796ae5ee5fd19c
-```
-
-The frozen-parameter digest is also identical before and after:
-
-```text
-d882c794aecd821a164dfa01057bf19bebc593abf1698b3ef19d0ff43f144958
-```
-
-All parameters remain `requires_grad=False`.
+Projected-cache and parameter digests are byte-identical before/after.
 
 See [GATE1_CONTRACT.md](GATE1_CONTRACT.md) and [RESULTS_GATE1.md](RESULTS_GATE1.md).
+
+## Gate 2 — real pretrained DistilGPT2 K/V
+
+Gate 2 removes the hand-built Q/K/V geometry.
+
+Pinned model:
+
+```text
+distilbert/distilgpt2
+revision 2290a62
+```
+
+The prompt is tokenized normally, DistilGPT2 produces hidden states and Q/K/V, and one real attention head is selected by a preregistered cache-geometry rule. The model weights are never trained or changed.
+
+The observer is still one-dimensional:
+
+```text
+u  = normalize(mean(K_A) - mean(K_B))
+q' = q_pretrained + m * ||q_pretrained|| * u
+```
+
+with `|m| <= 4`.
+
+A fixed 161-point scalar grid is searched on every pretrained head. For each head, one scalar state maximizes **absolute total attention mass** on source A and one maximizes absolute total attention mass on source B. The chosen head maximizes the worse of those two target masses.
+
+### Why Gate 2 was hardened before merge
+
+The first Gate-2 receipt exposed a denominator loophole.
+
+A B-mode could win almost all of the normalized A-vs-B source share while both source spans received essentially zero attention. That technically satisfied the first contract but was not a real retrieval.
+
+So Gate 2 was strengthened before merge: each mode must put at least **20% of all attention** on its intended source, not merely beat the other source.
+
+### Hardened Gate 2 receipt
+
+CI selected:
+
+```text
+layer = 3
+head  = 2
+head dimension = 64
+```
+
+Modes:
+
+```text
+A mode: m = +1.15
+    total attention on A = 1.000000
+    A-vs-B share on A    = 0.999999983
+
+B mode: m = -4.00
+    total attention on B = 1.000000
+    A-vs-B share on B    = 0.999999999984
+```
+
+Protocol:
+
+```text
+block A: 1 calibration read -> 3 blind reads
+block B: 1 calibration read -> 3 blind reads
+block A: 1 calibration read -> 3 blind reads
+block B: 1 calibration read -> 3 blind reads
+```
+
+Only the first read of each block receives the trusted-source receipt, and it arrives **after** the read. The next three reads receive no truth signal.
+
+Results:
+
+```text
+blind adaptive test accuracy = 12 / 12 = 1.000
+best fixed reader            =  6 / 12 = 0.500
+reset-observer control       =  6 / 12 = 0.500
+adaptive advantage           = +0.500
+```
+
+The projected K/V digest was identical before/after:
+
+```text
+79a3fa9e0fbb26e50b3acd5e03b90a74c8fcf1b87c650a5ed6578f36a0543cde
+```
+
+Target-attention parameter digest:
+
+```text
+ac80d2a0f80207e5a62aa81ff34b386bd19fef9a255d4aabf33e132723cdb824
+```
+
+See [GATE2_CONTRACT.md](GATE2_CONTRACT.md) and [RESULTS_GATE2.md](RESULTS_GATE2.md).
 
 Run:
 
 ```bash
-pip install -r requirements-gate1.txt --index-url https://download.pytorch.org/whl/cpu
-python gate1_experiment.py
+pip install -r requirements-gate2.txt --extra-index-url https://download.pytorch.org/whl/cpu
+python gate2_experiment.py
 ```
 
-## What Gate 1 does and does not establish
+## What Gate 2 does — and does not — establish
 
-Gate 1 now establishes this executable object:
+Gate 2 now has a real pretrained attention field:
 
 ```text
-fast present h_t
-fixed historical field (K,V)
-slow persistent observer m_t
-
-q_t = W_Q h_t + u m_t
-read_t = Attention(q_t, K, V)
-m_(t+1) = U(m_t, read_t, feedback_t)
+pretrained prompt -> natural hidden states -> natural projected K/V
+                                              |
+historical receipt -> scalar m -> query line -+
+                                              |
+                                              v
+                                      different read
 ```
 
-It does **not** establish useful adaptation inside a pretrained LLM. The A/B memory and observer direction are deliberately constructed so the mechanism is transparent.
+The blind-test result demonstrates that an earlier calibration can persist as one scalar and materially alter later retrieval from unchanged pretrained K/V.
 
-The next hard gate is therefore not another synthetic schedule. It is to attach a tiny low-rank observer state to a **real frozen pretrained transformer layer**, use naturally produced hidden states/KV, and ask whether earlier calibration experience can improve later ambiguous retrieval under an equal-compute static-reader attacker.
+But the mechanism is still **cache-specific**. The source-address direction, selected head, and two useful scalar modes were calibrated on the same cache later used for testing. The B mode also lands exactly on the allowed `m=-4` boundary. That asymmetry is evidence, not decoration.
 
-The discipline stays the same:
+Therefore the next gate is transfer:
 
-```text
-make the reader dynamic before making the memory dynamic
-```
+> Freeze the selected head and observer mechanism on calibration caches, then move to different prompts/caches and forbid rebuilding the address mechanism there.
 
-## Relationship to the recent repos
+If it survives that, the object starts looking less like a clever local steering trick and more like a reusable observer state.
+
+## Relationship to recent repos
 
 - **ReadWrite** — a state may be invisible until the right intervention/query is applied.
 - **WhatToLookAt** — memory changes which later measurement is worth buying.
 - **PredictiveHKT** — a changing representation can masquerade as a changing world.
 - **AuditedEpistemicCache** — reusable evidence needs a receipt for the observer/representation that produced it.
 - **OperatorTime** — the reader's resident state participates in the effective operator.
-- **AInstein** — provenance matters; the right ingredients at the wrong addresses are not equivalent.
-- **AInsteinInsideTransformerResidualStream** — temporary latent computation and compute foveation live in the fast stream; this repo isolates the slower reader state that could decide how history is interrogated.
-
-The working slogan is:
+- **AInstein** — provenance matters; ingredients at the wrong addresses are not equivalent.
+- **AInsteinInsideTransformerResidualStream** — temporary latent computation lives in the fast stream; this repo isolates a slower reader state that decides how history is interrogated.
 
 > **Do not only remember the past. Let experience change the apparatus that reads the past.**
