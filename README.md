@@ -228,6 +228,71 @@ identity / provenance binding   +   reusable positional read coordinate
 
 so that swapping source order changes the binding, not the meaning of the observer state.
 
+## Gate 4 — persistent identity + current address binding
+
+Gate 3's order-swap failure was a representational conflation: one state was being asked to encode both **who should be trusted** and **where that source currently lives**.
+
+Gate 4 factors those roles:
+
+```text
+persistent trusted identity
+        |
+        v
+current identity -> source-slot binding
+        |
+        v
+slot 1 / slot 2
+        |
+        v
+frozen Gate-2/3 positional read mode
+```
+
+The binder is intentionally explicit and auditable. Each source record begins with a provenance token (Alice or Bob); frozen token IDs map that identity to its current slot. The binder never sees trust labels, K/V geometry, or test outcomes.
+
+Across six content families in both source orders:
+
+```text
+cases                              12
+identity-conditioned reads         24
+bound identity accuracy          1.00
+dual-identity case success       1.00
+reversed-order dual success      1.00
+persistent Alice sequence        1.00
+persistent Bob sequence          1.00
+mean intended-source mass      0.9968
+
+static Alice->slot1/Bob->slot2   0.50
+inverted binder                  0.00
+```
+
+Every projected K/V cache remains unchanged.
+
+The result is deliberately narrower than "the model learned provenance identity." It establishes the **factorization**:
+
+```text
+slow semantic choice != current address
+```
+
+and shows that a persistent semantic choice can survive permutations when a separate binding operation converts identity into the reusable positional read coordinate.
+
+See [GATE4_CONTRACT.md](GATE4_CONTRACT.md) and [RESULTS_GATE4.md](RESULTS_GATE4.md).
+
+### Next boundary
+
+Gate 4's binder is explicit metadata. That is useful in real systems—provenance often *is* metadata—but it is also the obvious next attacker.
+
+Gate 5 should remove the exact Alice/Bob token lookup and ask whether a binding rule calibrated on some source identities can bind **new identities or changed provenance markers** without knowing their current slot in advance.
+
+That is now the interesting problem:
+
+```text
+persistent relation / trust
+        +
+learned or inferred current binding
+        +
+reusable read coordinate
+```
+
 ## Relationship to recent repos
 
 - **ReadWrite** — a state may be invisible until the right intervention/query is applied.

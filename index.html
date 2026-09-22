@@ -30,6 +30,16 @@ code{color:#cbd5e1}.big{font-size:2rem;font-weight:800}.small{color:#8e99a7;font
 <p class="lead">Keep historical material fixed. Let a tiny persistent state change how the transformer interrogates it.</p>
 
 
+
+<h2>Gate 4 — identity is not address <span class="pass">PASS</span></h2>
+<div class="grid">
+<section class="card"><div class="small">bound identity reads</div><div class="metric">24 / 24</div><p>Persistent Alice/Bob state is rebound to the current source slot before using the frozen positional reader.</p></section>
+<section class="card"><div class="small">reversed-order cases</div><div class="metric">6 / 6</div><p>The order-swap failure disappears once identity and address are separate objects.</p></section>
+<section class="card"><div class="small">static identity→slot attacker</div><div class="metric">50%</div><p>Alice→slot1 / Bob→slot2 fails on every reversed ordering.</p></section>
+<section class="card"><div class="small">inverted binder</div><div class="metric">0%</div><p>The binder is causally necessary; choosing the opposite current slot destroys retrieval.</p></section>
+</div>
+<p class="lead warn"><strong>Current boundary:</strong> the binder uses explicit Alice/Bob provenance token IDs. Gate 5 must attack that convenience rather than making the slot reader more complicated.</p>
+
 <h2>Gate 3 — frozen coordinate on unseen caches <span class="pass">PASS</span></h2>
 <div class="grid">
 <section class="card"><div class="small">ordinary unseen transfer</div><div class="metric">7 / 7</div><p>Five content changes plus two paraphrases; frozen layer/head, direction and scalar modes.</p></section>
