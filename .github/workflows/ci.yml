@@ -71,3 +71,7 @@ jobs:
         run: python gate6_experiment.py
       - name: Run Gate 6 tests
         run: python -m unittest discover -s tests -p "test_gate6.py" -v
+      - name: Run Gate 7 active-identity receipt
+        run: python gate7_experiment.py
+      - name: Run Gate 7 tests
+        run: python -m unittest discover -s tests -p "test_gate7.py" -v
