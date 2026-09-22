@@ -33,6 +33,7 @@ from pathlib import Path
 from typing import List
 
 from observer_evidence import EvidenceLedger
+from qwen_chat_suffix import assistant_end_id, user_turn_suffix_ids
 
 import torch
 
@@ -147,70 +148,6 @@ def new_cache():
         return DynamicCache()
     except Exception:
         return None
-
-
-def assistant_end_id(tokenizer) -> int:
-    tok = tokenizer.convert_tokens_to_ids("<|im_end|>")
-    if tok is None or tok == tokenizer.unk_token_id:
-        if tokenizer.eos_token_id is None:
-            raise RuntimeError("Qwen assistant-end token is unavailable")
-        return int(tokenizer.eos_token_id)
-    return int(tok)
-
-
-def user_turn_suffix_ids(tokenizer, user_text: str) -> List[int]:
-    """Render only the bytes/tokens after the previous assistant <|im_end|>.
-
-    A synthetic assistant anchor makes this independent of how the previous
-    generated answer happened to tokenize.  We cut the template immediately
-    after that anchor's im_end token and keep the exact template-generated
-    suffix for the new user turn plus assistant generation prompt.
-    """
-
-    anchor = "__AOC_PREVIOUS_ASSISTANT__"
-    anchor_messages = [
-        {"role": "system", "content": "__AOC_TEMPLATE_SYSTEM__"},
-        {"role": "user", "content": "__AOC_TEMPLATE_USER__"},
-        {"role": "assistant", "content": anchor},
-    ]
-    full_messages = anchor_messages + [
-        {"role": "user", "content": user_text},
-    ]
-
-    try:
-        anchor_ids = tokenizer.apply_chat_template(
-            anchor_messages,
-            tokenize=True,
-            add_generation_prompt=False,
-            enable_thinking=False,
-        )
-        full_ids = tokenizer.apply_chat_template(
-            full_messages,
-            tokenize=True,
-            add_generation_prompt=True,
-            enable_thinking=False,
-        )
-    except TypeError:
-        anchor_ids = tokenizer.apply_chat_template(
-            anchor_messages,
-            tokenize=True,
-            add_generation_prompt=False,
-        )
-        full_ids = tokenizer.apply_chat_template(
-            full_messages,
-            tokenize=True,
-            add_generation_prompt=True,
-        )
-
-    end_id = assistant_end_id(tokenizer)
-    positions = [i for i, tok in enumerate(anchor_ids) if int(tok) == end_id]
-    if not positions:
-        raise RuntimeError("chat template anchor contained no assistant end token")
-    cut = positions[-1] + 1
-    prefix = [int(x) for x in anchor_ids[:cut]]
-    if [int(x) for x in full_ids[:cut]] != prefix:
-        raise RuntimeError("Qwen chat template is not prefix-stable at assistant boundary")
-    return [int(x) for x in full_ids[cut:]]
 
 
 def initial_prompt(tokenizer, args):
