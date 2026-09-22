@@ -493,3 +493,29 @@ The useful question is no longer just “can history recover identity?” but:
 - **AInsteinInsideTransformerResidualStream** — temporary latent computation lives in the fast stream; this repo isolates a slower reader state that decides how history is interrogated.
 
 > **Do not only remember the past. Let experience change the apparatus that reads the past.**
+
+## Qwen3-8B practical observer bridge
+
+The scientific gates now have a practical language-model harness in
+[`qwen_observer_chat.py`](qwen_observer_chat.py). It keeps the Qwen weights and
+historical K/V untouched while a small persistent observer state changes the
+query geometry used to read those sources. The selected layer/head identities
+are calibrated once and frozen; the actual read tangent is reconstructed from
+the **current post-RoPE key geometry** on every decode step.
+
+This is intentionally not Gate 8. Gate 8 remains the measurement-cost / active
+probe question exposed by Gate 7.
+
+Quick comparison on the same textual prompt:
+
+```bash
+pip install -r requirements-qwen.txt
+python qwen_observer_chat.py --compare
+```
+
+The default placement profile reuses the recent Qwen3-8B setup that survives
+on the development machine: 6 GiB GPU + 6 GiB CPU with disk overflow. If
+Windows kills the load, use `--gpu-memory 4GiB --cpu-memory 4GiB`.
+
+See [QWEN_OBSERVER_CHAT.md](QWEN_OBSERVER_CHAT.md) for the mechanism, controls,
+interactive commands, and interpretation boundary.
