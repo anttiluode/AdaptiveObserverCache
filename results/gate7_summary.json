@@ -1,0 +1,21 @@
+{
+  "gate": 7,
+  "status": "pass",
+  "summary": {
+    "families": 6,
+    "cases": 12,
+    "identity_reads": 24,
+    "historical_sources": 12,
+    "history_bound_accuracy": 1,
+    "dual_success_rate": 1,
+    "reversed_order_dual_success_rate": 1,
+    "mean_target_mass": 0.961948091785113,
+    "minimum_history_match_margin": 2,
+    "static_slot_accuracy": 0.5,
+    "one_probe_accuracy": 0.5,
+    "reset_history_accuracy": 0.5,
+    "shuffled_history_accuracy": 0,
+    "incomplete_relation_graph_accuracy": 0
+  },
+  "source": "GitHub Actions Gate 7 receipt, PR #10"
+}

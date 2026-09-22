@@ -405,6 +405,83 @@ can history recover which current source continues the trusted identity?
 
 That would turn the binding layer from supplied metadata into an inferred, auditable hypothesis.
 
+## Gate 7 — identity continuity from behavioral history
+
+Gate 6 still received a complete identity relation graph. Gate 7 deletes the terminal alias relation and asks whether earlier observations can identify which current anonymous source is the continuation of a trusted historical source.
+
+The mechanism separates:
+
+```text
+persistent trusted canonical key
+        +
+historical behavioral fingerprint
+        +
+current anonymous probe responses
+        |
+        v
+inferred current source slot
+        |
+        v
+frozen positional attention reader
+```
+
+Each of the twelve historical sources has five prior probe outcomes. Within a source pair, probe 0 is deliberately identical, while probes 1–4 form complementary codes. At the current epoch, every anonymous source receives the same five probes with exactly one non-prefix probe corrupted. A generic minimum-Hamming matcher performs the continuity inference.
+
+CI receipt:
+
+```text
+families                              6
+cases                                12
+identity-conditioned reads           24
+
+history-bound accuracy             1.00
+dual-success rate                  1.00
+reversed-order dual success        1.00
+mean intended-source mass       0.96195
+minimum history-match margin          2
+
+static slot                        0.50
+one ambiguous probe                0.50
+reset / forgotten history          0.50
+shuffled historical fingerprints   0.00
+incomplete Gate-6 graph            0.00
+```
+
+Every projected K/V cache remains unchanged.
+
+The key result is not that five synthetic probe bits can identify two sources. It is the dependency structure:
+
+```text
+current observations alone are insufficient
+historical record alone is insufficient
+trust key alone is insufficient
+
+history + current measurement + persistent trust
+        -> current address
+        -> useful retrieval
+```
+
+See [GATE7_CONTRACT.md](GATE7_CONTRACT.md) and [RESULTS_GATE7.md](RESULTS_GATE7.md).
+
+### Next boundary
+
+Gate 7 gets all five current probes for free. That is now the obvious luxury to remove.
+
+The next gate should give each probe a cost and require the observer to choose **which measurement to buy next** from its current uncertainty. That reconnects AdaptiveObserverCache directly to `WhatToLookAt` / active observability:
+
+```text
+history
+  -> uncertainty over current identity
+  -> choose informative probe
+  -> update observer
+  -> stop when identity is resolved
+  -> read memory
+```
+
+The useful question is no longer just “can history recover identity?” but:
+
+> **Can history make sensing cheaper by telling the observer what it needs to measure?**
+
 ## Relationship to recent repos
 
 - **ReadWrite** — a state may be invisible until the right intervention/query is applied.
