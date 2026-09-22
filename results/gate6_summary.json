@@ -1,0 +1,33 @@
+{
+  "gate": 6,
+  "status": "pass",
+  "mechanism": "persistent canonical key -> multi-hop alias relation graph -> current alias -> slot -> frozen positional reader",
+  "frozen_reader": {
+    "model": "distilbert/distilgpt2",
+    "revision": "2290a62",
+    "layer": 3,
+    "head": 2,
+    "first_slot_mode": 1.149999976158142,
+    "second_slot_mode": -3.950000047683716
+  },
+  "population": {
+    "families": 6,
+    "cases": 12,
+    "identity_reads": 24,
+    "unique_canonical_keys": 12
+  },
+  "results": {
+    "relational_bound_accuracy": 1,
+    "dual_success_rate": 1,
+    "reversed_order_dual_success_rate": 1,
+    "mean_target_mass": 0.9606801259020964,
+    "minimum_relation_hops": 2,
+    "exact_key_accuracy": 0,
+    "one_hop_alias_accuracy": 0,
+    "shuffled_graph_accuracy": 0
+  },
+  "integrity": {
+    "all_test_caches_unchanged": true
+  },
+  "boundary": "Identity relation metadata is supplied; missing or uncertain relations are not yet inferred."
+}

@@ -337,6 +337,74 @@ This is a more general binding primitive than Gate 4, but it is still symbolic: 
 
 See [GATE5_CONTRACT.md](GATE5_CONTRACT.md) and [RESULTS_GATE5.md](RESULTS_GATE5.md).
 
+## Gate 6 — persistent identity through alias drift
+
+Gate 5 still assumed the current record exposed exactly the same provenance key that had been stored earlier. Gate 6 lets the visible source identity change completely.
+
+The slow state keeps the old canonical provenance key, while an independent relation graph tracks identity continuity:
+
+```text
+persistent canonical trust key
+        +
+changing identity relation graph
+        |
+        v
+current unrelated surface alias
+        |
+        v
+current source slot
+        |
+        v
+frozen positional read operator
+```
+
+The current prompt no longer contains the canonical key. Example:
+
+```text
+persistent state: Carol
+
+relation metadata:
+Carol -> CSeven -> Orion
+
+current source record:
+Orion reports ...
+```
+
+Every valid identity path is at least two relation hops, so exact equality and one-hop alias lookup are incapable of solving the gate.
+
+Across six provenance pairs, both source orders, and 24 identity-conditioned reads:
+
+```text
+relational bound accuracy         1.00
+dual-success rate                 1.00
+reversed-order dual success       1.00
+mean intended-source mass       0.96068
+minimum relation hops                2
+
+exact-key attacker                0.00
+one-hop alias attacker            0.00
+shuffled relation graph           0.00
+```
+
+Every projected K/V cache remains unchanged.
+
+This moves the object one step beyond a persistent key-value lookup: the slow state can survive a change in the source's surface name as long as identity continuity is represented somewhere independently.
+
+See [GATE6_CONTRACT.md](GATE6_CONTRACT.md) and [RESULTS_GATE6.md](RESULTS_GATE6.md).
+
+### Next boundary
+
+Gate 6 is still given the identity-relation graph. That is now the obvious dependency to attack.
+
+The next useful question is:
+
+```text
+if one alias edge disappears or becomes ambiguous,
+can history recover which current source continues the trusted identity?
+```
+
+That would turn the binding layer from supplied metadata into an inferred, auditable hypothesis.
+
 ## Relationship to recent repos
 
 - **ReadWrite** — a state may be invisible until the right intervention/query is applied.
