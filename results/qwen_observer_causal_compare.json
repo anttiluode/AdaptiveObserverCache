@@ -1,0 +1,659 @@
+{
+  "scope": "Qwen causal head selection after the first attention-only observer run moved source attention but not generated language.",
+  "model": "Qwen/Qwen3-8B",
+  "target_question": "Why did the device fail? Give the cause in one short sentence.",
+  "probe_question": "Which component caused the failure? Answer with exactly one word: valve or sensor.",
+  "probe_a": {
+    "text": "valve",
+    "token_ids": [
+      831,
+      586
+    ],
+    "first_token_id": 831
+  },
+  "probe_b": {
+    "text": "sensor",
+    "token_ids": [
+      29511
+    ],
+    "first_token_id": 29511
+  },
+  "layers": [
+    18,
+    24,
+    30
+  ],
+  "candidates_per_layer": 4,
+  "target_margin": 3.0,
+  "max_ratio": 1.0,
+  "min_causal_swing": 0.0,
+  "causal_scan": [
+    {
+      "head": {
+        "layer": 18,
+        "query_head": 30,
+        "kv_head": 7,
+        "symmetric_source_mass": 0.16970151662826538,
+        "mass_when_a": 0.5502762198448181,
+        "mass_when_b": 0.16970151662826538,
+        "ratio_when_a": 0.4898671791237543,
+        "ratio_when_b": 0.29416171361979454
+      },
+      "gap_when_A_trust": 6.5,
+      "gap_when_B_trust": 6.25,
+      "causal_swing": 0.25,
+      "mean_update_ratio": 0.38368334470851895,
+      "capped": false,
+      "runs": {
+        "A": {
+          "trust": 1.0,
+          "gap_A_minus_B": 6.5,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.32725968956947327,
+            "mean_other_mass": 0.014551738277077675,
+            "mean_query_update_ratio": 0.43041412548386615,
+            "max_query_update_ratio": 0.43041412548386615,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "trust": -1.0,
+          "gap_A_minus_B": 6.25,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.07261205464601517,
+            "mean_other_mass": 0.009814778342843056,
+            "mean_query_update_ratio": 0.3369525639331717,
+            "max_query_update_ratio": 0.3369525639331717,
+            "capped_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "head": {
+        "layer": 18,
+        "query_head": 21,
+        "kv_head": 5,
+        "symmetric_source_mass": 0.08469884097576141,
+        "mass_when_a": 0.1186433732509613,
+        "mass_when_b": 0.08469884097576141,
+        "ratio_when_a": 0.45806773960730585,
+        "ratio_when_b": 0.3800704746848993
+      },
+      "gap_when_A_trust": 6.0,
+      "gap_when_B_trust": 6.25,
+      "causal_swing": -0.25,
+      "mean_update_ratio": 0.41121952277817964,
+      "capped": false,
+      "runs": {
+        "A": {
+          "trust": 1.0,
+          "gap_A_minus_B": 6.0,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.04265478998422623,
+            "mean_other_mass": 0.001839992473833263,
+            "mean_query_update_ratio": 0.42798006242643355,
+            "max_query_update_ratio": 0.42798006242643355,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "trust": -1.0,
+          "gap_A_minus_B": 6.25,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.042282797396183014,
+            "mean_other_mass": 0.0070260064676404,
+            "mean_query_update_ratio": 0.3944589831299257,
+            "max_query_update_ratio": 0.3944589831299257,
+            "capped_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "head": {
+        "layer": 18,
+        "query_head": 13,
+        "kv_head": 3,
+        "symmetric_source_mass": 0.07134415954351425,
+        "mass_when_a": 0.16291329264640808,
+        "mass_when_b": 0.07134415954351425,
+        "ratio_when_a": 0.3580250156334345,
+        "ratio_when_b": 0.36164918300847343
+      },
+      "gap_when_A_trust": 6.0,
+      "gap_when_B_trust": 6.25,
+      "causal_swing": -0.25,
+      "mean_update_ratio": 0.3583624481975578,
+      "capped": false,
+      "runs": {
+        "A": {
+          "trust": 1.0,
+          "gap_A_minus_B": 6.0,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.14050351083278656,
+            "mean_other_mass": 0.008923457935452461,
+            "mean_query_update_ratio": 0.3494984344021675,
+            "max_query_update_ratio": 0.3494984344021675,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "trust": -1.0,
+          "gap_A_minus_B": 6.25,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.06111887842416763,
+            "mean_other_mass": 0.0035988998133689165,
+            "mean_query_update_ratio": 0.3672264619929481,
+            "max_query_update_ratio": 0.3672264619929481,
+            "capped_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "head": {
+        "layer": 18,
+        "query_head": 28,
+        "kv_head": 7,
+        "symmetric_source_mass": 0.06900083273649216,
+        "mass_when_a": 0.06900083273649216,
+        "mass_when_b": 0.0825178325176239,
+        "ratio_when_a": 0.4100351142323762,
+        "ratio_when_b": 0.28437676999860306
+      },
+      "gap_when_A_trust": 6.25,
+      "gap_when_B_trust": 6.0,
+      "causal_swing": 0.25,
+      "mean_update_ratio": 0.3538161080816943,
+      "capped": false,
+      "runs": {
+        "A": {
+          "trust": 1.0,
+          "gap_A_minus_B": 6.25,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.031782619655132294,
+            "mean_other_mass": 0.0016147843562066555,
+            "mean_query_update_ratio": 0.3820277760424326,
+            "max_query_update_ratio": 0.3820277760424326,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "trust": -1.0,
+          "gap_A_minus_B": 6.0,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.031446423381567,
+            "mean_other_mass": 0.002213728381320834,
+            "mean_query_update_ratio": 0.3256044401209559,
+            "max_query_update_ratio": 0.3256044401209559,
+            "capped_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "head": {
+        "layer": 24,
+        "query_head": 8,
+        "kv_head": 2,
+        "symmetric_source_mass": 0.5061255693435669,
+        "mass_when_a": 0.7226691246032715,
+        "mass_when_b": 0.5061255693435669,
+        "ratio_when_a": 0.3577908149495007,
+        "ratio_when_b": 0.37113747552970816
+      },
+      "gap_when_A_trust": 6.25,
+      "gap_when_B_trust": 6.5,
+      "causal_swing": -0.25,
+      "mean_update_ratio": 0.3686462175197343,
+      "capped": false,
+      "runs": {
+        "A": {
+          "trust": 1.0,
+          "gap_A_minus_B": 6.25,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.1340520977973938,
+            "mean_other_mass": 0.00698409928008914,
+            "mean_query_update_ratio": 0.38159437057241646,
+            "max_query_update_ratio": 0.38159437057241646,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "trust": -1.0,
+          "gap_A_minus_B": 6.5,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.0734252855181694,
+            "mean_other_mass": 0.005843078717589378,
+            "mean_query_update_ratio": 0.35569806446705216,
+            "max_query_update_ratio": 0.35569806446705216,
+            "capped_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "head": {
+        "layer": 24,
+        "query_head": 28,
+        "kv_head": 7,
+        "symmetric_source_mass": 0.40518277883529663,
+        "mass_when_a": 0.40518277883529663,
+        "mass_when_b": 0.4289233684539795,
+        "ratio_when_a": 0.34751675902835,
+        "ratio_when_b": 0.43167991017524027
+      },
+      "gap_when_A_trust": 3.0,
+      "gap_when_B_trust": 13.25,
+      "causal_swing": -10.25,
+      "mean_update_ratio": 0.39052364741978457,
+      "capped": false,
+      "runs": {
+        "A": {
+          "trust": 1.0,
+          "gap_A_minus_B": 3.0,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.31061071157455444,
+            "mean_other_mass": 0.021449310705065727,
+            "mean_query_update_ratio": 0.41705280486200197,
+            "max_query_update_ratio": 0.41705280486200197,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "trust": -1.0,
+          "gap_A_minus_B": 13.25,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.39363735914230347,
+            "mean_other_mass": 0.020149249583482742,
+            "mean_query_update_ratio": 0.36399448997756717,
+            "max_query_update_ratio": 0.36399448997756717,
+            "capped_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "head": {
+        "layer": 24,
+        "query_head": 29,
+        "kv_head": 7,
+        "symmetric_source_mass": 0.3152068555355072,
+        "mass_when_a": 0.47883620858192444,
+        "mass_when_b": 0.3152068555355072,
+        "ratio_when_a": 0.18174579759412554,
+        "ratio_when_b": 0.49617732725553104
+      },
+      "gap_when_A_trust": 7.25,
+      "gap_when_B_trust": 3.0,
+      "causal_swing": 4.25,
+      "mean_update_ratio": 0.32582810694580977,
+      "capped": false,
+      "runs": {
+        "A": {
+          "trust": 1.0,
+          "gap_A_minus_B": 7.25,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.10533499717712402,
+            "mean_other_mass": 0.005508022382855415,
+            "mean_query_update_ratio": 0.24851319286634377,
+            "max_query_update_ratio": 0.24851319286634377,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "trust": -1.0,
+          "gap_A_minus_B": 3.0,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.12159664183855057,
+            "mean_other_mass": 0.0047976355999708176,
+            "mean_query_update_ratio": 0.4031430210252757,
+            "max_query_update_ratio": 0.4031430210252757,
+            "capped_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "head": {
+        "layer": 24,
+        "query_head": 23,
+        "kv_head": 5,
+        "symmetric_source_mass": 0.2703208923339844,
+        "mass_when_a": 0.2703208923339844,
+        "mass_when_b": 0.3355734050273895,
+        "ratio_when_a": 0.26868694508327146,
+        "ratio_when_b": 0.3437080749266016
+      },
+      "gap_when_A_trust": 7.0,
+      "gap_when_B_trust": 4.75,
+      "causal_swing": 2.25,
+      "mean_update_ratio": 0.3960185706676044,
+      "capped": false,
+      "runs": {
+        "A": {
+          "trust": 1.0,
+          "gap_A_minus_B": 7.0,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.0931927040219307,
+            "mean_other_mass": 0.005059105344116688,
+            "mean_query_update_ratio": 0.29342172606919914,
+            "max_query_update_ratio": 0.29342172606919914,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "trust": -1.0,
+          "gap_A_minus_B": 4.75,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.12826594710350037,
+            "mean_other_mass": 0.005943054333329201,
+            "mean_query_update_ratio": 0.4986154152660096,
+            "max_query_update_ratio": 0.4986154152660096,
+            "capped_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "head": {
+        "layer": 30,
+        "query_head": 11,
+        "kv_head": 2,
+        "symmetric_source_mass": 0.08307279646396637,
+        "mass_when_a": 0.08768667280673981,
+        "mass_when_b": 0.08307279646396637,
+        "ratio_when_a": 0.22103351347285471,
+        "ratio_when_b": 0.5432341194168246
+      },
+      "gap_when_A_trust": 7.0,
+      "gap_when_B_trust": 5.5,
+      "causal_swing": 1.5,
+      "mean_update_ratio": 0.3998095540179737,
+      "capped": false,
+      "runs": {
+        "A": {
+          "trust": 1.0,
+          "gap_A_minus_B": 7.0,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.26134639978408813,
+            "mean_other_mass": 0.024796761572360992,
+            "mean_query_update_ratio": 0.3064429603781152,
+            "max_query_update_ratio": 0.3064429603781152,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "trust": -1.0,
+          "gap_A_minus_B": 5.5,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.1827276051044464,
+            "mean_other_mass": 0.004947074688971043,
+            "mean_query_update_ratio": 0.49317614765783224,
+            "max_query_update_ratio": 0.49317614765783224,
+            "capped_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "head": {
+        "layer": 30,
+        "query_head": 17,
+        "kv_head": 4,
+        "symmetric_source_mass": 0.0719902291893959,
+        "mass_when_a": 0.0719902291893959,
+        "mass_when_b": 0.3035676181316376,
+        "ratio_when_a": 0.2988049203344562,
+        "ratio_when_b": 0.30507130528628484
+      },
+      "gap_when_A_trust": 6.25,
+      "gap_when_B_trust": 6.25,
+      "causal_swing": 0.0,
+      "mean_update_ratio": 0.28704675505066163,
+      "capped": false,
+      "runs": {
+        "A": {
+          "trust": 1.0,
+          "gap_A_minus_B": 6.25,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.24886412918567657,
+            "mean_other_mass": 0.010497626848518848,
+            "mean_query_update_ratio": 0.3498943608696191,
+            "max_query_update_ratio": 0.3498943608696191,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "trust": -1.0,
+          "gap_A_minus_B": 6.25,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.48029789328575134,
+            "mean_other_mass": 0.029988784343004227,
+            "mean_query_update_ratio": 0.22419914923170414,
+            "max_query_update_ratio": 0.22419914923170414,
+            "capped_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "head": {
+        "layer": 30,
+        "query_head": 26,
+        "kv_head": 6,
+        "symmetric_source_mass": 0.06924363225698471,
+        "mass_when_a": 0.06924363225698471,
+        "mass_when_b": 0.13848982751369476,
+        "ratio_when_a": 0.2507649386233799,
+        "ratio_when_b": 0.475923575857441
+      },
+      "gap_when_A_trust": 6.25,
+      "gap_when_B_trust": 6.25,
+      "causal_swing": 0.0,
+      "mean_update_ratio": 0.3957519844513048,
+      "capped": false,
+      "runs": {
+        "A": {
+          "trust": 1.0,
+          "gap_A_minus_B": 6.25,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.025147756561636925,
+            "mean_other_mass": 0.0018621988128870726,
+            "mean_query_update_ratio": 0.3476631285118099,
+            "max_query_update_ratio": 0.3476631285118099,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "trust": -1.0,
+          "gap_A_minus_B": 6.25,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.06319830566644669,
+            "mean_other_mass": 0.0061543649062514305,
+            "mean_query_update_ratio": 0.4438408403907996,
+            "max_query_update_ratio": 0.4438408403907996,
+            "capped_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "head": {
+        "layer": 30,
+        "query_head": 9,
+        "kv_head": 2,
+        "symmetric_source_mass": 0.055573347955942154,
+        "mass_when_a": 0.11220458149909973,
+        "mass_when_b": 0.055573347955942154,
+        "ratio_when_a": 0.25388754784828105,
+        "ratio_when_b": 0.533857792847478
+      },
+      "gap_when_A_trust": 6.25,
+      "gap_when_B_trust": 6.5,
+      "causal_swing": -0.25,
+      "mean_update_ratio": 0.39726456502221974,
+      "capped": false,
+      "runs": {
+        "A": {
+          "trust": 1.0,
+          "gap_A_minus_B": 6.25,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.167403906583786,
+            "mean_other_mass": 0.025147462263703346,
+            "mean_query_update_ratio": 0.321105208187032,
+            "max_query_update_ratio": 0.321105208187032,
+            "capped_fraction": 0.0
+          }
+        },
+        "B": {
+          "trust": -1.0,
+          "gap_A_minus_B": 6.5,
+          "observer": {
+            "reads": 1,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.0774252787232399,
+            "mean_other_mass": 0.02951282076537609,
+            "mean_query_update_ratio": 0.47342392185740745,
+            "max_query_update_ratio": 0.47342392185740745,
+            "capped_fraction": 0.0
+          }
+        }
+      }
+    }
+  ],
+  "selected_heads": [
+    {
+      "layer": 24,
+      "query_head": 29,
+      "kv_head": 7,
+      "symmetric_source_mass": 0.3152068555355072,
+      "mass_when_a": 0.47883620858192444,
+      "mass_when_b": 0.3152068555355072,
+      "ratio_when_a": 0.18174579759412554,
+      "ratio_when_b": 0.49617732725553104
+    },
+    {
+      "layer": 24,
+      "query_head": 23,
+      "kv_head": 5,
+      "symmetric_source_mass": 0.2703208923339844,
+      "mass_when_a": 0.2703208923339844,
+      "mass_when_b": 0.3355734050273895,
+      "ratio_when_a": 0.26868694508327146,
+      "ratio_when_b": 0.3437080749266016
+    },
+    {
+      "layer": 30,
+      "query_head": 11,
+      "kv_head": 2,
+      "symmetric_source_mass": 0.08307279646396637,
+      "mass_when_a": 0.08768667280673981,
+      "mass_when_b": 0.08307279646396637,
+      "ratio_when_a": 0.22103351347285471,
+      "ratio_when_b": 0.5432341194168246
+    },
+    {
+      "layer": 18,
+      "query_head": 28,
+      "kv_head": 7,
+      "symmetric_source_mass": 0.06900083273649216,
+      "mass_when_a": 0.06900083273649216,
+      "mass_when_b": 0.0825178325176239,
+      "ratio_when_a": 0.4100351142323762,
+      "ratio_when_b": 0.28437676999860306
+    }
+  ],
+  "runs": [
+    {
+      "mode": "A",
+      "trust": 1.0,
+      "answer": "The device failed because valve C was obstructed.",
+      "observer": {
+        "reads": 44,
+        "cache_integrity_ok": true,
+        "mean_target_mass": 0.45665841380303557,
+        "mean_other_mass": 0.035008485608903524,
+        "mean_query_update_ratio": 0.2307803740235401,
+        "max_query_update_ratio": 0.5093873519333638,
+        "capped_fraction": 0.0
+      }
+    },
+    {
+      "mode": "neutral",
+      "trust": 0.0,
+      "answer": "The device failed because valve C was obstructed.",
+      "observer": {
+        "reads": 44,
+        "cache_integrity_ok": true,
+        "mean_target_mass": 0.26450544701550494,
+        "mean_other_mass": 0.1177164812953296,
+        "mean_query_update_ratio": 0.0,
+        "max_query_update_ratio": 0.0,
+        "capped_fraction": 0.0
+      }
+    },
+    {
+      "mode": "B",
+      "trust": -1.0,
+      "answer": "The device failed because sensor K drifted.",
+      "observer": {
+        "reads": 36,
+        "cache_integrity_ok": true,
+        "mean_target_mass": 0.41937911241418785,
+        "mean_other_mass": 0.01604525417658604,
+        "mean_query_update_ratio": 0.33720941640727337,
+        "max_query_update_ratio": 0.6244045416503778,
+        "capped_fraction": 0.0
+      }
+    }
+  ],
+  "status": "completed"
+}
