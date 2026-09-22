@@ -1,0 +1,305 @@
+{
+  "scope": "Matched observer trust x temporal-distance sweep on one canonical growing Qwen KV cache. All diagnostic probes use isolated cache branches and must not advance the canonical history.",
+  "model": "Qwen/Qwen3-8B",
+  "transformers_version": "5.15.0",
+  "source_spans": {
+    "A": [
+      45,
+      62
+    ],
+    "B": [
+      72,
+      87
+    ]
+  },
+  "frozen_heads": [
+    {
+      "layer": 24,
+      "query_head": 29,
+      "kv_head": 7
+    },
+    {
+      "layer": 24,
+      "query_head": 23,
+      "kv_head": 5
+    },
+    {
+      "layer": 30,
+      "query_head": 11,
+      "kv_head": 2
+    },
+    {
+      "layer": 18,
+      "query_head": 28,
+      "kv_head": 7
+    }
+  ],
+  "target_margin": 3.0,
+  "max_ratio": 1.0,
+  "distance_targets": [
+    0,
+    256
+  ],
+  "trust_grid": [
+    -1.0,
+    0.0,
+    1.0
+  ],
+  "candidate_a": "The device failed because valve C was obstructed.",
+  "candidate_b": "The device failed because sensor K drifted.",
+  "checkpoint_definition": "added canonical KV tokens after the initial closed assistant answer",
+  "checkpoints": [
+    {
+      "target_distance": 0,
+      "actual_added_tokens": 0,
+      "canonical_cache_tokens": 131,
+      "dose_response": [
+        {
+          "trust": -1.0,
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "tokens": 10,
+            "sum_logprob": -10.250051975110182,
+            "mean_logprob": -1.0250051975110182,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.3434716386720538,
+              "mean_other_mass": 0.015320133668137715,
+              "mean_query_update_ratio": 0.3504646041821061,
+              "max_query_update_ratio": 0.7539068500520741,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "tokens": 8,
+            "sum_logprob": -5.221290302159787e-05,
+            "mean_logprob": -6.526612877699733e-06,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.3930277571780607,
+              "mean_other_mass": 0.012055521918227896,
+              "mean_query_update_ratio": 0.19004618868119122,
+              "max_query_update_ratio": 0.4278405126990991,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": -1.0249986708981405
+        },
+        {
+          "trust": 0.0,
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "tokens": 10,
+            "sum_logprob": -9.500101923564216,
+            "mean_logprob": -0.9500101923564216,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.13093204014003276,
+              "mean_other_mass": 0.16157751488499345,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "tokens": 8,
+            "sum_logprob": -0.00010251680941308905,
+            "mean_logprob": -1.2814601176636131e-05,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.04231649555731565,
+              "mean_other_mass": 0.29088065668474883,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": -0.949997377755245
+        },
+        {
+          "trust": 1.0,
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "tokens": 10,
+            "sum_logprob": -6.002503275492927,
+            "mean_logprob": -0.6002503275492928,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.33529995381832123,
+              "mean_other_mass": 0.03086935572500806,
+              "mean_query_update_ratio": 0.3053422147674547,
+              "max_query_update_ratio": 0.5587618276123564,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "tokens": 8,
+            "sum_logprob": -0.002504261762965143,
+            "mean_logprob": -0.0003130327203706429,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.36884495965205133,
+              "mean_other_mass": 0.04025170298336889,
+              "mean_query_update_ratio": 0.4802461900894253,
+              "max_query_update_ratio": 0.8432147479041185,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": -0.5999372948289221
+        }
+      ],
+      "generation": []
+    },
+    {
+      "target_distance": 256,
+      "actual_added_tokens": 280,
+      "canonical_cache_tokens": 411,
+      "dose_response": [
+        {
+          "trust": -1.0,
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "tokens": 10,
+            "sum_logprob": -0.0005529781919904053,
+            "mean_logprob": -5.5297819199040535e-05,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.28565307017415764,
+              "mean_other_mass": 0.013185886072460563,
+              "mean_query_update_ratio": 0.4200589765816546,
+              "max_query_update_ratio": 0.7306799002290316,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "tokens": 8,
+            "sum_logprob": -7.500553250312798,
+            "mean_logprob": -0.9375691562890998,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.35603347688447684,
+              "mean_other_mass": 0.010979044513078406,
+              "mean_query_update_ratio": 0.28290966875206863,
+              "max_query_update_ratio": 0.593477166786608,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 0.9375138584699008
+        },
+        {
+          "trust": 0.0,
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "tokens": 10,
+            "sum_logprob": 0.0,
+            "mean_logprob": 0.0,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.15094240139005705,
+              "mean_other_mass": 0.07918087124126032,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "tokens": 8,
+            "sum_logprob": -18.500000119209282,
+            "mean_logprob": -2.3125000149011603,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.07898313212717767,
+              "mean_other_mass": 0.19875218012020923,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 2.3125000149011603
+        },
+        {
+          "trust": 1.0,
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "tokens": 10,
+            "sum_logprob": 0.0,
+            "mean_logprob": 0.0,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.28933443343266846,
+              "mean_other_mass": 0.028048952255630866,
+              "mean_query_update_ratio": 0.19984652708333034,
+              "max_query_update_ratio": 0.5899238172954009,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "tokens": 8,
+            "sum_logprob": -21.250006318072337,
+            "mean_logprob": -2.656250789759042,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.3220290591707453,
+              "mean_other_mass": 0.03787511341943173,
+              "mean_query_update_ratio": 0.35668396987505,
+              "max_query_update_ratio": 0.8124567943489279,
+              "capped_fraction": 0.0
+            }
+          },
+          "mean_logprob_margin_A_minus_B": 2.656250789759042
+        }
+      ],
+      "generation": []
+    }
+  ],
+  "complete": true,
+  "anchor": {
+    "initial_answer": "The device failed because valve C was obstructed.",
+    "cache_tokens": 131,
+    "cache_fork_mode": "layer-tensor-constructor",
+    "source_cache_integrity_ok": true
+  },
+  "summary": {
+    "rows": [
+      {
+        "target_distance": 0,
+        "actual_added_tokens": 0,
+        "margin_at_minus1": -1.0249986708981405,
+        "margin_at_zero": -0.949997377755245,
+        "margin_at_plus1": -0.5999372948289221,
+        "endpoint_swing": 0.42506137606921834,
+        "swing_fraction_of_baseline": 1.0
+      },
+      {
+        "target_distance": 256,
+        "actual_added_tokens": 280,
+        "margin_at_minus1": 0.9375138584699008,
+        "margin_at_zero": 2.3125000149011603,
+        "margin_at_plus1": 2.656250789759042,
+        "endpoint_swing": 1.7187369312891414,
+        "swing_fraction_of_baseline": 4.043502957580547
+      }
+    ],
+    "interpretation_boundary": "Do not infer success from attention mass alone. Compare the A-minus-B likelihood dose-response and its endpoint swing across distance while canonical source integrity remains true."
+  },
+  "canonical_cache_tokens": 411,
+  "source_cache_integrity_ok": true
+}
