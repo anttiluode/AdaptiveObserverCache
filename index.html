@@ -10,7 +10,7 @@ body{margin:0;min-height:100vh;background:radial-gradient(circle at 20% 10%,#182
 main{max-width:980px;margin:auto;padding:64px 24px 80px}
 h1{font-size:clamp(2.4rem,7vw,5.8rem);line-height:.9;margin:0 0 18px;letter-spacing:-.06em}
 h2{margin-top:50px;font-size:1.7rem}
-.lead{max-width:780px;font-size:1.15rem;line-height:1.6;color:#aeb7c2}
+.lead{max-width:800px;font-size:1.15rem;line-height:1.6;color:#aeb7c2}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
 .card{background:#12161c;border:1px solid #242c36;border-radius:18px;padding:22px}
 .metric{font-size:2.2rem;font-weight:800}
@@ -18,95 +18,52 @@ button{background:#e9edf2;color:#0b0d10;border:0;border-radius:999px;padding:10p
 button.alt{background:#25303c;color:#e9edf2}
 .bar{height:14px;background:#202731;border-radius:999px;overflow:hidden;margin:8px 0 18px}
 .fill{height:100%;background:#d8dee7;transition:width .35s ease}
-code{color:#cbd5e1}
-.big{font-size:2rem;font-weight:800}
-.small{color:#8e99a7;font-size:.92rem}
+code{color:#cbd5e1}.big{font-size:2rem;font-weight:800}.small{color:#8e99a7;font-size:.92rem}
 .pass{display:inline-block;padding:5px 10px;border:1px solid #667383;border-radius:999px;font-weight:700}
+.warn{border-left:3px solid #8e99a7;padding-left:16px}
 @media(max-width:720px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <main>
 <h1>The memory stays.<br>The reader moves.</h1>
-<p class="lead">Observer-in-the-loop memory: keep historical material fixed, but let experience change the apparatus that reads it.</p>
+<p class="lead">Keep historical material fixed. Let a tiny persistent state change how the transformer interrogates it.</p>
 
-<h2>Gate 1 — frozen attention receipt <span class="pass">PASS</span></h2>
+<h2>Gate 2 — pretrained DistilGPT2 K/V <span class="pass">PASS</span></h2>
 <div class="grid">
-<section class="card">
-<div class="small">best fixed observer</div>
-<div class="metric">50.0%</div>
-<p>Best of fixed <code>m = −1, 0, +1</code>, same one-read budget.</p>
-</section>
-<section class="card">
-<div class="small">persistent adaptive observer</div>
-<div class="metric">81.25%</div>
-<p><strong>+31.25 points</strong>. K/V and model parameters remained byte-identical.</p>
-</section>
-<section class="card">
-<div class="small">same K/V + same present + m = +1</div>
-<div class="metric">96.22% A</div>
-<p>Rank-1 query modulation turns the frozen reader toward A-addressed evidence.</p>
-</section>
-<section class="card">
-<div class="small">same K/V + same present + m = −1</div>
-<div class="metric">96.22% B</div>
-<p>The historical field does not move. Only the query geometry does.</p>
-</section>
+<section class="card"><div class="small">blind adaptive reads</div><div class="metric">12 / 12</div><p>One calibration receipt, then three truth-free reads per block.</p></section>
+<section class="card"><div class="small">best fixed / reset controls</div><div class="metric">6 / 12</div><p>Same prompt, same pretrained cache, same one-read budget.</p></section>
+<section class="card"><div class="small">A observer mode</div><div class="metric">100% A</div><p><code>m = +1.15</code>; essentially all total attention lands on Alice's source span.</p></section>
+<section class="card"><div class="small">B observer mode</div><div class="metric">100% B</div><p><code>m = -4.00</code>; essentially all total attention lands on Bob's source span.</p></section>
+</div>
+<p class="lead warn"><strong>Important:</strong> the B mode hits the allowed scalar boundary, and the observer geometry is calibrated on this same cache. Gate 3 must freeze it and move to unseen prompts rather than rebuilding it.</p>
+
+<h2>Gate 1 — frozen synthetic attention bridge</h2>
+<div class="grid">
+<section class="card"><div class="small">best fixed observer</div><div class="metric">50.0%</div></section>
+<section class="card"><div class="small">persistent adaptive observer</div><div class="metric">81.25%</div><p>+31.25 points with byte-identical K/V and frozen parameters.</p></section>
 </div>
 
 <h2>Gate 0 interactive microscope</h2>
-<p class="lead">This older dependency-free toy uses two observer gains so you can directly watch attention mass move over an immutable cache. Gate 1 replaces it with a scalar rank-1 observer inside frozen PyTorch attention.</p>
+<p class="lead">The original dependency-free microscope still shows the primitive directly: the cache stays fixed while observer state changes the query.</p>
 <div>
 <button onclick="setObserver(2,-2)">A-biased observer</button>
 <button class="alt" onclick="setObserver(-2,2)">B-biased observer</button>
 <button class="alt" onclick="surprise()">Contradict current read</button>
 </div>
 <div class="grid">
-<section class="card">
-<div class="small">Observer state m = [log gain A, log gain B]</div>
-<div class="big" id="state"></div>
-<p>Fixed present: <code>[1, 1]</code></p>
-<p>Query direction: <code id="query"></code></p>
-</section>
-<section class="card">
-<div class="small">Attention mass over the same immutable cache</div>
-<p>A provenance <span id="aPct"></span></p>
-<div class="bar"><div id="aBar" class="fill"></div></div>
-<p>B provenance <span id="bPct"></span></p>
-<div class="bar"><div id="bBar" class="fill"></div></div>
-<div class="big" id="read"></div>
-</section>
+<section class="card"><div class="small">Observer state</div><div class="big" id="state"></div><p>Query: <code id="query"></code></p></section>
+<section class="card"><div class="small">Attention over immutable cache</div><p>A <span id="aPct"></span></p><div class="bar"><div id="aBar" class="fill"></div></div><p>B <span id="bPct"></span></p><div class="bar"><div id="bBar" class="fill"></div></div><div class="big" id="read"></div></section>
 </div>
-<p class="lead">Next boundary: use naturally produced hidden states and K/V from a real frozen pretrained transformer. Gate 1 proves only the mechanism.</p>
 </main>
 <script>
-const entries=[
- {k:[1,.15],v:1,p:"A"},{k:[.9,-.1],v:.8,p:"A"},
- {k:[.15,1],v:-1,p:"B"},{k:[-.1,.9],v:-.8,p:"B"}
-];
+const entries=[{k:[1,.15],v:1,p:"A"},{k:[.9,-.1],v:.8,p:"A"},{k:[.15,1],v:-1,p:"B"},{k:[-.1,.9],v:-.8,p:"B"}];
 let m=[2,-2];
 function softmax(xs){const z=Math.max(...xs),e=xs.map(x=>Math.exp(x-z)),s=e.reduce((a,b)=>a+b,0);return e.map(x=>x/s)}
-function read(){
- const raw=[Math.exp(m[0]),Math.exp(m[1])],n=Math.hypot(...raw),q=raw.map(x=>x/n);
- const w=softmax(entries.map(e=>(q[0]*e.k[0]+q[1]*e.k[1])/.2));
- let A=0,B=0,v=0;w.forEach((x,i)=>{v+=x*entries[i].v;(entries[i].p==="A"?A+=x:B+=x)});
- return {q,A,B,v,p:A>=B?"A":"B",pred:v>=0?1:-1};
-}
-function render(){
- const r=read();
- state.textContent="[ "+m.map(x=>x.toFixed(1)).join(", ")+" ]";
- query.textContent="["+r.q.map(x=>x.toFixed(3)).join(", ")+"]";
- aPct.textContent=(100*r.A).toFixed(1)+"%"; bPct.textContent=(100*r.B).toFixed(1)+"%";
- aBar.style.width=(100*r.A)+"%"; bBar.style.width=(100*r.B)+"%";
- read.textContent="reads "+r.p+"  →  "+(r.pred>0?"+1":"−1");
-}
+function read(){const raw=[Math.exp(m[0]),Math.exp(m[1])],n=Math.hypot(...raw),q=raw.map(x=>x/n);const w=softmax(entries.map(e=>(q[0]*e.k[0]+q[1]*e.k[1])/.2));let A=0,B=0,v=0;w.forEach((x,i)=>{v+=x*entries[i].v;(entries[i].p==="A"?A+=x:B+=x)});return {q,A,B,v,p:A>=B?"A":"B",pred:v>=0?1:-1}}
+function render(){const r=read();state.textContent="[ "+m.map(x=>x.toFixed(1)).join(", ")+" ]";query.textContent="["+r.q.map(x=>x.toFixed(3)).join(", ")+"]";aPct.textContent=(100*r.A).toFixed(1)+"%";bPct.textContent=(100*r.B).toFixed(1)+"%";aBar.style.width=(100*r.A)+"%";bBar.style.width=(100*r.B)+"%";read.textContent="reads "+r.p+" → "+(r.pred>0?"+1":"−1")}
 function setObserver(a,b){m=[a,b];render()}
-function surprise(){
- const r=read(),step=3;
- if(r.p==="A")m=[Math.max(-6,m[0]-step),Math.min(6,m[1]+step)];
- else m=[Math.min(6,m[0]+step),Math.max(-6,m[1]-step)];
- render();
-}
+function surprise(){const r=read(),step=3;if(r.p==="A")m=[Math.max(-6,m[0]-step),Math.min(6,m[1]+step)];else m=[Math.min(6,m[0]+step),Math.max(-6,m[1]-step)];render()}
 render();
 </script>
 </body>

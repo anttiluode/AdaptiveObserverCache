@@ -1,0 +1,53 @@
+{
+  "gate": 2,
+  "status": "pass",
+  "model": {
+    "id": "distilbert/distilgpt2",
+    "revision": "2290a62",
+    "layer": 3,
+    "head": 2,
+    "head_dim": 64
+  },
+  "observer": {
+    "equation": "q' = q_pretrained + m * ||q_pretrained|| * u",
+    "direction": "normalize(mean(K_A)-mean(K_B))",
+    "grid": [
+      -4,
+      4,
+      161
+    ],
+    "mode_A": 1.149999976158142,
+    "mode_B": -4,
+    "mode_B_boundary_hit": true
+  },
+  "paired": {
+    "A": {
+      "mass_A": 1,
+      "mass_B": 1.695941520551969e-8,
+      "source_share_A": 0.9999999830405851
+    },
+    "neutral": {
+      "mass_A": 0.9681972861289978,
+      "mass_B": 0.023786302655935287,
+      "source_share_A": 0.9760214756324036
+    },
+    "B": {
+      "mass_A": 1.6198325666905156e-11,
+      "mass_B": 1,
+      "source_share_A": 1.6198325666642768e-11
+    }
+  },
+  "blind_test": {
+    "adaptive": 1,
+    "best_fixed": 0.5,
+    "reset_control": 0.5,
+    "advantage": 0.5,
+    "test_reads": 12
+  },
+  "integrity": {
+    "cache_digest": "79a3fa9e0fbb26e50b3acd5e03b90a74c8fcf1b87c650a5ed6578f36a0543cde",
+    "target_attention_parameter_digest": "ac80d2a0f80207e5a62aa81ff34b386bd19fef9a255d4aabf33e132723cdb824",
+    "cache_unchanged": true
+  },
+  "note": "Initial normalized-share contract exposed a false-positive loophole and was hardened before merge to require absolute source engagement."
+}
