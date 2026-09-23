@@ -1,0 +1,652 @@
+{
+  "scope": "Phasic vs tonic vs neutral observer schedules on the first-ask, masked-distance Qwen cache. Separates observer-caused tail damage from distance-caused tail damage.",
+  "model": "Qwen/Qwen3-8B",
+  "transformers_version": "5.15.0",
+  "trust": -1.0,
+  "distances": [
+    0,
+    256
+  ],
+  "decision_index": 4,
+  "candidate_a": "The device failed because valve C was obstructed.",
+  "candidate_b": "The device failed because sensor K drifted.",
+  "arms": [
+    "tonic",
+    "phasic",
+    "neutral"
+  ],
+  "checkpoints": [
+    {
+      "added_masked_positions": 0,
+      "arms": {
+        "tonic": {
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " valve",
+              " C",
+              " was",
+              " obstruct",
+              "ed",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.0024756519123911858,
+              -1.1485549211502075,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.011047743260860443
+            ],
+            "prefix": -0.0024756519123911858,
+            "decision": -1.1485549211502075,
+            "tail": -0.011047743260860443,
+            "total": -1.1620783163234591,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.45180292408913375,
+              "mean_other_mass": 0.022699378890683873,
+              "mean_query_update_ratio": 0.4601713581820137,
+              "max_query_update_ratio": 0.7525565726975875,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " sensor",
+              " K",
+              " drifted",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.0024756519123911858,
+              -0.39855489134788513,
+              0.0,
+              -1.1920928244535389e-07,
+              -0.4740769863128662
+            ],
+            "prefix": -0.0024756519123911858,
+            "decision": -0.39855489134788513,
+            "tail": -0.47407710552214866,
+            "total": -0.875107648782425,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.4430171689018607,
+              "mean_other_mass": 0.01659915610071039,
+              "mean_query_update_ratio": 0.3363006229750865,
+              "max_query_update_ratio": 0.6240521917592114,
+              "capped_fraction": 0.0
+            }
+          }
+        },
+        "phasic": {
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " valve",
+              " C",
+              " was",
+              " obstruct",
+              "ed",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.0024756519123911858,
+              -1.1485549211502075,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.004078404977917671
+            ],
+            "prefix": -0.0024756519123911858,
+            "decision": -1.1485549211502075,
+            "tail": -0.004078404977917671,
+            "total": -1.1551089780405164,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.4071625919081271,
+              "mean_other_mass": 0.05386321296100505,
+              "mean_query_update_ratio": 0.21111589505182446,
+              "max_query_update_ratio": 0.6240521917592114,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " sensor",
+              " K",
+              " drifted",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.0024756519123911858,
+              -0.39855489134788513,
+              0.0,
+              -2.3841855067985307e-07,
+              -0.38687101006507874
+            ],
+            "prefix": -0.0024756519123911858,
+            "decision": -0.39855489134788513,
+            "tail": -0.3868712484836294,
+            "total": -0.7879017917439057,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.29774437309242785,
+              "mean_other_mass": 0.1346978517176467,
+              "mean_query_update_ratio": 0.2638948688147806,
+              "max_query_update_ratio": 0.6240521917592114,
+              "capped_fraction": 0.0
+            }
+          }
+        },
+        "neutral": {
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " valve",
+              " C",
+              " was",
+              " obstruct",
+              "ed",
+              "."
+            ],
+            "trust_schedule": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.0019286142196506262,
+              -0.0011533997021615505,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.0019286142196506262
+            ],
+            "prefix": -0.0019286142196506262,
+            "decision": -0.0011533997021615505,
+            "tail": -0.0019286142196506262,
+            "total": -0.005010628141462803,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.2875047833658755,
+              "mean_other_mass": 0.12438323490787298,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " sensor",
+              " K",
+              " drifted",
+              "."
+            ],
+            "trust_schedule": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.0019286142196506262,
+              -11.251152992248535,
+              0.0,
+              -3.576278118089249e-07,
+              -0.2014133334159851
+            ],
+            "prefix": -0.0019286142196506262,
+            "decision": -11.251152992248535,
+            "tail": -0.20141369104379692,
+            "total": -11.454495297511983,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.14773551971302368,
+              "mean_other_mass": 0.22379776858724654,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "added_masked_positions": 256,
+      "arms": {
+        "tonic": {
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " valve",
+              " C",
+              " was",
+              " obstruct",
+              "ed",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.023245446383953094,
+              -2.504835844039917,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.07889349013566971
+            ],
+            "prefix": -0.023245446383953094,
+            "decision": -2.504835844039917,
+            "tail": -0.07889349013566971,
+            "total": -2.60697478055954,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.35973461214452984,
+              "mean_other_mass": 0.019262665216228925,
+              "mean_query_update_ratio": 0.48209271652511526,
+              "max_query_update_ratio": 0.7389211444877577,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " sensor",
+              " K",
+              " drifted",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.023245446383953094,
+              -0.754835844039917,
+              0.0,
+              -5.960462772236497e-07,
+              -2.3502066135406494
+            ],
+            "prefix": -0.023245446383953094,
+            "decision": -0.754835844039917,
+            "tail": -2.3502072095869266,
+            "total": -3.1282885000107967,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.3379244311945513,
+              "mean_other_mass": 0.013324609008122934,
+              "mean_query_update_ratio": 0.35965061975265256,
+              "max_query_update_ratio": 0.639316104214638,
+              "capped_fraction": 0.0
+            }
+          }
+        },
+        "phasic": {
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " valve",
+              " C",
+              " was",
+              " obstruct",
+              "ed",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.023245446383953094,
+              -2.504835844039917,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.0485902801156044
+            ],
+            "prefix": -0.023245446383953094,
+            "decision": -2.504835844039917,
+            "tail": -0.0485902801156044,
+            "total": -2.5766715705394745,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.3414465204812586,
+              "mean_other_mass": 0.02334012152568903,
+              "mean_query_update_ratio": 0.22612830605517664,
+              "max_query_update_ratio": 0.639316104214638,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " sensor",
+              " K",
+              " drifted",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.023245446383953094,
+              -0.754835844039917,
+              0.0,
+              -5.960462772236497e-07,
+              -2.1269280910491943
+            ],
+            "prefix": -0.023245446383953094,
+            "decision": -0.754835844039917,
+            "tail": -2.1269286870954716,
+            "total": -2.9050099775193416,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.23982235440053046,
+              "mean_other_mass": 0.08596790453520953,
+              "mean_query_update_ratio": 0.2826603825689708,
+              "max_query_update_ratio": 0.639316104214638,
+              "capped_fraction": 0.0
+            }
+          }
+        },
+        "neutral": {
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " valve",
+              " C",
+              " was",
+              " obstruct",
+              "ed",
+              "."
+            ],
+            "trust_schedule": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.018149960786104202,
+              -0.10651388764381409,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.014164271764457226
+            ],
+            "prefix": -0.018149960786104202,
+            "decision": -0.10651388764381409,
+            "tail": -0.014164271764457226,
+            "total": -0.13882812019437551,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.24535550320288166,
+              "mean_other_mass": 0.06481302637839689,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " sensor",
+              " K",
+              " drifted",
+              "."
+            ],
+            "trust_schedule": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.018149960786104202,
+              -10.356513977050781,
+              0.0,
+              -1.5497195136049413e-06,
+              -1.3132617473602295
+            ],
+            "prefix": -0.018149960786104202,
+            "decision": -10.356513977050781,
+            "tail": -1.313263297079743,
+            "total": -11.687927234916629,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.11886276905715931,
+              "mean_other_mass": 0.13837406956008635,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          }
+        }
+      }
+    }
+  ],
+  "complete": true,
+  "anchor": {
+    "cache_tokens": 93,
+    "cache_fork_mode": "layer-tensor-constructor"
+  },
+  "readout": {
+    "near_winner": {
+      "tonic": "B",
+      "phasic": "B",
+      "neutral": "A"
+    },
+    "far_winner": {
+      "tonic": "A",
+      "phasic": "A",
+      "neutral": "A"
+    },
+    "observer_tail_damage_nats": 0.22327852249145508,
+    "distance_tail_cost_nats": 1.1118496060359462,
+    "far_decision_logprob_mismatch_tonic_vs_phasic": 0.0,
+    "threshold_nats": 0.5,
+    "verdict": "DISTANCE_DAMAGES_TAIL"
+  }
+}
