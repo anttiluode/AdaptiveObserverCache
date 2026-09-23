@@ -4,6 +4,7 @@ import unittest
 from qwen_first_ask_metrics import (
     first_divergence,
     sequence_control_summary,
+    split_first_ask_ids,
 )
 
 
@@ -37,6 +38,18 @@ class FirstAskMetricsTests(unittest.TestCase):
     def test_first_divergence_rejects_prefix_only_candidates(self):
         with self.assertRaises(ValueError):
             first_divergence([1, 2], [1, 2, 3])
+
+    def test_split_first_ask_closes_system_before_question(self):
+        source_ids, question_suffix = split_first_ask_ids(
+            [101, 102, 999, 201, 202, 999, 301],
+            assistant_end_id=999,
+        )
+        self.assertEqual(source_ids, [101, 102, 999])
+        self.assertEqual(question_suffix, [201, 202, 999, 301])
+
+    def test_split_first_ask_requires_system_boundary(self):
+        with self.assertRaises(ValueError):
+            split_first_ask_ids([1, 2, 3], assistant_end_id=999)
 
 
 if __name__ == "__main__":
