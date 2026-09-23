@@ -1,0 +1,6013 @@
+{
+  "scope": "Phasic vs tonic vs neutral observer schedules on the first-ask, masked-distance Qwen cache. Separates observer-caused tail damage from distance-caused tail damage.",
+  "model": "Qwen/Qwen3-8B",
+  "transformers_version": "5.15.0",
+  "trust": -1.0,
+  "distances": [
+    0,
+    256
+  ],
+  "decision_index": 4,
+  "candidate_a": "The device failed because valve C was obstructed.",
+  "candidate_b": "The device failed because sensor K drifted.",
+  "arms": [
+    "tonic",
+    "phasic",
+    "neutral"
+  ],
+  "checkpoints": [
+    {
+      "added_masked_positions": 0,
+      "arms": {
+        "tonic": {
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " valve",
+              " C",
+              " was",
+              " obstruct",
+              "ed",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.0024756519123911858,
+              -1.1485549211502075,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.011047743260860443
+            ],
+            "top": [
+              [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -26.375
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -28.875
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -30.75
+                },
+                {
+                  "token": "Source",
+                  "id": 3608,
+                  "logprob": -33.375
+                }
+              ],
+              [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -28.0
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -29.5
+                },
+                {
+                  "token": ".device",
+                  "id": 18355,
+                  "logprob": -32.0
+                },
+                {
+                  "token": " devices",
+                  "id": 7611,
+                  "logprob": -33.0
+                }
+              ],
+              [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.5
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.25
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -25.75
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.375
+                }
+              ],
+              [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.0024756519123911858
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -6.002475738525391
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -19.25247573852539
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -24.00247573852539
+                },
+                {
+                  "token": "\u662f\u56e0\u4e3a",
+                  "id": 104404,
+                  "logprob": -26.75247573852539
+                }
+              ],
+              [
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -0.39855489134788513
+                },
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -1.1485549211502075
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -5.148554801940918
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -5.148554801940918
+                },
+                {
+                  "token": " there",
+                  "id": 1052,
+                  "logprob": -15.398554801940918
+                }
+              ],
+              [
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " K",
+                  "id": 730,
+                  "logprob": -33.5
+                },
+                {
+                  "token": "_C",
+                  "id": 920,
+                  "logprob": -37.375
+                },
+                {
+                  "token": "C",
+                  "id": 34,
+                  "logprob": -37.5
+                },
+                {
+                  "token": " B",
+                  "id": 425,
+                  "logprob": -37.625
+                }
+              ],
+              [
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " became",
+                  "id": 6116,
+                  "logprob": -27.625
+                },
+                {
+                  "token": " \u0431\u044b\u043b",
+                  "id": 128897,
+                  "logprob": -30.25
+                },
+                {
+                  "token": " were",
+                  "id": 1033,
+                  "logprob": -30.25
+                },
+                {
+                  "token": "was",
+                  "id": 16123,
+                  "logprob": -30.5
+                }
+              ],
+              [
+                {
+                  "token": " obstruct",
+                  "id": 53192,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " obstruction",
+                  "id": 59951,
+                  "logprob": -23.75
+                },
+                {
+                  "token": " blocked",
+                  "id": 19299,
+                  "logprob": -27.125
+                },
+                {
+                  "token": " obst",
+                  "id": 17864,
+                  "logprob": -27.5
+                },
+                {
+                  "token": " restricted",
+                  "id": 21739,
+                  "logprob": -29.375
+                }
+              ],
+              [
+                {
+                  "token": "ed",
+                  "id": 291,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "ED",
+                  "id": 1479,
+                  "logprob": -33.5
+                },
+                {
+                  "token": "ing",
+                  "id": 287,
+                  "logprob": -35.125
+                },
+                {
+                  "token": "eded",
+                  "id": 29935,
+                  "logprob": -36.875
+                },
+                {
+                  "token": "edm",
+                  "id": 89525,
+                  "logprob": -37.5
+                }
+              ],
+              [
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -0.011047743260860443
+                },
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -4.511047840118408
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -18.01104736328125
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -18.26104736328125
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -26.88604736328125
+                }
+              ]
+            ],
+            "prefix": -0.0024756519123911858,
+            "decision": -1.1485549211502075,
+            "tail": -0.011047743260860443,
+            "total": -1.1620783163234591,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.45180292408913375,
+              "mean_other_mass": 0.022699378890683873,
+              "mean_query_update_ratio": 0.4601713581820137,
+              "max_query_update_ratio": 0.7525565726975875,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " sensor",
+              " K",
+              " drifted",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.0024756519123911858,
+              -0.39855489134788513,
+              0.0,
+              -1.1920928244535389e-07,
+              -0.4740769863128662
+            ],
+            "top": [
+              [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -26.375
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -28.875
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -30.75
+                },
+                {
+                  "token": "Source",
+                  "id": 3608,
+                  "logprob": -33.375
+                }
+              ],
+              [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -28.0
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -29.5
+                },
+                {
+                  "token": ".device",
+                  "id": 18355,
+                  "logprob": -32.0
+                },
+                {
+                  "token": " devices",
+                  "id": 7611,
+                  "logprob": -33.0
+                }
+              ],
+              [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.5
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.25
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -25.75
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.375
+                }
+              ],
+              [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.0024756519123911858
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -6.002475738525391
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -19.25247573852539
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -24.00247573852539
+                },
+                {
+                  "token": "\u662f\u56e0\u4e3a",
+                  "id": 104404,
+                  "logprob": -26.75247573852539
+                }
+              ],
+              [
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -0.39855489134788513
+                },
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -1.1485549211502075
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -5.148554801940918
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -5.148554801940918
+                },
+                {
+                  "token": " there",
+                  "id": 1052,
+                  "logprob": -15.398554801940918
+                }
+              ],
+              [
+                {
+                  "token": " K",
+                  "id": 730,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": -36.0
+                },
+                {
+                  "token": " \u041a",
+                  "id": 35379,
+                  "logprob": -36.25
+                },
+                {
+                  "token": "K",
+                  "id": 42,
+                  "logprob": -37.25
+                },
+                {
+                  "token": " k",
+                  "id": 595,
+                  "logprob": -37.375
+                }
+              ],
+              [
+                {
+                  "token": " drifted",
+                  "id": 91562,
+                  "logprob": -1.1920928244535389e-07
+                },
+                {
+                  "token": " drifting",
+                  "id": 84253,
+                  "logprob": -16.5
+                },
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": -16.625
+                },
+                {
+                  "token": " drift",
+                  "id": 33638,
+                  "logprob": -17.0
+                },
+                {
+                  "token": ".dr",
+                  "id": 36938,
+                  "logprob": -19.125
+                }
+              ],
+              [
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -0.4740769863128662
+                },
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -0.9740769863128662
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -21.849077224731445
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -27.224077224731445
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -27.224077224731445
+                }
+              ]
+            ],
+            "prefix": -0.0024756519123911858,
+            "decision": -0.39855489134788513,
+            "tail": -0.47407710552214866,
+            "total": -0.875107648782425,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.4430171689018607,
+              "mean_other_mass": 0.01659915610071039,
+              "mean_query_update_ratio": 0.3363006229750865,
+              "max_query_update_ratio": 0.6240521917592114,
+              "capped_fraction": 0.0
+            }
+          }
+        },
+        "phasic": {
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " valve",
+              " C",
+              " was",
+              " obstruct",
+              "ed",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.0024756519123911858,
+              -1.1485549211502075,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.004078404977917671
+            ],
+            "top": [
+              [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -26.375
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -28.875
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -30.75
+                },
+                {
+                  "token": "Source",
+                  "id": 3608,
+                  "logprob": -33.375
+                }
+              ],
+              [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -28.0
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -29.5
+                },
+                {
+                  "token": ".device",
+                  "id": 18355,
+                  "logprob": -32.0
+                },
+                {
+                  "token": " devices",
+                  "id": 7611,
+                  "logprob": -33.0
+                }
+              ],
+              [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.5
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.25
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -25.75
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.375
+                }
+              ],
+              [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.0024756519123911858
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -6.002475738525391
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -19.25247573852539
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -24.00247573852539
+                },
+                {
+                  "token": "\u662f\u56e0\u4e3a",
+                  "id": 104404,
+                  "logprob": -26.75247573852539
+                }
+              ],
+              [
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -0.39855489134788513
+                },
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -1.1485549211502075
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -5.148554801940918
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -5.148554801940918
+                },
+                {
+                  "token": " there",
+                  "id": 1052,
+                  "logprob": -15.398554801940918
+                }
+              ],
+              [
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "_C",
+                  "id": 920,
+                  "logprob": -37.625
+                },
+                {
+                  "token": " B",
+                  "id": 425,
+                  "logprob": -37.625
+                },
+                {
+                  "token": "C",
+                  "id": 34,
+                  "logprob": -37.875
+                },
+                {
+                  "token": ".C",
+                  "id": 727,
+                  "logprob": -40.125
+                }
+              ],
+              [
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " became",
+                  "id": 6116,
+                  "logprob": -29.0
+                },
+                {
+                  "token": " were",
+                  "id": 1033,
+                  "logprob": -30.375
+                },
+                {
+                  "token": " \u0431\u044b\u043b",
+                  "id": 128897,
+                  "logprob": -30.625
+                },
+                {
+                  "token": " \u0431\u044b\u043b\u0430",
+                  "id": 129760,
+                  "logprob": -30.75
+                }
+              ],
+              [
+                {
+                  "token": " obstruct",
+                  "id": 53192,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " obstruction",
+                  "id": 59951,
+                  "logprob": -23.5
+                },
+                {
+                  "token": " obst",
+                  "id": 17864,
+                  "logprob": -27.375
+                },
+                {
+                  "token": " blocked",
+                  "id": 19299,
+                  "logprob": -28.625
+                },
+                {
+                  "token": " ob",
+                  "id": 1508,
+                  "logprob": -31.125
+                }
+              ],
+              [
+                {
+                  "token": "ed",
+                  "id": 291,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "ED",
+                  "id": 1479,
+                  "logprob": -33.75
+                },
+                {
+                  "token": "ing",
+                  "id": 287,
+                  "logprob": -35.5
+                },
+                {
+                  "token": "eded",
+                  "id": 29935,
+                  "logprob": -36.5
+                },
+                {
+                  "token": "edm",
+                  "id": 89525,
+                  "logprob": -38.0
+                }
+              ],
+              [
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -0.004078404977917671
+                },
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -5.504078388214111
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -19.004077911376953
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -19.004077911376953
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -28.129077911376953
+                }
+              ]
+            ],
+            "prefix": -0.0024756519123911858,
+            "decision": -1.1485549211502075,
+            "tail": -0.004078404977917671,
+            "total": -1.1551089780405164,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.4071625919081271,
+              "mean_other_mass": 0.05386321296100505,
+              "mean_query_update_ratio": 0.21111589505182446,
+              "max_query_update_ratio": 0.6240521917592114,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " sensor",
+              " K",
+              " drifted",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.0024756519123911858,
+              -0.39855489134788513,
+              0.0,
+              -2.3841855067985307e-07,
+              -0.38687101006507874
+            ],
+            "top": [
+              [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -26.375
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -28.875
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -30.75
+                },
+                {
+                  "token": "Source",
+                  "id": 3608,
+                  "logprob": -33.375
+                }
+              ],
+              [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -28.0
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -29.5
+                },
+                {
+                  "token": ".device",
+                  "id": 18355,
+                  "logprob": -32.0
+                },
+                {
+                  "token": " devices",
+                  "id": 7611,
+                  "logprob": -33.0
+                }
+              ],
+              [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.5
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.25
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -25.75
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.375
+                }
+              ],
+              [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.0024756519123911858
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -6.002475738525391
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -19.25247573852539
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -24.00247573852539
+                },
+                {
+                  "token": "\u662f\u56e0\u4e3a",
+                  "id": 104404,
+                  "logprob": -26.75247573852539
+                }
+              ],
+              [
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -0.39855489134788513
+                },
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -1.1485549211502075
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -5.148554801940918
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -5.148554801940918
+                },
+                {
+                  "token": " there",
+                  "id": 1052,
+                  "logprob": -15.398554801940918
+                }
+              ],
+              [
+                {
+                  "token": " K",
+                  "id": 730,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": -35.25
+                },
+                {
+                  "token": " \u041a",
+                  "id": 35379,
+                  "logprob": -35.75
+                },
+                {
+                  "token": "K",
+                  "id": 42,
+                  "logprob": -36.75
+                },
+                {
+                  "token": " k",
+                  "id": 595,
+                  "logprob": -37.0
+                }
+              ],
+              [
+                {
+                  "token": " drifted",
+                  "id": 91562,
+                  "logprob": -2.3841855067985307e-07
+                },
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": -16.375
+                },
+                {
+                  "token": " drifting",
+                  "id": 84253,
+                  "logprob": -16.625
+                },
+                {
+                  "token": " drift",
+                  "id": 33638,
+                  "logprob": -17.125
+                },
+                {
+                  "token": ".dr",
+                  "id": 36938,
+                  "logprob": -19.125
+                }
+              ],
+              [
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -0.38687101006507874
+                },
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -1.1368709802627563
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -22.136871337890625
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -27.386871337890625
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -27.386871337890625
+                }
+              ]
+            ],
+            "prefix": -0.0024756519123911858,
+            "decision": -0.39855489134788513,
+            "tail": -0.3868712484836294,
+            "total": -0.7879017917439057,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.29774437309242785,
+              "mean_other_mass": 0.1346978517176467,
+              "mean_query_update_ratio": 0.2638948688147806,
+              "max_query_update_ratio": 0.6240521917592114,
+              "capped_fraction": 0.0
+            }
+          }
+        },
+        "neutral": {
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " valve",
+              " C",
+              " was",
+              " obstruct",
+              "ed",
+              "."
+            ],
+            "trust_schedule": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.0019286142196506262,
+              -0.0011533997021615505,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.0019286142196506262
+            ],
+            "top": [
+              [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -26.25
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -28.75
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -30.5
+                },
+                {
+                  "token": "Source",
+                  "id": 3608,
+                  "logprob": -33.5
+                }
+              ],
+              [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -27.75
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -29.25
+                },
+                {
+                  "token": ".device",
+                  "id": 18355,
+                  "logprob": -31.5
+                },
+                {
+                  "token": " devices",
+                  "id": 7611,
+                  "logprob": -32.5
+                }
+              ],
+              [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.5
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.25
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -25.875
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.5
+                }
+              ],
+              [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.0019286142196506262
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -6.251928806304932
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -19.001928329467773
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -23.751928329467773
+                },
+                {
+                  "token": "\u662f\u56e0\u4e3a",
+                  "id": 104404,
+                  "logprob": -26.751928329467773
+                }
+              ],
+              [
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -0.0011533997021615505
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -7.251153469085693
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -7.751153469085693
+                },
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -11.251152992248535
+                },
+                {
+                  "token": "\u9600",
+                  "id": 102860,
+                  "logprob": -16.00115394592285
+                }
+              ],
+              [
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " B",
+                  "id": 425,
+                  "logprob": -37.625
+                },
+                {
+                  "token": "C",
+                  "id": 34,
+                  "logprob": -37.875
+                },
+                {
+                  "token": "_C",
+                  "id": 920,
+                  "logprob": -38.0
+                },
+                {
+                  "token": ".C",
+                  "id": 727,
+                  "logprob": -40.25
+                }
+              ],
+              [
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " became",
+                  "id": 6116,
+                  "logprob": -29.5
+                },
+                {
+                  "token": " were",
+                  "id": 1033,
+                  "logprob": -30.375
+                },
+                {
+                  "token": " \u0431\u044b\u043b",
+                  "id": 128897,
+                  "logprob": -30.625
+                },
+                {
+                  "token": " \u0431\u044b\u043b\u0430",
+                  "id": 129760,
+                  "logprob": -30.75
+                }
+              ],
+              [
+                {
+                  "token": " obstruct",
+                  "id": 53192,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " obstruction",
+                  "id": 59951,
+                  "logprob": -23.5
+                },
+                {
+                  "token": " obst",
+                  "id": 17864,
+                  "logprob": -27.5
+                },
+                {
+                  "token": " blocked",
+                  "id": 19299,
+                  "logprob": -29.0
+                },
+                {
+                  "token": " ob",
+                  "id": 1508,
+                  "logprob": -31.25
+                }
+              ],
+              [
+                {
+                  "token": "ed",
+                  "id": 291,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "ED",
+                  "id": 1479,
+                  "logprob": -33.75
+                },
+                {
+                  "token": "ing",
+                  "id": 287,
+                  "logprob": -35.625
+                },
+                {
+                  "token": "eded",
+                  "id": 29935,
+                  "logprob": -36.5
+                },
+                {
+                  "token": "edm",
+                  "id": 89525,
+                  "logprob": -37.875
+                }
+              ],
+              [
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -0.0019286142196506262
+                },
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -6.251928806304932
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -19.501928329467773
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -19.876928329467773
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -28.751928329467773
+                }
+              ]
+            ],
+            "prefix": -0.0019286142196506262,
+            "decision": -0.0011533997021615505,
+            "tail": -0.0019286142196506262,
+            "total": -0.005010628141462803,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.2875047833658755,
+              "mean_other_mass": 0.12438323490787298,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " sensor",
+              " K",
+              " drifted",
+              "."
+            ],
+            "trust_schedule": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.0019286142196506262,
+              -11.251152992248535,
+              0.0,
+              -3.576278118089249e-07,
+              -0.2014133334159851
+            ],
+            "top": [
+              [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -26.25
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -28.75
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -30.5
+                },
+                {
+                  "token": "Source",
+                  "id": 3608,
+                  "logprob": -33.5
+                }
+              ],
+              [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -27.75
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -29.25
+                },
+                {
+                  "token": ".device",
+                  "id": 18355,
+                  "logprob": -31.5
+                },
+                {
+                  "token": " devices",
+                  "id": 7611,
+                  "logprob": -32.5
+                }
+              ],
+              [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.5
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.25
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -25.875
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.5
+                }
+              ],
+              [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.0019286142196506262
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -6.251928806304932
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -19.001928329467773
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -23.751928329467773
+                },
+                {
+                  "token": "\u662f\u56e0\u4e3a",
+                  "id": 104404,
+                  "logprob": -26.751928329467773
+                }
+              ],
+              [
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -0.0011533997021615505
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -7.251153469085693
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -7.751153469085693
+                },
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -11.251152992248535
+                },
+                {
+                  "token": "\u9600",
+                  "id": 102860,
+                  "logprob": -16.00115394592285
+                }
+              ],
+              [
+                {
+                  "token": " K",
+                  "id": 730,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": -33.75
+                },
+                {
+                  "token": " \u041a",
+                  "id": 35379,
+                  "logprob": -35.5
+                },
+                {
+                  "token": "K",
+                  "id": 42,
+                  "logprob": -36.375
+                },
+                {
+                  "token": " k",
+                  "id": 595,
+                  "logprob": -36.5
+                }
+              ],
+              [
+                {
+                  "token": " drifted",
+                  "id": 91562,
+                  "logprob": -3.576278118089249e-07
+                },
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": -15.625
+                },
+                {
+                  "token": " drifting",
+                  "id": 84253,
+                  "logprob": -16.375
+                },
+                {
+                  "token": " drift",
+                  "id": 33638,
+                  "logprob": -16.75
+                },
+                {
+                  "token": ".dr",
+                  "id": 36938,
+                  "logprob": -19.125
+                }
+              ],
+              [
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -0.2014133334159851
+                },
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -1.7014133930206299
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -21.201414108276367
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -26.826414108276367
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -26.951414108276367
+                }
+              ]
+            ],
+            "prefix": -0.0019286142196506262,
+            "decision": -11.251152992248535,
+            "tail": -0.20141369104379692,
+            "total": -11.454495297511983,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.14773551971302368,
+              "mean_other_mass": 0.22379776858724654,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          }
+        }
+      },
+      "generation": {
+        "tonic": {
+          "text": "The device failed because sensor K drifted.",
+          "tokens": [
+            "The",
+            " device",
+            " failed",
+            " because",
+            " sensor",
+            " K",
+            " drifted",
+            "."
+          ],
+          "stopped_on_end_token": true,
+          "steps": [
+            {
+              "index": 0,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -26.375
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -28.875
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -30.75
+                },
+                {
+                  "token": "Source",
+                  "id": 3608,
+                  "logprob": -33.375
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -28.0
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -29.5
+                },
+                {
+                  "token": ".device",
+                  "id": 18355,
+                  "logprob": -32.0
+                },
+                {
+                  "token": " devices",
+                  "id": 7611,
+                  "logprob": -33.0
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.5
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.25
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -25.75
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.375
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.0024756519123911858
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -6.002475738525391
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -19.25247573852539
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -24.00247573852539
+                },
+                {
+                  "token": "\u662f\u56e0\u4e3a",
+                  "id": 104404,
+                  "logprob": -26.75247573852539
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -0.39855489134788513
+                },
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -1.1485549211502075
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -5.148554801940918
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -5.148554801940918
+                },
+                {
+                  "token": " there",
+                  "id": 1052,
+                  "logprob": -15.398554801940918
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " K",
+                  "id": 730,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": -36.0
+                },
+                {
+                  "token": " \u041a",
+                  "id": 35379,
+                  "logprob": -36.25
+                },
+                {
+                  "token": "K",
+                  "id": 42,
+                  "logprob": -37.25
+                },
+                {
+                  "token": " k",
+                  "id": 595,
+                  "logprob": -37.375
+                }
+              ]
+            },
+            {
+              "index": 6,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " drifted",
+                  "id": 91562,
+                  "logprob": -1.1920928244535389e-07
+                },
+                {
+                  "token": " drifting",
+                  "id": 84253,
+                  "logprob": -16.5
+                },
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": -16.625
+                },
+                {
+                  "token": " drift",
+                  "id": 33638,
+                  "logprob": -17.0
+                },
+                {
+                  "token": ".dr",
+                  "id": 36938,
+                  "logprob": -19.125
+                }
+              ]
+            },
+            {
+              "index": 7,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -0.4740769863128662
+                },
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -0.9740769863128662
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -21.849077224731445
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -27.224077224731445
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -27.224077224731445
+                }
+              ]
+            },
+            {
+              "index": 8,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": "<|im_end|>",
+                  "id": 151645,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " \ufffd",
+                  "id": 25521,
+                  "logprob": -18.625
+                },
+                {
+                  "token": "</think>",
+                  "id": 151668,
+                  "logprob": -19.0
+                },
+                {
+                  "token": " \ufffd",
+                  "id": 11162,
+                  "logprob": -21.125
+                },
+                {
+                  "token": " (",
+                  "id": 320,
+                  "logprob": -21.9375
+                }
+              ]
+            }
+          ],
+          "observer": {
+            "reads": 36,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.41702353126472896,
+            "mean_other_mass": 0.015904469409077946,
+            "mean_query_update_ratio": 0.3373500577290634,
+            "max_query_update_ratio": 0.6240521917592114,
+            "capped_fraction": 0.0
+          },
+          "choice": "B"
+        },
+        "phasic": {
+          "text": "The device failed because sensor K drifted.",
+          "tokens": [
+            "The",
+            " device",
+            " failed",
+            " because",
+            " sensor",
+            " K",
+            " drifted",
+            "."
+          ],
+          "stopped_on_end_token": true,
+          "steps": [
+            {
+              "index": 0,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -26.375
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -28.875
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -30.75
+                },
+                {
+                  "token": "Source",
+                  "id": 3608,
+                  "logprob": -33.375
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -28.0
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -29.5
+                },
+                {
+                  "token": ".device",
+                  "id": 18355,
+                  "logprob": -32.0
+                },
+                {
+                  "token": " devices",
+                  "id": 7611,
+                  "logprob": -33.0
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.5
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.25
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -25.75
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.375
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.0024756519123911858
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -6.002475738525391
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -19.25247573852539
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -24.00247573852539
+                },
+                {
+                  "token": "\u662f\u56e0\u4e3a",
+                  "id": 104404,
+                  "logprob": -26.75247573852539
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -0.39855489134788513
+                },
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -1.1485549211502075
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -5.148554801940918
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -5.148554801940918
+                },
+                {
+                  "token": " there",
+                  "id": 1052,
+                  "logprob": -15.398554801940918
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " K",
+                  "id": 730,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": -35.25
+                },
+                {
+                  "token": " \u041a",
+                  "id": 35379,
+                  "logprob": -35.75
+                },
+                {
+                  "token": "K",
+                  "id": 42,
+                  "logprob": -36.75
+                },
+                {
+                  "token": " k",
+                  "id": 595,
+                  "logprob": -37.0
+                }
+              ]
+            },
+            {
+              "index": 6,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " drifted",
+                  "id": 91562,
+                  "logprob": -2.3841855067985307e-07
+                },
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": -16.375
+                },
+                {
+                  "token": " drifting",
+                  "id": 84253,
+                  "logprob": -16.625
+                },
+                {
+                  "token": " drift",
+                  "id": 33638,
+                  "logprob": -17.125
+                },
+                {
+                  "token": ".dr",
+                  "id": 36938,
+                  "logprob": -19.125
+                }
+              ]
+            },
+            {
+              "index": 7,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -0.38687101006507874
+                },
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -1.1368709802627563
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -22.136871337890625
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -27.386871337890625
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -27.386871337890625
+                }
+              ]
+            },
+            {
+              "index": 8,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": "<|im_end|>",
+                  "id": 151645,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " \ufffd",
+                  "id": 25521,
+                  "logprob": -18.625
+                },
+                {
+                  "token": "</think>",
+                  "id": 151668,
+                  "logprob": -18.875
+                },
+                {
+                  "token": " \ufffd",
+                  "id": 11162,
+                  "logprob": -21.125
+                },
+                {
+                  "token": " (",
+                  "id": 320,
+                  "logprob": -22.25
+                }
+              ]
+            }
+          ],
+          "observer": {
+            "reads": 36,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.270513631688017,
+            "mean_other_mass": 0.12859536179005066,
+            "mean_query_update_ratio": 0.2345732167242494,
+            "max_query_update_ratio": 0.6240521917592114,
+            "capped_fraction": 0.0
+          },
+          "choice": "B"
+        },
+        "neutral": {
+          "text": "The device failed because valve C was obstructed.",
+          "tokens": [
+            "The",
+            " device",
+            " failed",
+            " because",
+            " valve",
+            " C",
+            " was",
+            " obstruct",
+            "ed",
+            "."
+          ],
+          "stopped_on_end_token": true,
+          "steps": [
+            {
+              "index": 0,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -26.25
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -28.75
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -30.5
+                },
+                {
+                  "token": "Source",
+                  "id": 3608,
+                  "logprob": -33.5
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -27.75
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -29.25
+                },
+                {
+                  "token": ".device",
+                  "id": 18355,
+                  "logprob": -31.5
+                },
+                {
+                  "token": " devices",
+                  "id": 7611,
+                  "logprob": -32.5
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.5
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.25
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -25.875
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.5
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.0019286142196506262
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -6.251928806304932
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -19.001928329467773
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -23.751928329467773
+                },
+                {
+                  "token": "\u662f\u56e0\u4e3a",
+                  "id": 104404,
+                  "logprob": -26.751928329467773
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -0.0011533997021615505
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -7.251153469085693
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -7.751153469085693
+                },
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -11.251152992248535
+                },
+                {
+                  "token": "\u9600",
+                  "id": 102860,
+                  "logprob": -16.00115394592285
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " B",
+                  "id": 425,
+                  "logprob": -37.625
+                },
+                {
+                  "token": "C",
+                  "id": 34,
+                  "logprob": -37.875
+                },
+                {
+                  "token": "_C",
+                  "id": 920,
+                  "logprob": -38.0
+                },
+                {
+                  "token": ".C",
+                  "id": 727,
+                  "logprob": -40.25
+                }
+              ]
+            },
+            {
+              "index": 6,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " became",
+                  "id": 6116,
+                  "logprob": -29.5
+                },
+                {
+                  "token": " were",
+                  "id": 1033,
+                  "logprob": -30.375
+                },
+                {
+                  "token": " \u0431\u044b\u043b",
+                  "id": 128897,
+                  "logprob": -30.625
+                },
+                {
+                  "token": " \u0431\u044b\u043b\u0430",
+                  "id": 129760,
+                  "logprob": -30.75
+                }
+              ]
+            },
+            {
+              "index": 7,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " obstruct",
+                  "id": 53192,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " obstruction",
+                  "id": 59951,
+                  "logprob": -23.5
+                },
+                {
+                  "token": " obst",
+                  "id": 17864,
+                  "logprob": -27.5
+                },
+                {
+                  "token": " blocked",
+                  "id": 19299,
+                  "logprob": -29.0
+                },
+                {
+                  "token": " ob",
+                  "id": 1508,
+                  "logprob": -31.25
+                }
+              ]
+            },
+            {
+              "index": 8,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": "ed",
+                  "id": 291,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "ED",
+                  "id": 1479,
+                  "logprob": -33.75
+                },
+                {
+                  "token": "ing",
+                  "id": 287,
+                  "logprob": -35.625
+                },
+                {
+                  "token": "eded",
+                  "id": 29935,
+                  "logprob": -36.5
+                },
+                {
+                  "token": "edm",
+                  "id": 89525,
+                  "logprob": -37.875
+                }
+              ]
+            },
+            {
+              "index": 9,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -0.0019286142196506262
+                },
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -6.251928806304932
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -19.501928329467773
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -19.876928329467773
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -28.751928329467773
+                }
+              ]
+            },
+            {
+              "index": 10,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": "<|im_end|>",
+                  "id": 151645,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "</think>",
+                  "id": 151668,
+                  "logprob": -18.5
+                },
+                {
+                  "token": " \ufffd",
+                  "id": 25521,
+                  "logprob": -18.5
+                },
+                {
+                  "token": " \ufffd",
+                  "id": 11162,
+                  "logprob": -21.0625
+                },
+                {
+                  "token": " Alternatively",
+                  "id": 38478,
+                  "logprob": -21.125
+                }
+              ]
+            }
+          ],
+          "observer": {
+            "reads": 44,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.26558626714077865,
+            "mean_other_mass": 0.11766901038671759,
+            "mean_query_update_ratio": 0.0,
+            "max_query_update_ratio": 0.0,
+            "capped_fraction": 0.0
+          },
+          "choice": "A"
+        }
+      }
+    },
+    {
+      "added_masked_positions": 256,
+      "arms": {
+        "tonic": {
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " valve",
+              " C",
+              " was",
+              " obstruct",
+              "ed",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.023245446383953094,
+              -2.504835844039917,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.07889349013566971
+            ],
+            "top": [
+              [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -25.625
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -26.25
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -29.5
+                },
+                {
+                  "token": "Source",
+                  "id": 3608,
+                  "logprob": -30.0
+                }
+              ],
+              [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -27.0
+                },
+                {
+                  "token": " cause",
+                  "id": 5240,
+                  "logprob": -27.5
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -29.0
+                },
+                {
+                  "token": ".device",
+                  "id": 18355,
+                  "logprob": -31.25
+                }
+              ],
+              [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.75
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.5
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.125
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -26.25
+                }
+              ],
+              [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.023245446383953094
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -3.773245334625244
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -19.023244857788086
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -21.273244857788086
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -25.148244857788086
+                }
+              ],
+              [
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -0.754835844039917
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -1.004835844039917
+                },
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -2.504835844039917
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -2.504835844039917
+                },
+                {
+                  "token": " there",
+                  "id": 1052,
+                  "logprob": -7.754836082458496
+                }
+              ],
+              [
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " K",
+                  "id": 730,
+                  "logprob": -32.75
+                },
+                {
+                  "token": " B",
+                  "id": 425,
+                  "logprob": -36.25
+                },
+                {
+                  "token": "_C",
+                  "id": 920,
+                  "logprob": -36.875
+                },
+                {
+                  "token": "C",
+                  "id": 34,
+                  "logprob": -37.125
+                }
+              ],
+              [
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " became",
+                  "id": 6116,
+                  "logprob": -25.5
+                },
+                {
+                  "token": " were",
+                  "id": 1033,
+                  "logprob": -30.5
+                },
+                {
+                  "token": " \u0431\u044b\u043b",
+                  "id": 128897,
+                  "logprob": -30.625
+                },
+                {
+                  "token": "was",
+                  "id": 16123,
+                  "logprob": -30.75
+                }
+              ],
+              [
+                {
+                  "token": " obstruct",
+                  "id": 53192,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " obstruction",
+                  "id": 59951,
+                  "logprob": -24.125
+                },
+                {
+                  "token": " blocked",
+                  "id": 19299,
+                  "logprob": -26.625
+                },
+                {
+                  "token": " obst",
+                  "id": 17864,
+                  "logprob": -27.75
+                },
+                {
+                  "token": " restricted",
+                  "id": 21739,
+                  "logprob": -28.375
+                }
+              ],
+              [
+                {
+                  "token": "ed",
+                  "id": 291,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "ing",
+                  "id": 287,
+                  "logprob": -32.5
+                },
+                {
+                  "token": "ED",
+                  "id": 1479,
+                  "logprob": -33.625
+                },
+                {
+                  "token": "eded",
+                  "id": 29935,
+                  "logprob": -36.125
+                },
+                {
+                  "token": "edTextBox",
+                  "id": 97917,
+                  "logprob": -37.5
+                }
+              ],
+              [
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -0.07889349013566971
+                },
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -2.5788934230804443
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -13.078893661499023
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -13.328893661499023
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -24.078893661499023
+                }
+              ]
+            ],
+            "prefix": -0.023245446383953094,
+            "decision": -2.504835844039917,
+            "tail": -0.07889349013566971,
+            "total": -2.60697478055954,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.35973461214452984,
+              "mean_other_mass": 0.019262665216228925,
+              "mean_query_update_ratio": 0.48209271652511526,
+              "max_query_update_ratio": 0.7389211444877577,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " sensor",
+              " K",
+              " drifted",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.023245446383953094,
+              -0.754835844039917,
+              0.0,
+              -5.960462772236497e-07,
+              -2.3502066135406494
+            ],
+            "top": [
+              [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -25.625
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -26.25
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -29.5
+                },
+                {
+                  "token": "Source",
+                  "id": 3608,
+                  "logprob": -30.0
+                }
+              ],
+              [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -27.0
+                },
+                {
+                  "token": " cause",
+                  "id": 5240,
+                  "logprob": -27.5
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -29.0
+                },
+                {
+                  "token": ".device",
+                  "id": 18355,
+                  "logprob": -31.25
+                }
+              ],
+              [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.75
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.5
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.125
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -26.25
+                }
+              ],
+              [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.023245446383953094
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -3.773245334625244
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -19.023244857788086
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -21.273244857788086
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -25.148244857788086
+                }
+              ],
+              [
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -0.754835844039917
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -1.004835844039917
+                },
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -2.504835844039917
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -2.504835844039917
+                },
+                {
+                  "token": " there",
+                  "id": 1052,
+                  "logprob": -7.754836082458496
+                }
+              ],
+              [
+                {
+                  "token": " K",
+                  "id": 730,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": -33.5
+                },
+                {
+                  "token": " \u041a",
+                  "id": 35379,
+                  "logprob": -35.25
+                },
+                {
+                  "token": " k",
+                  "id": 595,
+                  "logprob": -35.625
+                },
+                {
+                  "token": "K",
+                  "id": 42,
+                  "logprob": -36.125
+                }
+              ],
+              [
+                {
+                  "token": " drifted",
+                  "id": 91562,
+                  "logprob": -5.960462772236497e-07
+                },
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": -14.500000953674316
+                },
+                {
+                  "token": " drifting",
+                  "id": 84253,
+                  "logprob": -16.375
+                },
+                {
+                  "token": " drift",
+                  "id": 33638,
+                  "logprob": -17.0
+                },
+                {
+                  "token": ".dr",
+                  "id": 36938,
+                  "logprob": -19.375
+                }
+              ],
+              [
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -0.10020658373832703
+                },
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -2.3502066135406494
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -18.85020637512207
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -24.85020637512207
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -25.22520637512207
+                }
+              ]
+            ],
+            "prefix": -0.023245446383953094,
+            "decision": -0.754835844039917,
+            "tail": -2.3502072095869266,
+            "total": -3.1282885000107967,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.3379244311945513,
+              "mean_other_mass": 0.013324609008122934,
+              "mean_query_update_ratio": 0.35965061975265256,
+              "max_query_update_ratio": 0.639316104214638,
+              "capped_fraction": 0.0
+            }
+          }
+        },
+        "phasic": {
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " valve",
+              " C",
+              " was",
+              " obstruct",
+              "ed",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.023245446383953094,
+              -2.504835844039917,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.0485902801156044
+            ],
+            "top": [
+              [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -25.625
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -26.25
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -29.5
+                },
+                {
+                  "token": "Source",
+                  "id": 3608,
+                  "logprob": -30.0
+                }
+              ],
+              [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -27.0
+                },
+                {
+                  "token": " cause",
+                  "id": 5240,
+                  "logprob": -27.5
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -29.0
+                },
+                {
+                  "token": ".device",
+                  "id": 18355,
+                  "logprob": -31.25
+                }
+              ],
+              [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.75
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.5
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.125
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -26.25
+                }
+              ],
+              [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.023245446383953094
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -3.773245334625244
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -19.023244857788086
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -21.273244857788086
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -25.148244857788086
+                }
+              ],
+              [
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -0.754835844039917
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -1.004835844039917
+                },
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -2.504835844039917
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -2.504835844039917
+                },
+                {
+                  "token": " there",
+                  "id": 1052,
+                  "logprob": -7.754836082458496
+                }
+              ],
+              [
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " B",
+                  "id": 425,
+                  "logprob": -35.75
+                },
+                {
+                  "token": "_C",
+                  "id": 920,
+                  "logprob": -36.625
+                },
+                {
+                  "token": "C",
+                  "id": 34,
+                  "logprob": -37.25
+                },
+                {
+                  "token": ".C",
+                  "id": 727,
+                  "logprob": -38.875
+                }
+              ],
+              [
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " became",
+                  "id": 6116,
+                  "logprob": -26.75
+                },
+                {
+                  "token": " were",
+                  "id": 1033,
+                  "logprob": -30.75
+                },
+                {
+                  "token": " \u0431\u044b\u043b",
+                  "id": 128897,
+                  "logprob": -31.125
+                },
+                {
+                  "token": "was",
+                  "id": 16123,
+                  "logprob": -31.25
+                }
+              ],
+              [
+                {
+                  "token": " obstruct",
+                  "id": 53192,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " obstruction",
+                  "id": 59951,
+                  "logprob": -24.0
+                },
+                {
+                  "token": " obst",
+                  "id": 17864,
+                  "logprob": -27.875
+                },
+                {
+                  "token": " blocked",
+                  "id": 19299,
+                  "logprob": -28.25
+                },
+                {
+                  "token": " restricted",
+                  "id": 21739,
+                  "logprob": -30.75
+                }
+              ],
+              [
+                {
+                  "token": "ed",
+                  "id": 291,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "ing",
+                  "id": 287,
+                  "logprob": -32.5
+                },
+                {
+                  "token": "ED",
+                  "id": 1479,
+                  "logprob": -33.5
+                },
+                {
+                  "token": "eded",
+                  "id": 29935,
+                  "logprob": -35.25
+                },
+                {
+                  "token": "ied",
+                  "id": 1122,
+                  "logprob": -36.75
+                }
+              ],
+              [
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -0.0485902801156044
+                },
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -3.0485901832580566
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -13.298590660095215
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -13.548590660095215
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -24.6735897064209
+                }
+              ]
+            ],
+            "prefix": -0.023245446383953094,
+            "decision": -2.504835844039917,
+            "tail": -0.0485902801156044,
+            "total": -2.5766715705394745,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.3414465204812586,
+              "mean_other_mass": 0.02334012152568903,
+              "mean_query_update_ratio": 0.22612830605517664,
+              "max_query_update_ratio": 0.639316104214638,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " sensor",
+              " K",
+              " drifted",
+              "."
+            ],
+            "trust_schedule": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.023245446383953094,
+              -0.754835844039917,
+              0.0,
+              -5.960462772236497e-07,
+              -2.1269280910491943
+            ],
+            "top": [
+              [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -25.625
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -26.25
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -29.5
+                },
+                {
+                  "token": "Source",
+                  "id": 3608,
+                  "logprob": -30.0
+                }
+              ],
+              [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -27.0
+                },
+                {
+                  "token": " cause",
+                  "id": 5240,
+                  "logprob": -27.5
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -29.0
+                },
+                {
+                  "token": ".device",
+                  "id": 18355,
+                  "logprob": -31.25
+                }
+              ],
+              [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.75
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.5
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.125
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -26.25
+                }
+              ],
+              [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.023245446383953094
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -3.773245334625244
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -19.023244857788086
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -21.273244857788086
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -25.148244857788086
+                }
+              ],
+              [
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -0.754835844039917
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -1.004835844039917
+                },
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -2.504835844039917
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -2.504835844039917
+                },
+                {
+                  "token": " there",
+                  "id": 1052,
+                  "logprob": -7.754836082458496
+                }
+              ],
+              [
+                {
+                  "token": " K",
+                  "id": 730,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": -32.75
+                },
+                {
+                  "token": " \u041a",
+                  "id": 35379,
+                  "logprob": -34.75
+                },
+                {
+                  "token": " k",
+                  "id": 595,
+                  "logprob": -35.125
+                },
+                {
+                  "token": "K",
+                  "id": 42,
+                  "logprob": -35.75
+                }
+              ],
+              [
+                {
+                  "token": " drifted",
+                  "id": 91562,
+                  "logprob": -5.960462772236497e-07
+                },
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": -14.500000953674316
+                },
+                {
+                  "token": " drifting",
+                  "id": 84253,
+                  "logprob": -16.25
+                },
+                {
+                  "token": " drift",
+                  "id": 33638,
+                  "logprob": -16.75
+                },
+                {
+                  "token": ".dr",
+                  "id": 36938,
+                  "logprob": -19.25
+                }
+              ],
+              [
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -0.12692804634571075
+                },
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -2.1269280910491943
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -18.876928329467773
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -25.001928329467773
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -25.501928329467773
+                }
+              ]
+            ],
+            "prefix": -0.023245446383953094,
+            "decision": -0.754835844039917,
+            "tail": -2.1269286870954716,
+            "total": -2.9050099775193416,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.23982235440053046,
+              "mean_other_mass": 0.08596790453520953,
+              "mean_query_update_ratio": 0.2826603825689708,
+              "max_query_update_ratio": 0.639316104214638,
+              "capped_fraction": 0.0
+            }
+          }
+        },
+        "neutral": {
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " valve",
+              " C",
+              " was",
+              " obstruct",
+              "ed",
+              "."
+            ],
+            "trust_schedule": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.018149960786104202,
+              -0.10651388764381409,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.014164271764457226
+            ],
+            "top": [
+              [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -26.125
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -26.625
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -29.75
+                },
+                {
+                  "token": "According",
+                  "id": 11190,
+                  "logprob": -30.25
+                }
+              ],
+              [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -27.0
+                },
+                {
+                  "token": " cause",
+                  "id": 5240,
+                  "logprob": -28.0
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -28.75
+                },
+                {
+                  "token": " devices",
+                  "id": 7611,
+                  "logprob": -31.0
+                }
+              ],
+              [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.5
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.25
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.0
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -26.125
+                }
+              ],
+              [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.018149960786104202
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -4.0181498527526855
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -20.518150329589844
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -21.018150329589844
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -25.018150329589844
+                }
+              ],
+              [
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -0.10651388764381409
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -2.6065139770507812
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -3.6065139770507812
+                },
+                {
+                  "token": " there",
+                  "id": 1052,
+                  "logprob": -9.606513977050781
+                },
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -10.356513977050781
+                }
+              ],
+              [
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " B",
+                  "id": 425,
+                  "logprob": -35.875
+                },
+                {
+                  "token": "C",
+                  "id": 34,
+                  "logprob": -36.75
+                },
+                {
+                  "token": "_C",
+                  "id": 920,
+                  "logprob": -36.875
+                },
+                {
+                  "token": ".C",
+                  "id": 727,
+                  "logprob": -38.75
+                }
+              ],
+              [
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " became",
+                  "id": 6116,
+                  "logprob": -27.25
+                },
+                {
+                  "token": " \u0431\u044b\u043b",
+                  "id": 128897,
+                  "logprob": -31.0
+                },
+                {
+                  "token": " were",
+                  "id": 1033,
+                  "logprob": -31.0
+                },
+                {
+                  "token": "was",
+                  "id": 16123,
+                  "logprob": -31.25
+                }
+              ],
+              [
+                {
+                  "token": " obstruct",
+                  "id": 53192,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " obstruction",
+                  "id": 59951,
+                  "logprob": -24.0
+                },
+                {
+                  "token": " obst",
+                  "id": 17864,
+                  "logprob": -28.0
+                },
+                {
+                  "token": " blocked",
+                  "id": 19299,
+                  "logprob": -28.5
+                },
+                {
+                  "token": " restricted",
+                  "id": 21739,
+                  "logprob": -31.0
+                }
+              ],
+              [
+                {
+                  "token": "ed",
+                  "id": 291,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "ing",
+                  "id": 287,
+                  "logprob": -32.75
+                },
+                {
+                  "token": "ED",
+                  "id": 1479,
+                  "logprob": -33.375
+                },
+                {
+                  "token": "eded",
+                  "id": 29935,
+                  "logprob": -35.25
+                },
+                {
+                  "token": "ied",
+                  "id": 1122,
+                  "logprob": -36.875
+                }
+              ],
+              [
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -0.014164271764457226
+                },
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -4.264164447784424
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -14.514163970947266
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -15.014163970947266
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -26.014163970947266
+                }
+              ]
+            ],
+            "prefix": -0.018149960786104202,
+            "decision": -0.10651388764381409,
+            "tail": -0.014164271764457226,
+            "total": -0.13882812019437551,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.24535550320288166,
+              "mean_other_mass": 0.06481302637839689,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "token_texts": [
+              "The",
+              " device",
+              " failed",
+              " because",
+              " sensor",
+              " K",
+              " drifted",
+              "."
+            ],
+            "trust_schedule": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "logprobs": [
+              0.0,
+              0.0,
+              0.0,
+              -0.018149960786104202,
+              -10.356513977050781,
+              0.0,
+              -1.5497195136049413e-06,
+              -1.3132617473602295
+            ],
+            "top": [
+              [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -26.125
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -26.625
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -29.75
+                },
+                {
+                  "token": "According",
+                  "id": 11190,
+                  "logprob": -30.25
+                }
+              ],
+              [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -27.0
+                },
+                {
+                  "token": " cause",
+                  "id": 5240,
+                  "logprob": -28.0
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -28.75
+                },
+                {
+                  "token": " devices",
+                  "id": 7611,
+                  "logprob": -31.0
+                }
+              ],
+              [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.5
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.25
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.0
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -26.125
+                }
+              ],
+              [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.018149960786104202
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -4.0181498527526855
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -20.518150329589844
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -21.018150329589844
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -25.018150329589844
+                }
+              ],
+              [
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -0.10651388764381409
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -2.6065139770507812
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -3.6065139770507812
+                },
+                {
+                  "token": " there",
+                  "id": 1052,
+                  "logprob": -9.606513977050781
+                },
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -10.356513977050781
+                }
+              ],
+              [
+                {
+                  "token": " K",
+                  "id": 730,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": -30.5
+                },
+                {
+                  "token": " k",
+                  "id": 595,
+                  "logprob": -34.0
+                },
+                {
+                  "token": " \u041a",
+                  "id": 35379,
+                  "logprob": -34.25
+                },
+                {
+                  "token": "K",
+                  "id": 42,
+                  "logprob": -35.25
+                }
+              ],
+              [
+                {
+                  "token": " drifted",
+                  "id": 91562,
+                  "logprob": -1.5497195136049413e-06
+                },
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": -13.500001907348633
+                },
+                {
+                  "token": " drifting",
+                  "id": 84253,
+                  "logprob": -16.250001907348633
+                },
+                {
+                  "token": " drift",
+                  "id": 33638,
+                  "logprob": -16.875001907348633
+                },
+                {
+                  "token": ".dr",
+                  "id": 36938,
+                  "logprob": -19.625001907348633
+                }
+              ],
+              [
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -0.3132617473602295
+                },
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -1.3132617473602295
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -17.813261032104492
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -23.813261032104492
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -24.438261032104492
+                }
+              ]
+            ],
+            "prefix": -0.018149960786104202,
+            "decision": -10.356513977050781,
+            "tail": -1.313263297079743,
+            "total": -11.687927234916629,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.11886276905715931,
+              "mean_other_mass": 0.13837406956008635,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          }
+        }
+      },
+      "generation": {
+        "tonic": {
+          "text": "The device failed because sensor K drifted, as supported by the calibration log.",
+          "tokens": [
+            "The",
+            " device",
+            " failed",
+            " because",
+            " sensor",
+            " K",
+            " drifted",
+            ",",
+            " as",
+            " supported",
+            " by",
+            " the",
+            " calibration",
+            " log",
+            "."
+          ],
+          "stopped_on_end_token": true,
+          "steps": [
+            {
+              "index": 0,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -25.625
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -26.25
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -29.5
+                },
+                {
+                  "token": "Source",
+                  "id": 3608,
+                  "logprob": -30.0
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -27.0
+                },
+                {
+                  "token": " cause",
+                  "id": 5240,
+                  "logprob": -27.5
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -29.0
+                },
+                {
+                  "token": ".device",
+                  "id": 18355,
+                  "logprob": -31.25
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.75
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.5
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.125
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -26.25
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.023245446383953094
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -3.773245334625244
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -19.023244857788086
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -21.273244857788086
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -25.148244857788086
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -0.754835844039917
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -1.004835844039917
+                },
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -2.504835844039917
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -2.504835844039917
+                },
+                {
+                  "token": " there",
+                  "id": 1052,
+                  "logprob": -7.754836082458496
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " K",
+                  "id": 730,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": -33.5
+                },
+                {
+                  "token": " \u041a",
+                  "id": 35379,
+                  "logprob": -35.25
+                },
+                {
+                  "token": " k",
+                  "id": 595,
+                  "logprob": -35.625
+                },
+                {
+                  "token": "K",
+                  "id": 42,
+                  "logprob": -36.125
+                }
+              ]
+            },
+            {
+              "index": 6,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " drifted",
+                  "id": 91562,
+                  "logprob": -5.960462772236497e-07
+                },
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": -14.500000953674316
+                },
+                {
+                  "token": " drifting",
+                  "id": 84253,
+                  "logprob": -16.375
+                },
+                {
+                  "token": " drift",
+                  "id": 33638,
+                  "logprob": -17.0
+                },
+                {
+                  "token": ".dr",
+                  "id": 36938,
+                  "logprob": -19.375
+                }
+              ]
+            },
+            {
+              "index": 7,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -0.10020658373832703
+                },
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -2.3502066135406494
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -18.85020637512207
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -24.85020637512207
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -25.22520637512207
+                }
+              ]
+            },
+            {
+              "index": 8,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " as",
+                  "id": 438,
+                  "logprob": -0.0052339909598231316
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -5.2552337646484375
+                },
+                {
+                  "token": " supported",
+                  "id": 7248,
+                  "logprob": -15.505233764648438
+                },
+                {
+                  "token": " based",
+                  "id": 3118,
+                  "logprob": -21.505233764648438
+                },
+                {
+                  "token": " per",
+                  "id": 817,
+                  "logprob": -23.005233764648438
+                }
+              ]
+            },
+            {
+              "index": 9,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " supported",
+                  "id": 7248,
+                  "logprob": -0.16022898256778717
+                },
+                {
+                  "token": " indicated",
+                  "id": 16317,
+                  "logprob": -1.910228967666626
+                },
+                {
+                  "token": " evidenced",
+                  "id": 68357,
+                  "logprob": -12.410228729248047
+                },
+                {
+                  "token": " confirmed",
+                  "id": 10774,
+                  "logprob": -14.910228729248047
+                },
+                {
+                  "token": " documented",
+                  "id": 26372,
+                  "logprob": -15.410228729248047
+                }
+              ]
+            },
+            {
+              "index": 10,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " by",
+                  "id": 553,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " oleh",
+                  "id": 51316,
+                  "logprob": -29.625
+                },
+                {
+                  "token": " By",
+                  "id": 3216,
+                  "logprob": -31.5
+                },
+                {
+                  "token": "by",
+                  "id": 1694,
+                  "logprob": -32.625
+                },
+                {
+                  "token": "_by",
+                  "id": 3710,
+                  "logprob": -33.375
+                }
+              ]
+            },
+            {
+              "index": 11,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " the",
+                  "id": 279,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " calibration",
+                  "id": 37611,
+                  "logprob": -28.75
+                },
+                {
+                  "token": "the",
+                  "id": 1782,
+                  "logprob": -29.0
+                },
+                {
+                  "token": " a",
+                  "id": 264,
+                  "logprob": -32.875
+                },
+                {
+                  "token": " its",
+                  "id": 1181,
+                  "logprob": -33.5
+                }
+              ]
+            },
+            {
+              "index": 12,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " calibration",
+                  "id": 37611,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "_calibration",
+                  "id": 99086,
+                  "logprob": -27.75
+                },
+                {
+                  "token": " Calibration",
+                  "id": 96295,
+                  "logprob": -27.75
+                },
+                {
+                  "token": " recal",
+                  "id": 98683,
+                  "logprob": -31.125
+                },
+                {
+                  "token": "cal",
+                  "id": 5416,
+                  "logprob": -32.125
+                }
+              ]
+            },
+            {
+              "index": 13,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " log",
+                  "id": 1487,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " logs",
+                  "id": 18422,
+                  "logprob": -21.25
+                },
+                {
+                  "token": "log",
+                  "id": 839,
+                  "logprob": -26.5
+                },
+                {
+                  "token": ".log",
+                  "id": 1665,
+                  "logprob": -28.0
+                },
+                {
+                  "token": "\tlog",
+                  "id": 6725,
+                  "logprob": -29.5
+                }
+              ]
+            },
+            {
+              "index": 14,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -31.625
+                },
+                {
+                  "token": " records",
+                  "id": 7424,
+                  "logprob": -33.125
+                },
+                {
+                  "token": ".\"",
+                  "id": 1189,
+                  "logprob": -33.375
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -33.875
+                }
+              ]
+            },
+            {
+              "index": 15,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": "<|im_end|>",
+                  "id": 151645,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "</think>",
+                  "id": 151668,
+                  "logprob": -19.125
+                },
+                {
+                  "token": " \ufffd",
+                  "id": 25521,
+                  "logprob": -19.5
+                },
+                {
+                  "token": " \ufffd",
+                  "id": 11162,
+                  "logprob": -21.5
+                },
+                {
+                  "token": " (",
+                  "id": 320,
+                  "logprob": -21.9375
+                }
+              ]
+            }
+          ],
+          "observer": {
+            "reads": 64,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.26811348339833785,
+            "mean_other_mass": 0.01147303029529212,
+            "mean_query_update_ratio": 0.2830693165423686,
+            "max_query_update_ratio": 0.639316104214638,
+            "capped_fraction": 0.0
+          },
+          "choice": "B"
+        },
+        "phasic": {
+          "text": "The device failed because sensor K drifted, as supported by the calibration log.",
+          "tokens": [
+            "The",
+            " device",
+            " failed",
+            " because",
+            " sensor",
+            " K",
+            " drifted",
+            ",",
+            " as",
+            " supported",
+            " by",
+            " the",
+            " calibration",
+            " log",
+            "."
+          ],
+          "stopped_on_end_token": true,
+          "steps": [
+            {
+              "index": 0,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -25.625
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -26.25
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -29.5
+                },
+                {
+                  "token": "Source",
+                  "id": 3608,
+                  "logprob": -30.0
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -27.0
+                },
+                {
+                  "token": " cause",
+                  "id": 5240,
+                  "logprob": -27.5
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -29.0
+                },
+                {
+                  "token": ".device",
+                  "id": 18355,
+                  "logprob": -31.25
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.75
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.5
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.125
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -26.25
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.023245446383953094
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -3.773245334625244
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -19.023244857788086
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -21.273244857788086
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -25.148244857788086
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "trust": -1.0,
+              "top": [
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -0.754835844039917
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -1.004835844039917
+                },
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -2.504835844039917
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -2.504835844039917
+                },
+                {
+                  "token": " there",
+                  "id": 1052,
+                  "logprob": -7.754836082458496
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " K",
+                  "id": 730,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": -32.75
+                },
+                {
+                  "token": " \u041a",
+                  "id": 35379,
+                  "logprob": -34.75
+                },
+                {
+                  "token": " k",
+                  "id": 595,
+                  "logprob": -35.125
+                },
+                {
+                  "token": "K",
+                  "id": 42,
+                  "logprob": -35.75
+                }
+              ]
+            },
+            {
+              "index": 6,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " drifted",
+                  "id": 91562,
+                  "logprob": -5.960462772236497e-07
+                },
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": -14.500000953674316
+                },
+                {
+                  "token": " drifting",
+                  "id": 84253,
+                  "logprob": -16.25
+                },
+                {
+                  "token": " drift",
+                  "id": 33638,
+                  "logprob": -16.75
+                },
+                {
+                  "token": ".dr",
+                  "id": 36938,
+                  "logprob": -19.25
+                }
+              ]
+            },
+            {
+              "index": 7,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -0.12692804634571075
+                },
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -2.1269280910491943
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -18.876928329467773
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -25.001928329467773
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -25.501928329467773
+                }
+              ]
+            },
+            {
+              "index": 8,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " as",
+                  "id": 438,
+                  "logprob": -0.006715704221278429
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -5.006715774536133
+                },
+                {
+                  "token": " supported",
+                  "id": 7248,
+                  "logprob": -14.756715774536133
+                },
+                {
+                  "token": " based",
+                  "id": 3118,
+                  "logprob": -21.506715774536133
+                },
+                {
+                  "token": " per",
+                  "id": 817,
+                  "logprob": -23.256715774536133
+                }
+              ]
+            },
+            {
+              "index": 9,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " supported",
+                  "id": 7248,
+                  "logprob": -0.1269320398569107
+                },
+                {
+                  "token": " indicated",
+                  "id": 16317,
+                  "logprob": -2.126932144165039
+                },
+                {
+                  "token": " evidenced",
+                  "id": 68357,
+                  "logprob": -12.626932144165039
+                },
+                {
+                  "token": " confirmed",
+                  "id": 10774,
+                  "logprob": -15.126932144165039
+                },
+                {
+                  "token": " documented",
+                  "id": 26372,
+                  "logprob": -15.376932144165039
+                }
+              ]
+            },
+            {
+              "index": 10,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " by",
+                  "id": 553,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " oleh",
+                  "id": 51316,
+                  "logprob": -29.75
+                },
+                {
+                  "token": " By",
+                  "id": 3216,
+                  "logprob": -31.625
+                },
+                {
+                  "token": "by",
+                  "id": 1694,
+                  "logprob": -32.75
+                },
+                {
+                  "token": "_by",
+                  "id": 3710,
+                  "logprob": -33.5
+                }
+              ]
+            },
+            {
+              "index": 11,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " the",
+                  "id": 279,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " calibration",
+                  "id": 37611,
+                  "logprob": -29.0
+                },
+                {
+                  "token": "the",
+                  "id": 1782,
+                  "logprob": -29.375
+                },
+                {
+                  "token": " a",
+                  "id": 264,
+                  "logprob": -33.25
+                },
+                {
+                  "token": " its",
+                  "id": 1181,
+                  "logprob": -33.75
+                }
+              ]
+            },
+            {
+              "index": 12,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " calibration",
+                  "id": 37611,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " Calibration",
+                  "id": 96295,
+                  "logprob": -27.5
+                },
+                {
+                  "token": "_calibration",
+                  "id": 99086,
+                  "logprob": -27.625
+                },
+                {
+                  "token": " recal",
+                  "id": 98683,
+                  "logprob": -30.875
+                },
+                {
+                  "token": "cal",
+                  "id": 5416,
+                  "logprob": -32.0
+                }
+              ]
+            },
+            {
+              "index": 13,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " log",
+                  "id": 1487,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " logs",
+                  "id": 18422,
+                  "logprob": -21.5
+                },
+                {
+                  "token": "log",
+                  "id": 839,
+                  "logprob": -27.0
+                },
+                {
+                  "token": ".log",
+                  "id": 1665,
+                  "logprob": -28.25
+                },
+                {
+                  "token": "\tlog",
+                  "id": 6725,
+                  "logprob": -30.0
+                }
+              ]
+            },
+            {
+              "index": 14,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -31.75
+                },
+                {
+                  "token": " records",
+                  "id": 7424,
+                  "logprob": -33.25
+                },
+                {
+                  "token": ".\"",
+                  "id": 1189,
+                  "logprob": -33.5
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -33.875
+                }
+              ]
+            },
+            {
+              "index": 15,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": "<|im_end|>",
+                  "id": 151645,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "</think>",
+                  "id": 151668,
+                  "logprob": -19.125
+                },
+                {
+                  "token": " \ufffd",
+                  "id": 25521,
+                  "logprob": -19.375
+                },
+                {
+                  "token": " \ufffd",
+                  "id": 11162,
+                  "logprob": -21.5
+                },
+                {
+                  "token": " ",
+                  "id": 220,
+                  "logprob": -22.125
+                }
+              ]
+            }
+          ],
+          "observer": {
+            "reads": 64,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.13072382981954433,
+            "mean_other_mass": 0.10590817618140136,
+            "mean_query_update_ratio": 0.1413301912844854,
+            "max_query_update_ratio": 0.639316104214638,
+            "capped_fraction": 0.0
+          },
+          "choice": "B"
+        },
+        "neutral": {
+          "text": "The device failed because valve C was obstructed.",
+          "tokens": [
+            "The",
+            " device",
+            " failed",
+            " because",
+            " valve",
+            " C",
+            " was",
+            " obstruct",
+            "ed",
+            "."
+          ],
+          "stopped_on_end_token": true,
+          "steps": [
+            {
+              "index": 0,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": "The",
+                  "id": 785,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " The",
+                  "id": 576,
+                  "logprob": -26.125
+                },
+                {
+                  "token": "There",
+                  "id": 3862,
+                  "logprob": -26.625
+                },
+                {
+                  "token": ".The",
+                  "id": 11568,
+                  "logprob": -29.75
+                },
+                {
+                  "token": "According",
+                  "id": 11190,
+                  "logprob": -30.25
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " device",
+                  "id": 3671,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "device",
+                  "id": 6111,
+                  "logprob": -27.0
+                },
+                {
+                  "token": " cause",
+                  "id": 5240,
+                  "logprob": -28.0
+                },
+                {
+                  "token": "\tdevice",
+                  "id": 54719,
+                  "logprob": -28.75
+                },
+                {
+                  "token": " devices",
+                  "id": 7611,
+                  "logprob": -31.0
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " failed",
+                  "id": 4641,
+                  "logprob": 0.0
+                },
+                {
+                  "token": ".failed",
+                  "id": 62568,
+                  "logprob": -24.5
+                },
+                {
+                  "token": "failed",
+                  "id": 16091,
+                  "logprob": -25.25
+                },
+                {
+                  "token": " failure",
+                  "id": 7901,
+                  "logprob": -26.0
+                },
+                {
+                  "token": "_failed",
+                  "id": 35060,
+                  "logprob": -26.125
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " because",
+                  "id": 1576,
+                  "logprob": -0.018149960786104202
+                },
+                {
+                  "token": " due",
+                  "id": 4152,
+                  "logprob": -4.0181498527526855
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -20.518150329589844
+                },
+                {
+                  "token": "\u56e0\u4e3a",
+                  "id": 99519,
+                  "logprob": -21.018150329589844
+                },
+                {
+                  "token": "because",
+                  "id": 27653,
+                  "logprob": -25.018150329589844
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " valve",
+                  "id": 31430,
+                  "logprob": -0.10651388764381409
+                },
+                {
+                  "token": " either",
+                  "id": 2987,
+                  "logprob": -2.6065139770507812
+                },
+                {
+                  "token": " of",
+                  "id": 315,
+                  "logprob": -3.6065139770507812
+                },
+                {
+                  "token": " there",
+                  "id": 1052,
+                  "logprob": -9.606513977050781
+                },
+                {
+                  "token": " sensor",
+                  "id": 12002,
+                  "logprob": -10.356513977050781
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " C",
+                  "id": 356,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " B",
+                  "id": 425,
+                  "logprob": -35.875
+                },
+                {
+                  "token": "C",
+                  "id": 34,
+                  "logprob": -36.75
+                },
+                {
+                  "token": "_C",
+                  "id": 920,
+                  "logprob": -36.875
+                },
+                {
+                  "token": ".C",
+                  "id": 727,
+                  "logprob": -38.75
+                }
+              ]
+            },
+            {
+              "index": 6,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " was",
+                  "id": 572,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " became",
+                  "id": 6116,
+                  "logprob": -27.25
+                },
+                {
+                  "token": " \u0431\u044b\u043b",
+                  "id": 128897,
+                  "logprob": -31.0
+                },
+                {
+                  "token": " were",
+                  "id": 1033,
+                  "logprob": -31.0
+                },
+                {
+                  "token": "was",
+                  "id": 16123,
+                  "logprob": -31.25
+                }
+              ]
+            },
+            {
+              "index": 7,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": " obstruct",
+                  "id": 53192,
+                  "logprob": 0.0
+                },
+                {
+                  "token": " obstruction",
+                  "id": 59951,
+                  "logprob": -24.0
+                },
+                {
+                  "token": " obst",
+                  "id": 17864,
+                  "logprob": -28.0
+                },
+                {
+                  "token": " blocked",
+                  "id": 19299,
+                  "logprob": -28.5
+                },
+                {
+                  "token": " restricted",
+                  "id": 21739,
+                  "logprob": -31.0
+                }
+              ]
+            },
+            {
+              "index": 8,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": "ed",
+                  "id": 291,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "ing",
+                  "id": 287,
+                  "logprob": -32.75
+                },
+                {
+                  "token": "ED",
+                  "id": 1479,
+                  "logprob": -33.375
+                },
+                {
+                  "token": "eded",
+                  "id": 29935,
+                  "logprob": -35.25
+                },
+                {
+                  "token": "ied",
+                  "id": 1122,
+                  "logprob": -36.875
+                }
+              ]
+            },
+            {
+              "index": 9,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": ".",
+                  "id": 13,
+                  "logprob": -0.014164271764457226
+                },
+                {
+                  "token": ",",
+                  "id": 11,
+                  "logprob": -4.264164447784424
+                },
+                {
+                  "token": " according",
+                  "id": 4092,
+                  "logprob": -14.514163970947266
+                },
+                {
+                  "token": " or",
+                  "id": 476,
+                  "logprob": -15.014163970947266
+                },
+                {
+                  "token": " and",
+                  "id": 323,
+                  "logprob": -26.014163970947266
+                }
+              ]
+            },
+            {
+              "index": 10,
+              "trust": 0.0,
+              "top": [
+                {
+                  "token": "<|im_end|>",
+                  "id": 151645,
+                  "logprob": 0.0
+                },
+                {
+                  "token": "</think>",
+                  "id": 151668,
+                  "logprob": -18.75
+                },
+                {
+                  "token": " \ufffd",
+                  "id": 25521,
+                  "logprob": -18.75
+                },
+                {
+                  "token": " Alternatively",
+                  "id": 38478,
+                  "logprob": -19.375
+                },
+                {
+                  "token": " (",
+                  "id": 320,
+                  "logprob": -21.25
+                }
+              ]
+            }
+          ],
+          "observer": {
+            "reads": 44,
+            "cache_integrity_ok": true,
+            "mean_target_mass": 0.22472853589781813,
+            "mean_other_mass": 0.06050304918211292,
+            "mean_query_update_ratio": 0.0,
+            "max_query_update_ratio": 0.0,
+            "capped_fraction": 0.0
+          },
+          "choice": "A"
+        }
+      }
+    }
+  ],
+  "complete": true,
+  "anchor": {
+    "cache_tokens": 93,
+    "cache_fork_mode": "layer-tensor-constructor"
+  },
+  "readout": {
+    "near_winner": {
+      "tonic": "B",
+      "phasic": "B",
+      "neutral": "A"
+    },
+    "far_winner": {
+      "tonic": "A",
+      "phasic": "A",
+      "neutral": "A"
+    },
+    "observer_tail_damage_nats": 0.22327852249145508,
+    "distance_tail_cost_nats": 1.1118496060359462,
+    "far_decision_logprob_mismatch_tonic_vs_phasic": 0.0,
+    "threshold_nats": 0.5,
+    "verdict": "DISTANCE_DAMAGES_TAIL",
+    "generation_near": {
+      "tonic": "B",
+      "phasic": "B",
+      "neutral": "A"
+    },
+    "generation_far": {
+      "tonic": "B",
+      "phasic": "B",
+      "neutral": "A"
+    },
+    "generation_verdict": "GENERATION_CONTROL_SURVIVES"
+  }
+}
