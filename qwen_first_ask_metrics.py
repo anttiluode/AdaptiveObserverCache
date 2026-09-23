@@ -91,3 +91,14 @@ def sequence_control_summary(
         "saturated": winner_probability >= saturation_threshold,
         "saturation_threshold": float(saturation_threshold),
     }
+
+
+def winner_flip_gate(margins_by_trust) -> bool:
+    """True only when B wins at m=-1 and A wins at m=+1."""
+
+    try:
+        b_trust_margin = float(margins_by_trust[-1.0])
+        a_trust_margin = float(margins_by_trust[1.0])
+    except KeyError as exc:
+        raise ValueError("winner-flip gate requires trust endpoints -1 and +1") from exc
+    return b_trust_margin < 0.0 and a_trust_margin > 0.0
