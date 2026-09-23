@@ -1,136 +1,168 @@
-# Qwen live-cache distance × trust discriminator
+# Qwen first-ask distance × observer-control discriminator
 
-Date: 2026-09-22
+Date: 2026-09-23
 
-## Question
+## The question we actually need to ask
 
-Does the frozen Qwen observer keep causal leverage over an old source as one
-real KV cache grows, or does the observer dose-response flatten with temporal
-distance?
+Can the frozen Qwen observer still change **which answer wins on the first ask**
+after the source records have receded inside one growing KV cache?
 
-The first successful live second turn confounded two things:
-
-- source distance increased;
-- B trust was only `m=-0.664`, weaker than the earlier `m=-1` switch.
-
-This experiment holds observer strength fixed across matched distance
-checkpoints.
-
-## Critical invariant
-
-There is exactly one **canonical growing cache**.
-
-Only neutral deterministic filler turns advance it. Every trust probe runs on a
-temporary fork of that exact cache. A probe must not change the canonical cache
-length or token history, and the existing source-row integrity check must remain
-true.
-
-That makes all trust values at one checkpoint measurements of the same history.
-
-## Primary readout
-
-For the original valve/sensor conflict, teacher-force both complete candidate
-answers and record
+The corrected execution order is:
 
 ```text
-mean log p(A) - mean log p(B)
+system + Source A + Source B
+        |
+        +-- cache grows by masked spacer positions
+        |
+        +-- first and only user question
+        |
+        +-- observer m=-1 / 0 / +1
+        |
+        +-- candidate decision
 ```
 
-across observer trust.
+No prior assistant answer exists in the canonical cache.
 
-Attention movement is diagnostic only. The main object is the downstream
-candidate-likelihood dose-response.
+## Why the 2026-09-22 distance runs do not answer this
 
-For checkpoints that contain `m=-1` and `m=+1`, also record
+`qwen_observer_distance_sweep.py` and `qwen_observer_masked_distance.py` first
+built a cache containing:
 
 ```text
-endpoint swing = margin(+1) - margin(-1)
+system + sources + question + Qwen's closed valve answer
 ```
 
-and its fraction of the distance-zero swing.
+and then appended the **same question again** before candidate scoring.
 
-## Run tonight
+The visible-filler receipt therefore measured a saturated re-ask regime, not
+first-ask control. At distance 0 the sensor sentence already had probability
+approximately one for every observer value; at +280 the valve sentence had
+probability approximately one for every observer value. The observer changed
+the losing candidate's score without changing the winning candidate.
 
-The default is intentionally small:
+Those runs remain useful as re-ask/saturation diagnostics and cache-plumbing
+checks, but they do not establish or refute distance-dependent decision control.
+
+## Corrected harness
+
+Run:
 
 ```bash
-git pull
-python3.13 qwen_observer_distance_sweep.py
+python3.13 qwen_observer_first_ask_distance.py
 ```
 
-This measures target distances `0,256` with `m=-1,0,+1`.
+Default checkpoints are exact masked distances `0,256` with trust values
+`m=-1,0,+1`.
 
-A slightly denser second run, if useful:
+The canonical cache contains only the closed system/source message. The question
+suffix is withheld. Masked spacer rows then advance DynamicCache/RoPE position
+while remaining invisible to later attention. At each checkpoint every trust
+condition forks the same canonical cache and appends the question for the first
+and only time.
+
+The receipt is:
+
+```text
+results/qwen_observer_first_ask_distance.json
+```
+
+## Primary gate: did the winner change?
+
+For each candidate record the **summed** complete-sequence log probability:
+
+```text
+sumA = log P(valve sentence)
+sumB = log P(sensor sentence)
+M    = sumA - sumB
+```
+
+The primary control gate is:
+
+```text
+m=-1 : M < 0   -> B wins
+m=+1 : M > 0   -> A wins
+```
+
+or equivalently:
+
+```math
+M_d(-1) < 0 < M_d(+1)
+```
+
+A likelihood swing that never changes the winner is not counted as decision
+control.
+
+The harness prints the two raw sums, the margin, and the winner for every trust
+value.
+
+## Saturation warning
+
+For the pair of complete candidates, the harness reports
+
+```math
+p_A^{pair} = sigmoid(sumA - sumB)
+```
+
+and flags the neutral decision as `SATURATED` when the pairwise winning
+probability is at least 0.99.
+
+This warning matters because a perturbation that only moves a deeply losing
+candidate can produce a large-looking dose-response while having essentially no
+chance to change the decision.
+
+## Length-neutral secondary diagnostic
+
+The full candidates have different token counts, so summed sequence scores have
+a length effect. The harness therefore also finds the first token where the two
+candidate tokenizations diverge after their shared answer prefix and reports the
+single-step log-probability gap there.
+
+For the default answers this should correspond to the local `valve` versus
+`sensor` decision. It is a secondary diagnostic, not a replacement for the
+full-sequence winner gate.
+
+## Fail fast at distance zero
+
+Distance is meaningless if the observer cannot control the first-ask decision
+at the anchor.
+
+Therefore the default harness stops after distance 0 if the summed-sequence
+winner does not flip between `m=-1` and `m=+1`. It will not spend the +256 GPU
+work unless baseline control is established.
+
+An override exists only for debugging:
 
 ```bash
-python3.13 qwen_observer_distance_sweep.py \
-  --distances 0,256,512 \
-  --trust-grid=-1,-0.5,0,0.5,1 \
-  --receipt results/qwen_observer_distance_medium.json
+python3.13 qwen_observer_first_ask_distance.py --continue-without-baseline-flip
 ```
 
-## Full run
+Do not use an overridden run to make a distance-control claim.
 
-```bash
-python3.13 qwen_observer_distance_sweep.py \
-  --distances 0,128,512,1024,2048 \
-  --trust-grid=-1,-0.75,-0.5,0,0.5,0.75,1 \
-  --generate-endpoints \
-  --receipt results/qwen_observer_distance_full.json
-```
+## Interpretation
 
-The script writes the receipt after every completed checkpoint so a later crash
-does not erase earlier evidence.
+### Flip at 0 and flip at +256
 
-Distances are targets measured in canonical KV tokens added **after the initial
-closed assistant answer**. Because growth uses complete neutral chat turns, an
-actual checkpoint can overshoot its target slightly; both target and actual
-distance are recorded.
+The current frozen observer has controlled the same first-ask A/B decision even
+when the source records are 256 unreadable cache positions older.
 
-## Competing outcomes
+### Flip at 0, fail at +256
 
-### Stable control
+The distance question is finally earned: positional/cache age is a failure mode
+of the current actuator or its locally reconstructed tangent.
 
-If the likelihood curves and endpoint swing remain similar as distance grows,
-while old source K rows remain intact, the persistent observer has earned a
-long-context control claim. The earlier `m=-0.664` non-switch was mostly a
-strength/threshold issue.
+### No flip at 0
 
-### Distance attenuation
+Do not interpret distance. Debug the first-ask scorer/calibration against
+`qwen_observer_causal_compare.py`, which previously produced a language-level
+A/B switch on a fresh first question.
 
-If the curves flatten, shrink, or drift back toward the neutral/primacy basin
-with distance at matched trust, temporal distance is a real failure mode of the
-current local-tangent controller.
+### Full-sequence and matched-token gates disagree
 
-### Content/head specificity
-
-If this calibration conflict stays stable with distance while held-out
-conflicts remain inconsistent, the dominant problem is not memory age. The
-frozen causal actuator itself needs to generalize better.
+Inspect tokenization/length and downstream continuation effects. Do not collapse
+the disagreement into a single success/failure story.
 
 ## Boundary
 
-This experiment does **not** test PCA, PAC, entorhinal-style transverse sweeps,
-or GAx. Those remain unearned side hypotheses until this distance discriminator
-is resolved.
-
-
-## First run exposed a trajectory confound
-
-The first completed visible-filler receipt is now recorded in
-\`RESULTS_QWEN_DISTANCE_SWEEP.md\`.
-
-The observer did not fade at +280 tokens: the endpoint likelihood swing grew
-from about 0.425 to 1.719. However the neutral A-vs-B margin itself moved from
-about -0.950 to +2.313. The visible filler therefore changed the computational
-basin strongly enough that it cannot serve as a pure distance manipulation.
-
-The next discriminator is the masked positional control:
-
-\`\`\`bash
-python3.13 qwen_observer_masked_distance.py
-\`\`\`
-
-It creates cache rows that advance Qwen's cached position while remaining
-masked from all later attention. This separates readable intervening trajectory
-from positional age much more cleanly.
+This still does not test PCA/PAC, entorhinal transverse sweeps, GAx, or a
+residual-stream/Jacobian actuator. Those become relevant after the basic
+first-ask distance control question has a valid result.
