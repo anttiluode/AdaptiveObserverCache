@@ -53,7 +53,15 @@ from qwen_observer_masked_distance import (
     choose_spacer_id,
     grow_masked_to_distance,
 )
-from qwen_tail_schedule import ARMS, classify, split_logprobs, trust_for_index
+from qwen_chat_suffix import assistant_end_id
+from qwen_tail_schedule import (
+    ARMS,
+    classify,
+    generation_choice,
+    generation_verdict,
+    split_logprobs,
+    trust_for_index,
+)
 
 
 def parse_args():
@@ -79,8 +87,99 @@ def parse_args():
     )
     p.add_argument("--spacer-text", default="x")
     p.add_argument("--spacer-chunk", type=int, default=64)
-    p.add_argument("--receipt", default="results/qwen_observer_phasic_tail.json")
+    p.add_argument("--max-new-tokens", type=int, default=40)
+    p.add_argument("--top-k", type=int, default=5)
+    p.add_argument("--no-generate", action="store_true",
+                   help="skip the greedy generation branches")
+    p.add_argument("--receipt", default="results/qwen_observer_phasic_tail_gen.json")
     return p.parse_args()
+
+
+def top_tokens(tokenizer, logits, k):
+    logp = torch.log_softmax(logits.float(), dim=-1)[0]
+    vals, ids = torch.topk(logp, k)
+    return [
+        {"token": tokenizer.decode([int(i)]), "id": int(i), "logprob": float(v)}
+        for v, i in zip(vals.tolist(), ids.tolist())
+    ]
+
+
+@torch.inference_mode()
+def generate_scheduled(
+    model,
+    tokenizer,
+    controller,
+    canonical_cache,
+    canonical_history: List[int],
+    canonical_mask: List[int],
+    question_suffix: List[int],
+    *,
+    arm: str,
+    trust: float,
+    decision_index: int,
+    max_new_tokens: int,
+    top_k: int,
+):
+    """Greedy generation on an isolated branch that keeps spacer rows masked.
+
+    The trust schedule uses the same index rule as scoring: while producing
+    emitted token i the observer runs at trust_for_index(arm, i, ...).
+    """
+
+    canonical_len = cache_length(canonical_cache)
+    history_len = len(canonical_history)
+    mask_snapshot = tuple(canonical_mask)
+
+    branch = fork_cache(canonical_cache)
+    branch_history = list(canonical_history)
+    branch_mask = list(canonical_mask)
+
+    end_id = assistant_end_id(tokenizer)
+    eos_id = tokenizer.eos_token_id
+    stop_ids = {int(end_id)} | ({int(eos_id)} if eos_id is not None else set())
+
+    controller.begin_generation(preserve_source_baseline=True)
+    controller.set_trust(trust_for_index(arm, 0, decision_index, trust))
+    branch, logits = append_tokens_with_mask(
+        model, branch, branch_history, branch_mask,
+        question_suffix, [1] * len(question_suffix),
+    )
+
+    emitted: List[int] = []
+    steps = []
+    stopped = False
+    for i in range(max_new_tokens):
+        steps.append({
+            "index": i,
+            "trust": trust_for_index(arm, i, decision_index, trust),
+            "top": top_tokens(tokenizer, logits, top_k),
+        })
+        next_id = int(torch.argmax(logits.float(), dim=-1)[0])
+        if next_id in stop_ids:
+            stopped = True
+            break
+        emitted.append(next_id)
+        controller.set_trust(trust_for_index(arm, i + 1, decision_index, trust))
+        branch, logits = append_tokens_with_mask(
+            model, branch, branch_history, branch_mask, [next_id], [1],
+        )
+
+    controller.set_trust(0.0)
+    summary = controller.summary()
+    _assert_canonical_untouched(
+        canonical_cache, canonical_history, canonical_mask,
+        canonical_len, history_len, mask_snapshot,
+    )
+    if not summary.get("cache_integrity_ok", False):
+        raise RuntimeError("source K rows failed integrity check during generation")
+
+    return {
+        "text": tokenizer.decode(emitted, skip_special_tokens=True).strip(),
+        "tokens": [tokenizer.decode([t]) for t in emitted],
+        "stopped_on_end_token": stopped,
+        "steps": steps,
+        "observer": summary,
+    }
 
 
 @torch.inference_mode()
@@ -97,6 +196,7 @@ def score_scheduled(
     arm: str,
     trust: float,
     decision_index: int,
+    top_k: int = 5,
 ):
     """Teacher-force one candidate on an isolated branch with a per-token trust schedule."""
 
@@ -122,9 +222,11 @@ def score_scheduled(
     )
 
     logprobs: List[float] = []
+    tops = []
     for index, token_id in enumerate(candidate_ids):
         lp = torch.log_softmax(logits.float(), dim=-1)[0, token_id]
         logprobs.append(float(lp.item()))
+        tops.append(top_tokens(tokenizer, logits, top_k))
         if index + 1 < len(candidate_ids):
             controller.set_trust(schedule[index + 1])
             branch, logits = append_tokens_with_mask(
@@ -146,13 +248,14 @@ def score_scheduled(
         "token_texts": [tokenizer.decode([t]) for t in candidate_ids],
         "trust_schedule": schedule,
         "logprobs": logprobs,
+        "top": tops,
         **split,
         "observer": summary,
     }
 
 
 def checkpoint(model, tokenizer, controller, cache, history_ids, history_mask, *,
-               args, question_suffix, decision_index, anchor_len):
+               args, question_suffix, decision_index, anchor_len, word_a, word_b):
     actual = cache_length(cache) - anchor_len
     print(f"\n=== checkpoint +{actual} masked positions, trust={args.trust:+.2f} ===",
           flush=True)
@@ -164,6 +267,7 @@ def checkpoint(model, tokenizer, controller, cache, history_ids, history_mask, *
                 model, tokenizer, controller, cache, history_ids, history_mask,
                 question_suffix, text,
                 arm=arm, trust=args.trust, decision_index=decision_index,
+                top_k=args.top_k,
             )
         a, b = arms[arm]["A"], arms[arm]["B"]
         margin = a["total"] - b["total"]
@@ -174,7 +278,26 @@ def checkpoint(model, tokenizer, controller, cache, history_ids, history_mask, *
             f"| tail A={a['tail']:+8.4f} B={b['tail']:+8.4f}",
             flush=True,
         )
-    return {"added_masked_positions": actual, "arms": arms}
+    print("  what the model wanted instead of B's final token:")
+    for arm in ARMS:
+        top = arms[arm]["B"]["top"][-1]
+        shown = "  ".join(f"{t['token']!r}:{t['logprob']:+.2f}" for t in top)
+        print(f"    {arm:8s} {shown}")
+
+    generations = {}
+    if not args.no_generate:
+        print("  greedy generation:")
+        for arm in ARMS:
+            gen = generate_scheduled(
+                model, tokenizer, controller, cache, history_ids, history_mask,
+                question_suffix, arm=arm, trust=args.trust,
+                decision_index=decision_index,
+                max_new_tokens=args.max_new_tokens, top_k=args.top_k,
+            )
+            gen["choice"] = generation_choice(gen["text"], word_a, word_b)
+            generations[arm] = gen
+            print(f"    {arm:8s} [{gen['choice']:7s}] {gen['text']!r}", flush=True)
+    return {"added_masked_positions": actual, "arms": arms, "generation": generations}
 
 
 def main():
@@ -200,6 +323,8 @@ def main():
         tokenize_answer(tokenizer, args.candidate_b),
     )
     decision_index = divergence["index"]
+    word_a = tokenizer.decode([divergence["token_a"]])
+    word_b = tokenizer.decode([divergence["token_b"]])
     print(
         f"Decision token index {decision_index}: "
         f"A={tokenizer.decode([divergence['token_a']])!r} "
@@ -256,6 +381,7 @@ def main():
                 model, tokenizer, controller, cache, history_ids, history_mask,
                 args=args, question_suffix=question_suffix,
                 decision_index=decision_index, anchor_len=anchor_len,
+                word_a=word_a, word_b=word_b,
             )
             payload["checkpoints"].append(row)
             write_receipt(receipt_path, payload)
@@ -263,6 +389,12 @@ def main():
         near = payload["checkpoints"][0]["arms"]
         far = payload["checkpoints"][-1]["arms"]
         readout = classify(near, far)
+        if not args.no_generate:
+            near_c = {a: g["choice"] for a, g in payload["checkpoints"][0]["generation"].items()}
+            far_c = {a: g["choice"] for a, g in payload["checkpoints"][-1]["generation"].items()}
+            readout["generation_near"] = near_c
+            readout["generation_far"] = far_c
+            readout["generation_verdict"] = generation_verdict(near_c, far_c)
         payload["readout"] = readout
         payload["complete"] = True
         write_receipt(receipt_path, payload)
@@ -276,7 +408,11 @@ def main():
               f"{readout['distance_tail_cost_nats']:+.3f} nats")
         print(f"  decision-token mismatch tonic vs phasic (should be ~0): "
               f"{readout['far_decision_logprob_mismatch_tonic_vs_phasic']:.4f}")
-        print(f"  VERDICT: {readout['verdict']}")
+        print(f"  likelihood VERDICT: {readout['verdict']}")
+        if "generation_verdict" in readout:
+            print(f"  generation near: {readout['generation_near']}")
+            print(f"  generation far:  {readout['generation_far']}")
+            print(f"  generation VERDICT: {readout['generation_verdict']}")
     finally:
         controller.uninstall()
         write_receipt(receipt_path, payload)

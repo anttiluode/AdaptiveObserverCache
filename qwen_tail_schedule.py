@@ -99,3 +99,41 @@ def classify(near: dict, far: dict, *, threshold: float = TAIL_EFFECT_THRESHOLD)
         verdict = "UNRESOLVED"
     readout["verdict"] = verdict
     return readout
+
+
+def generation_choice(text: str, word_a: str, word_b: str) -> str:
+    """Which cause a free generation names: "A", "B", "both" or "neither".
+
+    ``word_a`` / ``word_b`` are the decoded divergence tokens (e.g. " valve",
+    " sensor"); matching is case-insensitive on the stripped word.
+    """
+
+    low = text.lower()
+    has_a = word_a.strip().lower() in low
+    has_b = word_b.strip().lower() in low
+    if has_a and has_b:
+        return "both"
+    if has_a:
+        return "A"
+    if has_b:
+        return "B"
+    return "neither"
+
+
+def generation_verdict(near_choices: dict, far_choices: dict) -> str:
+    """Pre-registered reading of greedy generation at a negative (B) trust.
+
+    NO_BASELINE_GENERATION     tonic does not name B alone at distance 0.
+    GENERATION_CONTROL_SURVIVES tonic names B alone at the far checkpoint.
+    GENERATION_HEDGES          tonic names both causes at the far checkpoint.
+    GENERATION_CONTROL_LOST    otherwise.
+    """
+
+    if near_choices.get("tonic") != "B":
+        return "NO_BASELINE_GENERATION"
+    far = far_choices.get("tonic")
+    if far == "B":
+        return "GENERATION_CONTROL_SURVIVES"
+    if far == "both":
+        return "GENERATION_HEDGES"
+    return "GENERATION_CONTROL_LOST"

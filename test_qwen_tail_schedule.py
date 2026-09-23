@@ -5,6 +5,8 @@ import unittest
 from qwen_tail_schedule import (
     ARMS,
     classify,
+    generation_choice,
+    generation_verdict,
     split_logprobs,
     trust_for_index,
 )
@@ -82,6 +84,20 @@ class ClassifyTests(unittest.TestCase):
 
     def test_arm_names(self):
         self.assertEqual(ARMS, ("tonic", "phasic", "neutral"))
+
+
+class GenerationTests(unittest.TestCase):
+    def test_choice(self):
+        self.assertEqual(generation_choice("The device failed because sensor K drifted.", " valve", " sensor"), "B")
+        self.assertEqual(generation_choice("Valve C was obstructed.", " valve", " sensor"), "A")
+        self.assertEqual(generation_choice("Sensor K drift or valve C.", " valve", " sensor"), "both")
+        self.assertEqual(generation_choice("Unknown.", " valve", " sensor"), "neither")
+
+    def test_verdict(self):
+        self.assertEqual(generation_verdict({"tonic": "A"}, {"tonic": "B"}), "NO_BASELINE_GENERATION")
+        self.assertEqual(generation_verdict({"tonic": "B"}, {"tonic": "B"}), "GENERATION_CONTROL_SURVIVES")
+        self.assertEqual(generation_verdict({"tonic": "B"}, {"tonic": "both"}), "GENERATION_HEDGES")
+        self.assertEqual(generation_verdict({"tonic": "B"}, {"tonic": "A"}), "GENERATION_CONTROL_LOST")
 
 
 class RunnerSyntaxTests(unittest.TestCase):
