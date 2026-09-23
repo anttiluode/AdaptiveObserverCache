@@ -730,3 +730,37 @@ The next discriminator is a matched distance-by-trust sweep on one live cache:
 hold sources and frozen heads fixed, grow temporal distance, and measure
 complete A-vs-B sequence likelihood at the same trust values. That separates
 distance decay from the already-observed decoding threshold.
+
+## Final Qwen closeout — semantic control survives +256 masked positions
+
+The corrected first-ask and phasic-tail experiments close the Qwen distance thread more cleanly than the older fixed-candidate score suggested.
+
+At distance 0, `m=-1` flips both the matched `valve`/`sensor` decision and greedy generation to B. After exactly +256 unreadable masked positions, the same observer still makes `sensor` beat `valve` at the decision boundary and both tonic and phasic greedy generation still produce the B explanation:
+
+```text
+The device failed because sensor K drifted, as supported by the calibration log.
+```
+
+The exact short B candidate `The device failed because sensor K drifted.` nevertheless loses the summed-likelihood comparison at +256. Token-level inspection shows that this is **not** because `K` or `drifted` became hard to recover: both remain essentially probability 1 once B is selected. The penalty is concentrated on the final period, because Qwen now prefers a comma and a longer B continuation.
+
+The preregistered tail classifier therefore keeps its literal likelihood verdict `DISTANCE_DAMAGES_TAIL`, while the greedy-generation verdict is `GENERATION_CONTROL_SURVIVES`. Those are not contradictory once semantic choice and exact termination style are separated.
+
+The phasic hypothesis also does not earn a positive result here. Turning the observer off after `sensor` improves the +256 B tail by only `+0.223` nats, below the frozen `0.5`-nat threshold, and tonic/phasic generations are identical. On this prompt, continuing the observer is not the main reason the exact short candidate loses.
+
+What AOC has earned is narrower and useful:
+
+```text
+persistent external observer state
+    -> causally changes how frozen history is read
+    -> changes the semantic answer on the calibration conflict
+    -> still controls that semantic answer after +256 masked cache positions
+
+but
+
+exact candidate-string likelihood can drift with continuation style
+and held-out full-generation transfer remains only 2/4.
+```
+
+So the remaining boundary is **general transfer**, not a demonstrated 256-token semantic-control failure.
+
+See [RESULTS_QWEN_PHASIC_TAIL.md](RESULTS_QWEN_PHASIC_TAIL.md) and `results/qwen_observer_phasic_tail_gen.json` for the complete receipt. The attempted `0,512,1024,2048` receipt is incomplete (`complete=false`) and is not used as evidence in this closeout.
