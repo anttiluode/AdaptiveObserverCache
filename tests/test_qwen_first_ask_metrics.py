@@ -5,6 +5,7 @@ from qwen_first_ask_metrics import (
     first_divergence,
     sequence_control_summary,
     split_first_ask_ids,
+    winner_flip_gate,
 )
 
 
@@ -50,6 +51,15 @@ class FirstAskMetricsTests(unittest.TestCase):
     def test_split_first_ask_requires_system_boundary(self):
         with self.assertRaises(ValueError):
             split_first_ask_ids([1, 2, 3], assistant_end_id=999)
+
+    def test_winner_flip_gate_requires_B_at_minus1_and_A_at_plus1(self):
+        self.assertTrue(winner_flip_gate({-1.0: -0.2, 0.0: 0.1, 1.0: 0.4}))
+        self.assertFalse(winner_flip_gate({-1.0: 0.2, 0.0: 0.3, 1.0: 0.4}))
+        self.assertFalse(winner_flip_gate({-1.0: -0.4, 0.0: -0.3, 1.0: -0.2}))
+
+    def test_winner_flip_gate_requires_both_endpoints(self):
+        with self.assertRaises(ValueError):
+            winner_flip_gate({0.0: 0.0, 1.0: 0.2})
 
 
 if __name__ == "__main__":
