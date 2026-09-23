@@ -1,0 +1,505 @@
+{
+  "scope": "First-ask AOC control versus positional distance. Canonical cache contains system/sources only; question is withheld until each isolated diagnostic branch. Masked spacer rows advance cache/RoPE position but remain unreadable to later queries.",
+  "model": "Qwen/Qwen3-8B",
+  "transformers_version": "5.15.0",
+  "regime": "first-ask",
+  "growth_mode": "masked-positional-spacer",
+  "source_spans": {
+    "A": [
+      45,
+      62
+    ],
+    "B": [
+      72,
+      87
+    ]
+  },
+  "frozen_heads": [
+    {
+      "layer": 24,
+      "query_head": 29,
+      "kv_head": 7
+    },
+    {
+      "layer": 24,
+      "query_head": 23,
+      "kv_head": 5
+    },
+    {
+      "layer": 30,
+      "query_head": 11,
+      "kv_head": 2
+    },
+    {
+      "layer": 18,
+      "query_head": 28,
+      "kv_head": 7
+    }
+  ],
+  "distance_targets": [
+    0,
+    256
+  ],
+  "trust_grid": [
+    -1.0,
+    0.0,
+    1.0
+  ],
+  "candidate_a": "The device failed because valve C was obstructed.",
+  "candidate_b": "The device failed because sensor K drifted.",
+  "saturation_threshold": 0.99,
+  "question_was_in_anchor": false,
+  "prior_assistant_answer_in_anchor": false,
+  "spacer": {
+    "text": "x",
+    "token_id": 87,
+    "decoded_token": "x",
+    "attention_visible_to_later_queries": false,
+    "chunk_size": 64
+  },
+  "checkpoints": [
+    {
+      "target_distance": 0,
+      "actual_added_tokens": 0,
+      "canonical_cache_tokens": 93,
+      "masked_history_tokens": 0,
+      "first_ask": true,
+      "dose_response": [
+        {
+          "trust": -1.0,
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "tokens": 10,
+            "sum_logprob": -1.1620783163234591,
+            "mean_logprob": -0.11620783163234591,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.45180292408913375,
+              "mean_other_mass": 0.022699378890683873,
+              "mean_query_update_ratio": 0.4601713581820137,
+              "max_query_update_ratio": 0.7525565726975875,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "tokens": 8,
+            "sum_logprob": -0.875107648782425,
+            "mean_logprob": -0.10938845609780312,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.4430171689018607,
+              "mean_other_mass": 0.01659915610071039,
+              "mean_query_update_ratio": 0.3363006229750865,
+              "max_query_update_ratio": 0.6240521917592114,
+              "capped_fraction": 0.0
+            }
+          },
+          "sequence_decision": {
+            "sum_logprob_A": -1.1620783163234591,
+            "sum_logprob_B": -0.875107648782425,
+            "sum_margin_A_minus_B": -0.2869706675410342,
+            "winner": "B",
+            "pair_probability_A": 0.4287456590283329,
+            "pair_probability_B": 0.571254340971667,
+            "winner_pair_probability": 0.571254340971667,
+            "saturated": false,
+            "saturation_threshold": 0.99
+          },
+          "matched_decision_token": {
+            "common_prefix_tokens": 4,
+            "divergence_index": 4,
+            "token_a": 31430,
+            "token_b": 12002,
+            "token_a_text": " valve",
+            "token_b_text": " sensor",
+            "logprob_a": -1.1485549211502075,
+            "logprob_b": -0.39855489134788513,
+            "gap_A_minus_B": -0.7500000298023224,
+            "observer": {
+              "reads": 20,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.43793654814362526,
+              "mean_other_mass": 0.016560104850213975,
+              "mean_query_update_ratio": 0.4222317901036489,
+              "max_query_update_ratio": 0.6240521917592114,
+              "capped_fraction": 0.0
+            }
+          }
+        },
+        {
+          "trust": 0.0,
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "tokens": 10,
+            "sum_logprob": -0.005010628141462803,
+            "mean_logprob": -0.0005010628141462803,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.2875047833658755,
+              "mean_other_mass": 0.12438323490787298,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "tokens": 8,
+            "sum_logprob": -11.454495297511983,
+            "mean_logprob": -1.4318119121889978,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.14773551971302368,
+              "mean_other_mass": 0.22379776858724654,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "sequence_decision": {
+            "sum_logprob_A": -0.005010628141462803,
+            "sum_logprob_B": -11.454495297511983,
+            "sum_margin_A_minus_B": 11.44948466937052,
+            "winner": "A",
+            "pair_probability_A": 0.9999893451495084,
+            "pair_probability_B": 1.0654850491564893e-05,
+            "winner_pair_probability": 0.9999893451495084,
+            "saturated": true,
+            "saturation_threshold": 0.99
+          },
+          "matched_decision_token": {
+            "common_prefix_tokens": 4,
+            "divergence_index": 4,
+            "token_a": 31430,
+            "token_b": 12002,
+            "token_a_text": " valve",
+            "token_b_text": " sensor",
+            "logprob_a": -0.0011533997021615505,
+            "logprob_b": -11.251152992248535,
+            "gap_A_minus_B": 11.249999592546374,
+            "observer": {
+              "reads": 20,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.19739428963512182,
+              "mean_other_mass": 0.15778315551578997,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          }
+        },
+        {
+          "trust": 1.0,
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "tokens": 10,
+            "sum_logprob": -0.0026152534410357475,
+            "mean_logprob": -0.00026152534410357476,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.4866268316283822,
+              "mean_other_mass": 0.03760424646898173,
+              "mean_query_update_ratio": 0.21730019800439182,
+              "max_query_update_ratio": 0.5092920113500536,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "tokens": 8,
+            "sum_logprob": -13.56418733771352,
+            "mean_logprob": -1.69552341721419,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.45741863432340324,
+              "mean_other_mass": 0.04558522224397166,
+              "mean_query_update_ratio": 0.36329551982640745,
+              "max_query_update_ratio": 0.81250217880609,
+              "capped_fraction": 0.0
+            }
+          },
+          "sequence_decision": {
+            "sum_logprob_A": -0.0026152534410357475,
+            "sum_logprob_B": -13.56418733771352,
+            "sum_margin_A_minus_B": 13.561572084272484,
+            "winner": "A",
+            "pair_probability_A": 0.999998710909173,
+            "pair_probability_B": 1.2890908269724832e-06,
+            "winner_pair_probability": 0.999998710909173,
+            "saturated": true,
+            "saturation_threshold": 0.99
+          },
+          "matched_decision_token": {
+            "common_prefix_tokens": 4,
+            "divergence_index": 4,
+            "token_a": 31430,
+            "token_b": 12002,
+            "token_a_text": " valve",
+            "token_b_text": " sensor",
+            "logprob_a": -0.00025602878304198384,
+            "logprob_b": -13.500255584716797,
+            "gap_A_minus_B": 13.499999555933755,
+            "observer": {
+              "reads": 20,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.43193159587681296,
+              "mean_other_mass": 0.05498646408086642,
+              "mean_query_update_ratio": 0.2753105160076066,
+              "max_query_update_ratio": 0.5092920113500536,
+              "capped_fraction": 0.0
+            }
+          }
+        }
+      ],
+      "sequence_winner_flip_control": true,
+      "matched_token_winner_flip_control": true,
+      "neutral_saturated": true,
+      "neutral_winner": "A"
+    },
+    {
+      "target_distance": 256,
+      "actual_added_tokens": 256,
+      "canonical_cache_tokens": 349,
+      "masked_history_tokens": 256,
+      "first_ask": true,
+      "dose_response": [
+        {
+          "trust": -1.0,
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "tokens": 10,
+            "sum_logprob": -2.60697478055954,
+            "mean_logprob": -0.260697478055954,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.35973461214452984,
+              "mean_other_mass": 0.019262665216228925,
+              "mean_query_update_ratio": 0.48209271652511526,
+              "max_query_update_ratio": 0.7389211444877577,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "tokens": 8,
+            "sum_logprob": -3.1282885000107967,
+            "mean_logprob": -0.3910360625013496,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.3379244311945513,
+              "mean_other_mass": 0.013324609008122934,
+              "mean_query_update_ratio": 0.35965061975265256,
+              "max_query_update_ratio": 0.639316104214638,
+              "capped_fraction": 0.0
+            }
+          },
+          "sequence_decision": {
+            "sum_logprob_A": -2.60697478055954,
+            "sum_logprob_B": -3.1282885000107967,
+            "sum_margin_A_minus_B": 0.5213137194512569,
+            "winner": "A",
+            "pair_probability_A": 0.6274549065111366,
+            "pair_probability_B": 0.37254509348886344,
+            "winner_pair_probability": 0.6274549065111366,
+            "saturated": false,
+            "saturation_threshold": 0.99
+          },
+          "matched_decision_token": {
+            "common_prefix_tokens": 4,
+            "divergence_index": 4,
+            "token_a": 31430,
+            "token_b": 12002,
+            "token_a_text": " valve",
+            "token_b_text": " sensor",
+            "logprob_a": -2.504835844039917,
+            "logprob_b": -0.754835844039917,
+            "gap_A_minus_B": -1.75,
+            "observer": {
+              "reads": 20,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.36268735155463216,
+              "mean_other_mass": 0.014743146573891863,
+              "mean_query_update_ratio": 0.4522566121103533,
+              "max_query_update_ratio": 0.639316104214638,
+              "capped_fraction": 0.0
+            }
+          }
+        },
+        {
+          "trust": 0.0,
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "tokens": 10,
+            "sum_logprob": -0.13882812019437551,
+            "mean_logprob": -0.013882812019437552,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.24535550320288166,
+              "mean_other_mass": 0.06481302637839689,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "tokens": 8,
+            "sum_logprob": -11.687927234916629,
+            "mean_logprob": -1.4609909043645786,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.11886276905715931,
+              "mean_other_mass": 0.13837406956008635,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          },
+          "sequence_decision": {
+            "sum_logprob_A": -0.13882812019437551,
+            "sum_logprob_B": -11.687927234916629,
+            "sum_margin_A_minus_B": 11.549099114722253,
+            "winner": "A",
+            "pair_probability_A": 0.9999903553650352,
+            "pair_probability_B": 9.644634964778298e-06,
+            "winner_pair_probability": 0.9999903553650352,
+            "saturated": true,
+            "saturation_threshold": 0.99
+          },
+          "matched_decision_token": {
+            "common_prefix_tokens": 4,
+            "divergence_index": 4,
+            "token_a": 31430,
+            "token_b": 12002,
+            "token_a_text": " valve",
+            "token_b_text": " sensor",
+            "logprob_a": -0.10651388764381409,
+            "logprob_b": -10.356513977050781,
+            "gap_A_minus_B": 10.250000089406967,
+            "observer": {
+              "reads": 20,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.1692641926696524,
+              "mean_other_mass": 0.09796906937845051,
+              "mean_query_update_ratio": 0.0,
+              "max_query_update_ratio": 0.0,
+              "capped_fraction": 0.0
+            }
+          }
+        },
+        {
+          "trust": 1.0,
+          "A": {
+            "text": "The device failed because valve C was obstructed.",
+            "tokens": 10,
+            "sum_logprob": -0.06389298103749752,
+            "mean_logprob": -0.006389298103749752,
+            "observer": {
+              "reads": 40,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.3515864806715399,
+              "mean_other_mass": 0.02668043555895565,
+              "mean_query_update_ratio": 0.2049861581506356,
+              "max_query_update_ratio": 0.5304297689192484,
+              "capped_fraction": 0.0
+            }
+          },
+          "B": {
+            "text": "The device failed because sensor K drifted.",
+            "tokens": 8,
+            "sum_logprob": -13.195791795180412,
+            "mean_logprob": -1.6494739743975515,
+            "observer": {
+              "reads": 32,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.2994658704265021,
+              "mean_other_mass": 0.03274202650391089,
+              "mean_query_update_ratio": 0.3517866634480105,
+              "max_query_update_ratio": 0.8228509136548084,
+              "capped_fraction": 0.0
+            }
+          },
+          "sequence_decision": {
+            "sum_logprob_A": -0.06389298103749752,
+            "sum_logprob_B": -13.195791795180412,
+            "sum_margin_A_minus_B": 13.131898814142914,
+            "winner": "A",
+            "pair_probability_A": 0.9999980189841617,
+            "pair_probability_B": 1.9810158382593812e-06,
+            "winner_pair_probability": 0.9999980189841617,
+            "saturated": true,
+            "saturation_threshold": 0.99
+          },
+          "matched_decision_token": {
+            "common_prefix_tokens": 4,
+            "divergence_index": 4,
+            "token_a": 31430,
+            "token_b": 12002,
+            "token_a_text": " valve",
+            "token_b_text": " sensor",
+            "logprob_a": -0.04050891101360321,
+            "logprob_b": -12.040509223937988,
+            "gap_A_minus_B": 12.000000312924385,
+            "observer": {
+              "reads": 20,
+              "cache_integrity_ok": true,
+              "mean_target_mass": 0.3138564136810601,
+              "mean_other_mass": 0.04182543229253497,
+              "mean_query_update_ratio": 0.25933047207030935,
+              "max_query_update_ratio": 0.5304297689192484,
+              "capped_fraction": 0.0
+            }
+          }
+        }
+      ],
+      "sequence_winner_flip_control": false,
+      "matched_token_winner_flip_control": true,
+      "neutral_saturated": true,
+      "neutral_winner": "A"
+    }
+  ],
+  "complete": true,
+  "run_status": "completed",
+  "anchor": {
+    "cache_tokens": 93,
+    "question_suffix_tokens": 27,
+    "cache_fork_mode": "layer-tensor-constructor",
+    "source_cache_integrity_ok": true,
+    "question_has_been_asked": false,
+    "assistant_answer_exists": false
+  },
+  "summary": {
+    "rows": [
+      {
+        "target_distance": 0,
+        "actual_added_tokens": 0,
+        "neutral_winner": "A",
+        "neutral_saturated": true,
+        "sequence_winner_flip_control": true,
+        "matched_token_winner_flip_control": true
+      },
+      {
+        "target_distance": 256,
+        "actual_added_tokens": 256,
+        "neutral_winner": "A",
+        "neutral_saturated": true,
+        "sequence_winner_flip_control": false,
+        "matched_token_winner_flip_control": true
+      }
+    ],
+    "distance_claim_rule": "Distance is interpretable only if sequence_winner_flip_control passes at distance 0. Survival at a later checkpoint requires the same B-at-minus1/A-at-plus1 summed-sequence winner flip there."
+  },
+  "canonical_cache_tokens": 349,
+  "source_cache_integrity_ok": true
+}
